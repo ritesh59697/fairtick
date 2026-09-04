@@ -219,7 +219,11 @@ export default function MarketListPage() {
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-zinc-400">Onchain DEX Mid:</span>
                       <span className="font-mono font-bold text-zinc-100">
-                        {m.dexPriceUsd > 0 ? `$${m.dexPriceUsd.toFixed(2)}` : "—"}
+                        {m.dexPriceUsd > 0 ? (
+                          `$${m.dexPriceUsd.toFixed(2)}`
+                        ) : (
+                          <span className="text-zinc-500 text-[11px] font-normal">No Active Pool</span>
+                        )}
                       </span>
                     </div>
 
@@ -233,7 +237,9 @@ export default function MarketListPage() {
                     <div className="pt-1.5 border-t border-zinc-850 flex items-center justify-between text-xs">
                       <span className="text-zinc-400">DEX Premium:</span>
                       <div className="flex items-center gap-1 font-mono font-bold">
-                        {isDiscount ? (
+                        {m.dexPriceUsd <= 0 ? (
+                          <span className="text-zinc-500 font-normal text-xs">—</span>
+                        ) : isDiscount ? (
                           <span className="text-emerald-400 flex items-center gap-0.5">
                             <TrendingDown className="w-3 h-3" />
                             -{absBps} bps (Cheap)
@@ -262,9 +268,13 @@ export default function MarketListPage() {
                 {/* Ticket Link CTA */}
                 <Link
                   href={`/trade/${m.stock.symbol}`}
-                  className="w-full py-2.5 px-3 rounded-lg bg-zinc-800 hover:bg-blue-600 text-zinc-200 hover:text-white text-xs font-semibold transition flex items-center justify-center gap-1.5 group-hover:border-blue-500 border border-transparent shadow"
+                  className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 border shadow ${
+                    m.stock.poolAddress && m.dexPriceUsd > 0
+                      ? "bg-zinc-800 hover:bg-blue-600 text-zinc-200 hover:text-white group-hover:border-blue-500 border-transparent"
+                      : "bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-800"
+                  }`}
                 >
-                  Open Trade Ticket
+                  {m.stock.poolAddress && m.dexPriceUsd > 0 ? "Open Trade Ticket" : "View Details (No Pool)"}
                   <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
                 </Link>
               </div>

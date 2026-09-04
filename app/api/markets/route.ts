@@ -118,48 +118,50 @@ export async function GET(request: Request) {
         multiplierNumber = 1.0;
       }
 
-      // 3. Fetch DEX Price from primary pool
-      let dexSource = stock.primaryDex;
-      try {
-        if (stock.primaryDex === "Aerodrome" && stock.poolAddress) {
-          const [reserves, t0] = await Promise.all([
-            client.readContract({
-              address: stock.poolAddress,
-              abi: AERO_V2_POOL_ABI,
-              functionName: "getReserves",
-            }),
-            client.readContract({
-              address: stock.poolAddress,
-              abi: AERO_V2_POOL_ABI,
-              functionName: "token0",
-            }),
-          ]);
-          const isT0Usdc = t0.toLowerCase() === "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913".toLowerCase();
-          dexPriceUsd = computeAeroV2PriceUsd(reserves[0], reserves[1], isT0Usdc);
-        } else if (stock.poolAddress) {
-          // Uniswap V3 pool
-          const [s0, t0] = await Promise.all([
-            client.readContract({
-              address: stock.poolAddress,
-              abi: POOL_V3_ABI,
-              functionName: "slot0",
-            }),
-            client.readContract({
-              address: stock.poolAddress,
-              abi: POOL_V3_ABI,
-              functionName: "token0",
-            }),
-          ]);
-          const isT0Usdc = t0.toLowerCase() === "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913".toLowerCase();
-          dexPriceUsd = computeUniV3PriceUsd(s0[1], isT0Usdc);
-        } else {
-          // Fallback or estimated benchmark from fair price
-          dexPriceUsd = fairPriceUsd > 0 ? fairPriceUsd * 1.0025 : 0;
-          dexSource = "Simulated / Depth";
+      // 3. Fetch DEX Price from verified primary pool
+      let dexSource = stock.poolAddress ? stock.primaryDex : "No Pool";
+      if (stock.poolAddress) {
+        try {
+          if (stock.primaryDex === "Aerodrome") {
+            const [reserves, t0] = await Promise.all([
+              client.readContract({
+                address: stock.poolAddress,
+                abi: AERO_V2_POOL_ABI,
+                functionName: "getReserves",
+              }),
+              client.readContract({
+                address: stock.poolAddress,
+                abi: AERO_V2_POOL_ABI,
+                functionName: "token0",
+              }),
+            ]);
+            const isT0Usdc = t0.toLowerCase() === "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913".toLowerCase();
+            dexPriceUsd = computeAeroV2PriceUsd(reserves[0], reserves[1], isT0Usdc);
+          } else {
+            // Uniswap V3 pool
+            const [s0, t0] = await Promise.all([
+              client.readContract({
+                address: stock.poolAddress,
+                abi: POOL_V3_ABI,
+                functionName: "slot0",
+              }),
+              client.readContract({
+                address: stock.poolAddress,
+                abi: POOL_V3_ABI,
+                functionName: "token0",
+              }),
+            ]);
+            const isT0Usdc = t0.toLowerCase() === "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913".toLowerCase();
+            dexPriceUsd = computeUniV3PriceUsd(s0[1], isT0Usdc);
+          }
+        } catch (e) {
+          console.error("Pool read error for", stock.symbol, stock.poolAddress);
+          dexPriceUsd = 0;
+          dexSource = "Pool Offline";
         }
-      } catch (e) {
-        dexPriceUsd = fairPriceUsd > 0 ? fairPriceUsd * 1.002 : 0;
-        dexSource = "Estimated Mid";
+      } else {
+        dexPriceUsd = 0;
+        dexSource = "No Pool";
       }
 
       // 4. Calculate Premium in basis points

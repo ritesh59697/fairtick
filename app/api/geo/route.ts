@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
+  const isProd = process.env.NODE_ENV === "production";
+
   // Check headers provided by hosting platforms (Vercel / Cloudflare)
   const countryHeader =
     request.headers.get("x-vercel-ip-country") ||
@@ -8,10 +10,12 @@ export async function GET(request: Request) {
     request.headers.get("x-country-code");
 
   if (countryHeader) {
-    const isUS = countryHeader.toUpperCase() === "US";
+    const country = countryHeader.toUpperCase();
+    const isUS = country === "US";
     return NextResponse.json({
       isUS,
-      country: countryHeader.toUpperCase(),
+      isBlocked: isUS,
+      country,
       source: "headers",
     });
   }
@@ -22,28 +26,47 @@ export async function GET(request: Request) {
     const ip = forwardedFor ? forwardedFor.split(",")[0].trim() : "";
     
     // If local development (127.0.0.1 / ::1 / empty), default to non-US so local testing works
-    if (!ip || ip === "::1" || ip === "127.0.0.1" || ip.startsWith("192.168.") || ip.startsWith("10.")) {
+    if (!isProd && (!ip || ip === "::1" || ip === "127.0.0.1" || ip.startsWith("192.168.") || ip.startsWith("10."))) {
       return NextResponse.json({
         isUS: false,
+        isBlocked: false,
         country: "DEV",
         source: "local-dev",
       });
     }
 
-    const res = await fetch(`https://ipapi.co/${ip}/json/`, { next: { revalidate: 3600 } });
-    const data = await res.json();
-    const isUS = data.country_code === "US";
+    if (ip) {
+      const res = await fetch(`https://ipapi.co/${ip}/json/`, { next: { revalidate: 3600 } });
+      const data = await res.json();
+      if (data && data.country_code) {
+        const country = String(data.country_code).toUpperCase();
+        const isUS = country === "US";
+        return NextResponse.json({
+          isUS,
+          isBlocked: isUS,
+          country,
+          source: "ipapi",
+        });
+      }
+    }
+
+    // If country is unknown: in production, block swap (fail-closed, not fail-open)
     return NextResponse.json({
-      isUS,
-      country: data.country_code || "UNKNOWN",
-      source: "ipapi",
+      isUS: isProd,
+      isBlocked: isProd,
+      country: "UNKNOWN",
+      source: "unknown",
+      failClosed: isProd,
     });
   } catch (e) {
-    // Fail safe in production or return permissive DEV flag
+    // In production, block swap (fail-closed, not fail-open)
     return NextResponse.json({
-      isUS: false,
+      isUS: isProd,
+      isBlocked: isProd,
       country: "UNKNOWN",
       source: "fallback",
+      failClosed: isProd,
     });
   }
 }
+

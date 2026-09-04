@@ -3,13 +3,13 @@
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useReadContract, useWriteContract, useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
 import { parseUnits, formatUnits, Address, erc20Abi, maxUint256 } from "viem";
 import { getTokenBySymbol, USDC_ADDRESS, USDC_DECIMALS, UNISWAP_V3_ROUTER } from "@/lib/tokens";
 import { B20_TOKEN_ABI, rawToScaledShares } from "@/lib/b20";
 import { TokenMarketSummary } from "@/app/api/markets/route";
 import { useGeoCheck } from "@/lib/geo";
-import { BUILDER_CODE_ENV } from "@/lib/attribution";
+import { BUILDER_CODE_ENV, hasValidBuilderCode } from "@/lib/attribution";
 import { buildSwapTransaction } from "@/lib/aerodrome";
 import { useAppWallet } from "@/lib/wallet-context";
 import { StockLogo } from "@/components/StockLogo";
@@ -102,8 +102,11 @@ export default function TradeTicketPage({
     query: { enabled: !!address && !isDemo && !!stock },
   });
 
-  // Contract write actions
+  // Contract write & transaction actions
   const { writeContractAsync } = useWriteContract();
+  const { sendTransactionAsync } = useSendTransaction();
+
+  const hasBuilderCode = hasValidBuilderCode(BUILDER_CODE_ENV);
 
   if (!stock) {
     return (
@@ -123,6 +126,8 @@ export default function TradeTicketPage({
   const fairPrice = market?.fairPriceUsd || 0;
   const premiumBps = market?.premiumBps || 0;
   const absPremiumBps = Math.abs(premiumBps);
+
+  const hasPool = !!stock?.poolAddress && dexPrice > 0;
 
   const multiplierWad = market ? BigInt(market.multiplierWad) : 10n ** 18n;
 
@@ -151,6 +156,8 @@ export default function TradeTicketPage({
   const isHighImpact = priceImpactBps > 150;
 
   // Swap gating logic per specifications:
+  // - Block if no verified onchain pool
+  // - Block if NEXT_PUBLIC_BUILDER_CODE is missing (read-only mode)
   // - Block if Geo is US
   // - Block if feed FROZEN or UNAVAILABLE
   // - Block if feed STALE
@@ -158,6 +165,8 @@ export default function TradeTicketPage({
   // - Block if premium exceeds max cap (default 50 bps)
   // - Block if impact > 150 bps
   const isTradeDisabled =
+    !hasPool ||
+    !hasBuilderCode ||
     isGeoBlocked ||
     isFrozen ||
     isStale ||
@@ -171,6 +180,14 @@ export default function TradeTicketPage({
     setErrorMessage(null);
     if (!isConnected || !address) {
       openModal();
+      return;
+    }
+    if (!hasPool) {
+      setErrorMessage("There is currently no verified Uniswap V3 pool for this asset on Base.");
+      return;
+    }
+    if (!hasBuilderCode) {
+      setErrorMessage("NEXT_PUBLIC_BUILDER_CODE must be configured to trade.");
       return;
     }
     if (isTradeDisabled) {
@@ -209,19 +226,18 @@ export default function TradeTicketPage({
 
       const currentAllowance = allowanceData || 0n;
 
-      // 1. Check & handle ERC20 approve if needed
+      // 1. Check & handle ERC20 approve if needed - strictly for UNISWAP_V3_ROUTER
       if (currentAllowance < targetAmountUnits) {
         const approveToken = side === "BUY" ? USDC_ADDRESS : currentStock.address;
-        const approveTx = await writeContractAsync({
+        await writeContractAsync({
           address: approveToken,
           abi: erc20Abi,
           functionName: "approve",
           args: [UNISWAP_V3_ROUTER, maxUint256],
         });
-        // Allowance approved
       }
 
-      // 2. Build swap transaction with Builder Code attribution
+      // 2. Build swap transaction with ERC-8021 Builder Code attribution
       const swapPrep = buildSwapTransaction({
         stock: currentStock,
         isBuy: side === "BUY",
@@ -232,44 +248,10 @@ export default function TradeTicketPage({
         builderCode: BUILDER_CODE_ENV,
       });
 
-      // 3. Execute swap on Base
-      const txHash = await writeContractAsync({
-        address: swapPrep.routerAddress,
-        abi: [
-          {
-            type: "function",
-            name: "exactInputSingle",
-            inputs: [
-              {
-                name: "params",
-                type: "tuple",
-                components: [
-                  { name: "tokenIn", type: "address" },
-                  { name: "tokenOut", type: "address" },
-                  { name: "fee", type: "uint24" },
-                  { name: "recipient", type: "address" },
-                  { name: "amountIn", type: "uint256" },
-                  { name: "amountOutMinimum", type: "uint256" },
-                  { name: "sqrtPriceLimitX96", type: "uint160" },
-                ],
-              },
-            ],
-            outputs: [{ name: "amountOut", type: "uint256" }],
-            stateMutability: "payable",
-          },
-        ],
-        functionName: "exactInputSingle",
-        args: [
-          {
-            tokenIn: swapPrep.tokenIn,
-            tokenOut: side === "BUY" ? currentStock.address : USDC_ADDRESS,
-            fee: currentStock.poolFee || 3000,
-            recipient: address,
-            amountIn: swapPrep.amountInUnits,
-            amountOutMinimum: swapPrep.minOutUnits,
-            sqrtPriceLimitX96: 0n,
-          },
-        ],
+      // 3. Execute swap on Base via SwapRouter02 with ERC-8021 attributed calldata
+      const txHash = await sendTransactionAsync({
+        to: swapPrep.routerAddress,
+        data: swapPrep.calldata,
       });
 
       // Redirect to Receipt Screen (Screen 3)
@@ -319,6 +301,31 @@ export default function TradeTicketPage({
           </button>
         </div>
       </div>
+
+      {/* Setup / Status Banners */}
+      {!hasBuilderCode && (
+        <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3 text-amber-300 text-xs shadow-lg">
+          <AlertTriangle className="w-5 h-5 shrink-0 text-amber-400 mt-0.5" />
+          <div className="space-y-1">
+            <div className="font-bold text-amber-200">Builder Code Setup Required (Read-Only Mode)</div>
+            <p className="text-amber-300/80 leading-relaxed">
+              <code>NEXT_PUBLIC_BUILDER_CODE</code> is not configured. Swapping is in read-only mode to prevent un-attributed transactions under ERC-8021. Set your Builder Code in <code>.env.local</code> to enable swaps.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {!hasPool && (
+        <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 flex items-start gap-3 text-zinc-300 text-xs shadow-lg">
+          <Info className="w-5 h-5 shrink-0 text-zinc-400 mt-0.5" />
+          <div className="space-y-1">
+            <div className="font-bold text-zinc-200">No Verified Onchain Pool Available</div>
+            <p className="text-zinc-400 leading-relaxed">
+              There is currently no verified Uniswap V3 liquidity pool for {stock.symbol} ({stock.name}) on Base. Swapping is disabled for this asset.
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Asset Fairness Dashboard */}
@@ -567,7 +574,11 @@ export default function TradeTicketPage({
               <div className="flex items-center justify-between text-zinc-400">
                 <span>Builder Code Attribution:</span>
                 <span className="font-mono text-zinc-300 text-[11px]">
-                  {BUILDER_CODE_ENV ? `"${BUILDER_CODE_ENV}"` : "None"}
+                  {hasBuilderCode ? (
+                    <span className="text-blue-400">"{BUILDER_CODE_ENV}" (ERC-8021)</span>
+                  ) : (
+                    <span className="text-amber-400 font-medium">Unconfigured (Read-Only)</span>
+                  )}
                 </span>
               </div>
             </div>
@@ -582,7 +593,23 @@ export default function TradeTicketPage({
 
             {/* Gated Action Button */}
             <div>
-              {!isConnected ? (
+              {!hasPool ? (
+                <button
+                  disabled
+                  className="w-full py-3.5 rounded-xl bg-zinc-850 text-zinc-500 font-semibold text-xs flex items-center justify-center gap-2 cursor-not-allowed border border-zinc-750"
+                >
+                  <Lock className="w-3.5 h-3.5" />
+                  No Onchain Pool (Swap Disabled)
+                </button>
+              ) : !hasBuilderCode ? (
+                <button
+                  disabled
+                  className="w-full py-3.5 rounded-xl bg-amber-950/60 border border-amber-500/40 text-amber-300 font-semibold text-xs flex items-center justify-center gap-2 cursor-not-allowed"
+                >
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  Setup Required: Missing Builder Code
+                </button>
+              ) : !isConnected ? (
                 <button
                   onClick={openModal}
                   className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2"
@@ -631,11 +658,11 @@ export default function TradeTicketPage({
                   {txSubmitting ? (
                     <span className="flex items-center gap-2">
                       <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Submitting on Base...
+                      Submitting to SwapRouter02...
                     </span>
                   ) : (
                     <span>
-                      {side === "BUY" ? `Buy ${stock.symbol} Safely` : `Sell ${stock.symbol}`}
+                      {side === "BUY" ? `Buy ${stock.symbol} via SwapRouter02` : `Sell ${stock.symbol} via SwapRouter02`}
                     </span>
                   )}
                 </button>

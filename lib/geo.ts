@@ -24,13 +24,14 @@ export function useGeoCheck() {
         const data = await res.json();
         setGeo((prev) => ({
           ...prev,
-          isBlocked: data.isUS || prev.simulatedUs,
+          isBlocked: (data.isBlocked !== undefined ? data.isBlocked : data.isUS) || prev.simulatedUs,
           country: data.country || "UNKNOWN",
           loading: false,
         }));
       } catch (e) {
         setGeo((prev) => ({
           ...prev,
+          isBlocked: process.env.NODE_ENV === "production" || prev.simulatedUs,
           loading: false,
         }));
       }
