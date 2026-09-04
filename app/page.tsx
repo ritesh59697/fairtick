@@ -16,32 +16,38 @@ import {
   Layers,
 } from "lucide-react";
 
+// Client-side cache to make back-navigation and re-renders instantaneous
+let clientSideMarketsCache: TokenMarketSummary[] = [];
+
 export default function MarketListPage() {
-  const [markets, setMarkets] = useState<TokenMarketSummary[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [markets, setMarkets] = useState<TokenMarketSummary[]>(() => clientSideMarketsCache);
+  const [isInitialLoading, setIsInitialLoading] = useState(() => clientSideMarketsCache.length === 0);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [forceStale, setForceStale] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
 
-  async function fetchMarkets(staleToggle = forceStale) {
-    setLoading(true);
+  async function fetchMarkets(isManual = false, staleToggle = forceStale) {
+    if (isManual) setIsRefreshing(true);
     try {
       const res = await fetch(`/api/markets?forceStale=${staleToggle}`);
       const json = await res.json();
-      if (json.data) {
+      if (json.data && Array.isArray(json.data) && json.data.length > 0) {
+        clientSideMarketsCache = json.data;
         setMarkets(json.data);
         setLastRefreshed(new Date());
       }
     } catch (e) {
       console.error("Failed to load markets", e);
     } finally {
-      setLoading(false);
+      setIsInitialLoading(false);
+      if (isManual) setIsRefreshing(false);
     }
   }
 
   useEffect(() => {
-    fetchMarkets();
-    const interval = setInterval(() => fetchMarkets(), 20000);
+    fetchMarkets(false);
+    const interval = setInterval(() => fetchMarkets(false), 20000);
     return () => clearInterval(interval);
   }, [forceStale]);
 
@@ -95,11 +101,11 @@ export default function MarketListPage() {
             </div>
 
             <button
-              onClick={() => fetchMarkets()}
-              disabled={loading}
-              className="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-200 text-xs font-semibold transition flex items-center justify-center gap-2"
+              onClick={() => fetchMarkets(true)}
+              disabled={isRefreshing}
+              className="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-200 text-xs font-semibold transition flex items-center justify-center gap-2 disabled:opacity-60"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin text-blue-400" : ""}`} />
               Refresh
             </button>
           </div>
@@ -124,8 +130,37 @@ export default function MarketListPage() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {displayedMarkets.map((m) => {
+        {isInitialLoading && displayedMarkets.length === 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div
+                key={i}
+                className="rounded-xl bg-zinc-900/50 border border-zinc-800 p-5 space-y-4 animate-pulse"
+              >
+                <div className="flex justify-between items-start">
+                  <div className="space-y-2">
+                    <div className="w-20 h-5 bg-zinc-800 rounded" />
+                    <div className="w-32 h-3.5 bg-zinc-800/60 rounded" />
+                  </div>
+                  <div className="w-16 h-5 bg-zinc-800/80 rounded-full" />
+                </div>
+                <div className="p-3 bg-zinc-950/60 rounded-lg space-y-2 border border-zinc-850">
+                  <div className="flex justify-between">
+                    <div className="w-20 h-3 bg-zinc-800 rounded" />
+                    <div className="w-16 h-3 bg-zinc-800 rounded" />
+                  </div>
+                  <div className="flex justify-between">
+                    <div className="w-24 h-3 bg-zinc-800 rounded" />
+                    <div className="w-16 h-3 bg-zinc-800 rounded" />
+                  </div>
+                </div>
+                <div className="w-full h-9 bg-zinc-800/40 rounded-lg" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {displayedMarkets.map((m) => {
             const isDiscount = m.premiumBps < 0;
             const isRich = m.premiumBps > 0;
             const absBps = Math.abs(m.premiumBps);
@@ -232,6 +267,7 @@ export default function MarketListPage() {
             );
           })}
         </div>
+        )}
 
         {/* View all button */}
         {!showAll && secondaryMarkets.length > 0 && (

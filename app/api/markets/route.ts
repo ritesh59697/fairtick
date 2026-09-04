@@ -28,9 +28,40 @@ export interface TokenMarketSummary {
   dexSource: string;
 }
 
+// In-memory cache to prevent pounding public RPCs (7+ second delays)
+let memoryCache: {
+  data: TokenMarketSummary[];
+  timestamp: number;
+} | null = null;
+
+const CACHE_TTL_MS = 15_000; // 15 seconds
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const forceStale = searchParams.get("forceStale") === "true";
+
+  const now = Date.now();
+
+  // If we have warm cache and it's fresh, return instantly (< 1ms)
+  if (memoryCache && now - memoryCache.timestamp < CACHE_TTL_MS) {
+    let returnData = memoryCache.data;
+    if (forceStale) {
+      returnData = returnData.map((item) => ({
+        ...item,
+        feed: {
+          ...item.feed,
+          status: "STALE",
+          statusReason: "Simulated Demo Staleness (>30m threshold)",
+          isTradeSafe: false,
+        },
+      }));
+    }
+    return NextResponse.json({
+      data: returnData,
+      timestamp: memoryCache.timestamp,
+      cached: true,
+    });
+  }
 
   const results = await Promise.all(
     B20_TOKENS.map(async (stock) => {
@@ -147,8 +178,27 @@ export async function GET(request: Request) {
     })
   );
 
-  return NextResponse.json({
+  // Cache fresh data in server memory
+  memoryCache = {
     data: results,
+    timestamp: Date.now(),
+  };
+
+  let returnData = results;
+  if (forceStale) {
+    returnData = returnData.map((item) => ({
+      ...item,
+      feed: {
+        ...item.feed,
+        status: "STALE",
+        statusReason: "Simulated Demo Staleness (>30m threshold)",
+        isTradeSafe: false,
+      },
+    }));
+  }
+
+  return NextResponse.json({
+    data: returnData,
     timestamp: Date.now(),
   });
 }
