@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { StockLogo } from "@/components/StockLogo";
 
 export default function ReceiptPage({
   params,
@@ -73,13 +74,16 @@ Tx: https://basescan.org/tx/${hash}`;
         <div className="bg-zinc-950 rounded-xl p-5 border border-zinc-850 space-y-3.5 text-xs">
           <div className="flex items-center justify-between pb-3 border-b border-zinc-850">
             <span className="text-zinc-400">Asset Traded:</span>
-            <div className="text-right">
-              <span className="font-bold text-zinc-100">{symbol}</span>
-              <span className="text-[11px] text-zinc-500 block font-mono">
-                {stock?.address
-                  ? `${stock.address.slice(0, 10)}...${stock.address.slice(-8)}`
-                  : "Coinbase B20 Precompile"}
-              </span>
+            <div className="flex items-center gap-2.5">
+              <StockLogo symbol={symbol} size="sm" />
+              <div className="text-right">
+                <span className="font-bold text-zinc-100">{symbol}</span>
+                <span className="text-[11px] text-zinc-500 block font-mono">
+                  {stock?.address
+                    ? `${stock.address.slice(0, 10)}...${stock.address.slice(-8)}`
+                    : "Coinbase B20 Precompile"}
+                </span>
+              </div>
             </div>
           </div>
 

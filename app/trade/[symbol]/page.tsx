@@ -12,6 +12,7 @@ import { useGeoCheck } from "@/lib/geo";
 import { BUILDER_CODE_ENV } from "@/lib/attribution";
 import { buildSwapTransaction } from "@/lib/aerodrome";
 import { useAppWallet } from "@/lib/wallet-context";
+import { StockLogo } from "@/components/StockLogo";
 import {
   ShieldAlert,
   ShieldCheck,
@@ -325,17 +326,20 @@ export default function TradeTicketPage({
           <div className="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 space-y-5 shadow-xl">
             {/* Asset Identity */}
             <div className="flex items-start justify-between">
-              <div>
-                <div className="flex items-center gap-2.5">
-                  <h1 className="text-2xl font-black text-zinc-100">{stock.symbol}</h1>
-                  <span className="text-xs font-mono text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded">
-                    {stock.underlying}
-                  </span>
+              <div className="flex items-center gap-4">
+                <StockLogo symbol={stock.symbol} size="lg" />
+                <div>
+                  <div className="flex items-center gap-2.5">
+                    <h1 className="text-2xl font-black text-zinc-100">{stock.symbol}</h1>
+                    <span className="text-xs font-mono text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded">
+                      {stock.underlying}
+                    </span>
+                  </div>
+                  <p className="text-xs text-zinc-400 mt-1">{stock.name}</p>
+                  <p className="text-[10px] font-mono text-zinc-500 mt-0.5 select-all">
+                    Contract: {stock.address.slice(0, 10)}...{stock.address.slice(-8)}
+                  </p>
                 </div>
-                <p className="text-xs text-zinc-400 mt-1">{stock.name}</p>
-                <p className="text-[10px] font-mono text-zinc-500 mt-0.5 select-all">
-                  Contract: {stock.address}
-                </p>
               </div>
 
               {/* Live / Held / Stale status */}
