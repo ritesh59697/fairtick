@@ -502,12 +502,12 @@ export default function TradeTicketPage({
                   </div>
                 </div>
 
-                <label className="flex items-center gap-2 pt-1 cursor-pointer">
+                <label className="flex items-center gap-2.5 pt-1 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={afterHoursRiskAcknowledged}
                     onChange={(e) => setAfterHoursRiskAcknowledged(e.target.checked)}
-                    className="rounded border-zinc-700 text-blue-600 focus:ring-0 w-3.5 h-3.5"
+                    className="ui-checkbox"
                   />
                   <span className="text-amber-200 font-medium text-[11px]">
                     I understand after-hours DEX premium risk
