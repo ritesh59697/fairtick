@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { ExternalLink, ShieldCheck, CheckCircle2, Terminal, Code2, Layers, ArrowUpRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { BaseLogo } from "@/components/BaseLogo";
 
 export function Footer() {
   return (
@@ -22,9 +24,10 @@ export function Footer() {
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
               <span className="font-bold text-white text-lg tracking-tight">FairTick</span>
-              <span className="text-[10px] font-mono bg-blue-500/15 text-blue-300 border border-blue-400/30 px-2 py-0.5 rounded-full font-semibold">
+              <Badge variant="outline" className="font-mono text-[10px] gap-1.5 py-0.5">
+                <BaseLogo className="w-2.5 h-2.5" fill="#0052FF" />
                 Base B20 Execution Standard
-              </span>
+              </Badge>
             </div>
 
             <p className="text-xs text-slate-300/90 leading-relaxed max-w-sm font-normal">
@@ -32,15 +35,15 @@ export function Footer() {
             </p>
 
             {/* Operational Status Badges */}
-            <div className="flex flex-wrap items-center gap-3 pt-1 text-[11px] font-mono">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
+            <div className="flex flex-wrap items-center gap-2.5 pt-1">
+              <Badge variant="success" className="font-mono text-xs">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Base Mainnet Online</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300">
+                Base Mainnet Online
+              </Badge>
+              <Badge variant="secondary" className="font-mono text-xs text-zinc-300">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                <span>Chainlink Feeds Active</span>
-              </div>
+                Chainlink Feeds Active
+              </Badge>
             </div>
           </div>
 

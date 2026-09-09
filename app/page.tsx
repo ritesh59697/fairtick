@@ -34,6 +34,7 @@ import { BentoFeatures } from "@/components/landing/BentoFeatures";
 import { ComparisonMatrix } from "@/components/landing/ComparisonMatrix";
 import { TechnicalFAQ } from "@/components/landing/TechnicalFAQ";
 import { TokenMarketSummary } from "@/app/api/markets/route";
+import { Badge } from "@/components/ui/badge";
 
 // Client-side cache to make navigation instant
 let clientSideMarketsCache: TokenMarketSummary[] = [];
@@ -96,14 +97,19 @@ export default function LandingPage() {
               href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 text-xs text-zinc-300 hover:text-white transition backdrop-blur-md shadow-lg shadow-black/20"
+              className="inline-block group"
             >
-              <BaseLogo className="w-3.5 h-3.5" fill="#0052FF" />
-              <span>Base B20 Execution Standard</span>
-              <span className="text-white/20">|</span>
-              <span className="text-white font-medium inline-flex items-center gap-1">
-                Verified Onchain <ChevronRight className="w-3 h-3 text-zinc-400" />
-              </span>
+              <Badge
+                variant="outline"
+                className="px-3.5 py-1.5 text-xs text-zinc-300 group-hover:text-white group-hover:border-white/30 transition backdrop-blur-md shadow-lg shadow-black/20 gap-2 font-mono"
+              >
+                <BaseLogo className="w-3.5 h-3.5" fill="#0052FF" />
+                <span>Base B20 Execution Standard</span>
+                <span className="text-white/20">|</span>
+                <span className="text-white font-medium inline-flex items-center gap-1">
+                  Verified Onchain <ChevronRight className="w-3 h-3 text-zinc-400 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </Badge>
             </a>
           </div>
 
@@ -169,10 +175,10 @@ export default function LandingPage() {
           <section id="markets" className="space-y-6 scroll-mt-24">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div>
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-zinc-300 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
+                <Badge variant="outline" className="gap-1.5 px-3.5 py-1 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
                   <Terminal className="w-3.5 h-3.5 text-zinc-400" />
                   <span>Markets Terminal</span>
-                </div>
+                </Badge>
                 <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mt-2 drop-shadow-md">
                   Active Coinbase B20 Markets on Base
                 </h2>
@@ -261,9 +267,9 @@ export default function LandingPage() {
                               <span className="font-bold text-zinc-100 group-hover:text-white transition text-base">
                                 {m.stock.symbol}
                               </span>
-                              <span className="text-[10px] font-mono text-zinc-400 bg-zinc-800/80 px-1.5 py-0.5 rounded border border-white/5">
+                              <Badge variant="secondary" className="text-[10px] font-mono py-0.5 px-1.5 font-normal">
                                 {m.stock.underlying}
-                              </span>
+                              </Badge>
                             </div>
                             <p className="text-xs text-zinc-400 truncate max-w-[150px]">{m.stock.name}</p>
                           </div>
@@ -303,12 +309,9 @@ export default function LandingPage() {
                       </div>
 
                       <div className="flex items-center justify-between pt-1 text-[11px]">
-                        <span
-                          className={`px-2 py-0.5 rounded text-[10px] font-semibold font-mono inline-flex items-center gap-1 ${
-                            m.feed.status === "LIVE"
-                              ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                              : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                          }`}
+                        <Badge
+                          variant={m.feed.status === "LIVE" ? "success" : "warning"}
+                          className="text-[10px] font-mono py-0.5 px-2"
                         >
                           {m.feed.status === "LIVE" ? (
                             <>
@@ -321,7 +324,7 @@ export default function LandingPage() {
                               <span>FEED HELD</span>
                             </>
                           )}
-                        </span>
+                        </Badge>
 
                         <span className="text-zinc-300 font-semibold group-hover:text-white group-hover:translate-x-0.5 transition flex items-center gap-1">
                           <span>Trade Ticket</span>
@@ -338,10 +341,10 @@ export default function LandingPage() {
           {/* SECTION 2: 3-PILLAR EXECUTION GUARDRAIL (How FairTick Works) */}
           <section id="guardrails" className="space-y-8 scroll-mt-24">
             <div className="text-center max-w-2xl mx-auto space-y-2">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-zinc-300 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
+              <Badge variant="outline" className="gap-1.5 px-3.5 py-1 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
                 <Activity className="w-3.5 h-3.5 text-zinc-400" />
                 <span>Execution Standard</span>
-              </div>
+              </Badge>
               <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow-md">
                 Three Pillars of Trade Protection
               </h2>

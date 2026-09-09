@@ -22,6 +22,7 @@ import { buildSwapTransaction } from "@/lib/aerodrome";
 import { useAppWallet } from "@/lib/wallet-context";
 import { StockLogo } from "@/components/StockLogo";
 import { ToggleSwitch } from "@/components/ToggleSwitch";
+import { Badge } from "@/components/ui/badge";
 import {
   ShieldAlert,
   ShieldCheck,
@@ -389,20 +390,20 @@ export default function TradeTicketPage({
               {/* Live / Held / Stale status */}
               <div>
                 {market?.feed.status === "LIVE" ? (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  <Badge variant="success" className="gap-1.5 px-2.5 py-1 text-xs font-mono font-semibold">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                     LIVE FEED
-                  </span>
+                  </Badge>
                 ) : market?.feed.status === "HELD" ? (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                  <Badge variant="warning" className="gap-1.5 px-2.5 py-1 text-xs font-mono font-semibold">
                     <Clock className="w-3 h-3" />
                     FEED HELD (AFTER-HOURS)
-                  </span>
+                  </Badge>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30">
+                  <Badge variant="destructive" className="gap-1.5 px-2.5 py-1 text-xs font-mono font-semibold">
                     <AlertTriangle className="w-3 h-3" />
                     FEED STALE / FROZEN
-                  </span>
+                  </Badge>
                 )}
               </div>
             </div>

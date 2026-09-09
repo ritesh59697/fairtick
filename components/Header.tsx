@@ -22,6 +22,7 @@ import { usePathname } from "next/navigation";
 import { BUILDER_CODE_ENV } from "@/lib/attribution";
 import { useAppWallet } from "@/lib/wallet-context";
 import { BaseLogo } from "@/components/BaseLogo";
+import { Badge } from "@/components/ui/badge";
 
 export function Header() {
   const pathname = usePathname();
@@ -85,10 +86,10 @@ export function Header() {
             <div>
               <div className="font-bold text-zinc-100 leading-none text-base tracking-tight flex items-center gap-2">
                 FairTick
-                <span className="text-[10px] font-semibold uppercase bg-white/10 text-zinc-300 border border-white/15 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
+                <Badge variant="outline" className="text-[10px] font-semibold uppercase gap-1 py-0.5 px-1.5 font-mono">
                   <BaseLogo className="w-2.5 h-2.5" fill="#0052FF" />
                   <span>Base B20</span>
-                </span>
+                </Badge>
               </div>
               <p className="text-[11px] text-zinc-400 leading-tight mt-0.5">
                 Don’t overpay for onchain Apple
@@ -141,20 +142,20 @@ export function Header() {
               Switch to Base
             </button>
           ) : (
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-zinc-900/90 border border-white/10 rounded-full text-xs text-zinc-300">
+            <Badge variant="outline" className="hidden sm:inline-flex items-center gap-1.5 py-1 px-3 text-xs text-zinc-300 font-normal">
               <BaseLogo className="w-3 h-3" fill="#0052FF" />
               <span>Base Mainnet</span>
-            </div>
+            </Badge>
           )}
 
           {isConnected ? (
             <div className="flex items-center gap-2">
               {isDemo ? (
-                <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-xs text-emerald-300">
+                <Badge variant="success" className="items-center gap-1.5 py-1 px-2.5 text-xs">
                   <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
                   <span className="font-semibold">Demo Mode</span>
-                  <span className="font-mono text-[10px] text-emerald-200 hidden sm:inline">($500 USDC)</span>
-                </div>
+                  <span className="font-mono text-[10px] text-emerald-200/90 hidden sm:inline">($500 USDC)</span>
+                </Badge>
               ) : (
                 <div className="px-3.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-full text-xs font-mono text-zinc-300">
                   {address?.slice(0, 6)}...{address?.slice(-4)}

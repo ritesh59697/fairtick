@@ -9,15 +9,16 @@ import {
   Binary,
   ShieldCheck,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export function BentoFeatures() {
   return (
     <section className="space-y-6">
       <div className="text-center max-w-2xl mx-auto space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-zinc-300 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
+        <Badge variant="outline" className="gap-1.5 px-3.5 py-1 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
           <Layers className="w-3.5 h-3.5 text-zinc-400" />
           <span>Core Architecture</span>
-        </div>
+        </Badge>
         <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow-md">
           Engineered for Real-World Tokenized Equities
         </h2>

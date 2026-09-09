@@ -18,6 +18,7 @@ import {
   ArrowLeftRight,
   Binary,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export function ProofStage() {
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -54,13 +55,11 @@ export function ProofStage() {
     <div className="rounded-2xl hairline-card hairline-frame p-6 md:p-8 space-y-6 relative overflow-hidden">
       {/* Header bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-zinc-800/80 pb-5">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-semibold">
-              Interactive Execution Simulator
-            </span>
-          </div>
+        <div className="space-y-1.5">
+          <Badge variant="success" className="font-mono text-[11px] uppercase tracking-wider py-0.5 px-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Interactive Execution Simulator
+          </Badge>
           <h3 className="text-xl md:text-2xl font-bold text-zinc-100 tracking-tight mt-1">
             How FairTick Protects Every Trade
           </h3>
@@ -70,9 +69,9 @@ export function ProofStage() {
         </div>
 
         <div className="hidden sm:flex items-center gap-2 self-start md:self-auto">
-          <span className="text-[11px] font-mono text-zinc-300 bg-zinc-900 border border-white/10 px-3 py-1 rounded-lg">
+          <Badge variant="outline" className="font-mono text-[11px] py-1 px-3">
             Base Mainnet (8453)
-          </span>
+          </Badge>
         </div>
       </div>
 
@@ -92,14 +91,13 @@ export function ProofStage() {
               }`}
             >
               <div className="flex items-center justify-between mb-2">
-                <span
-                  className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded inline-flex items-center gap-1.5 ${
-                    isActive ? "bg-white/20 text-white" : "bg-zinc-800 text-zinc-400"
-                  }`}
+                <Badge
+                  variant={isActive ? "default" : "secondary"}
+                  className="text-[10px] font-mono font-bold px-1.5 py-0.5 gap-1.5"
                 >
                   <Icon className="w-3 h-3 text-zinc-300" />
                   <span>Step {s.num}</span>
-                </span>
+                </Badge>
                 {isActive && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />}
               </div>
               <div className={`text-xs font-bold leading-snug ${isActive ? "text-zinc-100" : "text-zinc-300"}`}>
@@ -117,9 +115,9 @@ export function ProofStage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center min-h-[300px]">
         {/* Left: Explanation & Technical Rationale */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-zinc-300 text-xs font-mono font-medium">
-            <span>Step {steps[activeStep].num} of 04</span>
-          </div>
+          <Badge variant="outline" className="font-mono text-xs py-1 px-2.5">
+            Step {steps[activeStep].num} of 04
+          </Badge>
 
           <h4 className="text-lg font-bold text-zinc-100">
             {activeStep === 0 && "1. Independent Oracle Price Discovery"}

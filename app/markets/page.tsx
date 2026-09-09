@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { StockLogo } from "@/components/StockLogo";
 import { ToggleSwitch } from "@/components/ToggleSwitch";
+import { Badge } from "@/components/ui/badge";
 
 // Client-side cache to make back-navigation and re-renders instantaneous
 let clientSideMarketsCache: TokenMarketSummary[] = [];
@@ -66,10 +67,10 @@ export default function MarketListPage() {
 
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-semibold">
-              <Layers className="w-3.5 h-3.5" />
+            <Badge variant="outline" className="gap-2 px-3 py-1 text-xs font-semibold">
+              <Layers className="w-3.5 h-3.5 text-zinc-400" />
               Fairness Engine for Coinbase Tokenized Stocks on Base
-            </div>
+            </Badge>
             <h1 className="text-3xl md:text-4xl font-black text-zinc-100 tracking-tight">
               Don’t overpay for onchain Apple.
             </h1>
@@ -204,26 +205,26 @@ export default function MarketListPage() {
                       </div>
                     </div>
 
-                    {/* Status Pill */}
+                    {/* Status Badge */}
                     <div className="shrink-0">
                       {m.feed.status === "LIVE" ? (
-                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                        <Badge variant="success" className="text-[10px] font-mono py-0.5 px-2">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                           LIVE FEED
-                        </span>
+                        </Badge>
                       ) : m.feed.status === "HELD" ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                        <Badge variant="warning" className="text-[10px] font-mono py-0.5 px-2">
                           FEED HELD
-                        </span>
+                        </Badge>
                       ) : m.feed.status === "STALE" ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-500/15 text-red-400 border border-red-500/30">
+                        <Badge variant="destructive" className="text-[10px] font-mono py-0.5 px-2">
                           <AlertOctagon className="w-2.5 h-2.5" />
                           STALE
-                        </span>
+                        </Badge>
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-zinc-800 text-zinc-400 border border-zinc-700">
+                        <Badge variant="secondary" className="text-[10px] font-mono py-0.5 px-2">
                           UNAVAILABLE
-                        </span>
+                        </Badge>
                       )}
                     </div>
                   </div>

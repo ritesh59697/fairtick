@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export function TechnicalFAQ() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
@@ -32,10 +33,10 @@ export function TechnicalFAQ() {
   return (
     <section className="space-y-6 max-w-3xl mx-auto">
       <div className="text-center space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-zinc-300 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
+        <Badge variant="outline" className="gap-1.5 px-3.5 py-1 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
           <HelpCircle className="w-3.5 h-3.5 text-zinc-400" />
           <span>Technical FAQ</span>
-        </div>
+        </Badge>
         <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow-md">
           Frequently Answered Questions
         </h2>
