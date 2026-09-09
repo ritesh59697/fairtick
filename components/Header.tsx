@@ -90,9 +90,12 @@ export function Header() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-4 text-xs font-medium text-zinc-400">
+          <nav className="hidden md:flex items-center gap-5 text-xs font-medium text-zinc-400">
             <Link href="/" className="hover:text-zinc-200 transition">
-              Markets
+              Overview
+            </Link>
+            <Link href="/markets" className="text-blue-400 hover:text-blue-300 font-semibold transition">
+              Markets Terminal
             </Link>
             <a
               href="https://docs.base.org/specifications/b20/tokenized-stocks-on-base"

@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { TokenMarketSummary } from "@/app/api/markets/route";
 import {
   TrendingUp,
   TrendingDown,
@@ -14,18 +13,29 @@ import {
   RefreshCw,
   Sliders,
   Layers,
+  Sparkles,
+  ArrowRight,
+  Lock,
+  ArrowUpRight,
+  Flame,
+  CheckCircle2,
+  Terminal,
 } from "lucide-react";
 import { StockLogo } from "@/components/StockLogo";
 import { ToggleSwitch } from "@/components/ToggleSwitch";
+import { ProofStage } from "@/components/landing/ProofStage";
+import { BentoFeatures } from "@/components/landing/BentoFeatures";
+import { ComparisonMatrix } from "@/components/landing/ComparisonMatrix";
+import { TechnicalFAQ } from "@/components/landing/TechnicalFAQ";
+import { TokenMarketSummary } from "@/app/api/markets/route";
 
-// Client-side cache to make back-navigation and re-renders instantaneous
+// Client-side cache to make navigation instant
 let clientSideMarketsCache: TokenMarketSummary[] = [];
 
-export default function MarketListPage() {
+export default function LandingPage() {
   const [markets, setMarkets] = useState<TokenMarketSummary[]>(() => clientSideMarketsCache);
   const [isInitialLoading, setIsInitialLoading] = useState(() => clientSideMarketsCache.length === 0);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [showAll, setShowAll] = useState(false);
   const [forceStale, setForceStale] = useState(false);
   const [forceOpen, setForceOpen] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
@@ -54,37 +64,125 @@ export default function MarketListPage() {
     return () => clearInterval(interval);
   }, [forceStale, forceOpen]);
 
-  const priorityMarkets = markets.filter((m) => m.stock.isPriority);
-  const secondaryMarkets = markets.filter((m) => !m.stock.isPriority);
-  const displayedMarkets = showAll ? markets : priorityMarkets;
-
   return (
-    <div className="space-y-8">
-      {/* Hero Banner with value prop */}
-      <div className="relative rounded-2xl bg-gradient-to-b from-blue-950/40 via-zinc-900/60 to-zinc-950 border border-zinc-800 p-6 md:p-8 overflow-hidden shadow-2xl">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="space-y-16 md:space-y-24 py-6 md:py-10">
+      {/* 1. HERO SECTION (Bursar Dusk Gradient + Clarasight Hero Badge) */}
+      <section className="relative rounded-3xl bg-dusk-mesh hairline-frame p-8 md:p-14 overflow-hidden space-y-8">
+        {/* Subtle radial highlights */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-semibold">
-              <Layers className="w-3.5 h-3.5" />
-              Fairness Engine for Coinbase Tokenized Stocks on Base
+        <div className="max-w-3xl space-y-6 relative z-10">
+          {/* Eyebrow with live pulse dot */}
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-750 text-xs font-mono font-medium text-zinc-300 shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="text-zinc-400">BASE MAINNET B20</span>
+            <span className="text-zinc-600">|</span>
+            <span className="text-blue-400 font-semibold">CHAINLINK EQUITIES GUARDRAIL</span>
+          </div>
+
+          {/* Display Headline */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.08]">
+            Don’t overpay for{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400">
+              onchain Apple.
+            </span>
+          </h1>
+
+          {/* Lede paragraph */}
+          <p className="text-sm md:text-base text-zinc-300 leading-relaxed max-w-2xl font-normal">
+            Coinbase B20 tokenized stocks trade 24/7 on Base, but equity exchanges sleep on nights and weekends.
+            FairTick automatically verifies Chainlink feed freshness, halts swaps when off-market DEX markups exceed{" "}
+            <strong className="text-white font-semibold">50 bps</strong>, computes stock split multipliers, and routes execution through Uniswap V3 with native Base ERC-8021 builder attribution.
+          </p>
+
+          {/* Action CTAs with Double-Label Slide Effect */}
+          <div className="flex flex-wrap items-center gap-4 pt-2">
+            <Link
+              href="#markets"
+              className="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-xl shadow-blue-600/25 transition btn-slide"
+            >
+              <div className="btn-inner">
+                <span>Launch Live Terminal</span>
+                <span>Trade B20 Equities</span>
+              </div>
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+
+            <Link
+              href="/markets"
+              className="px-6 py-3.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-semibold text-sm transition inline-flex items-center gap-2"
+            >
+              <Terminal className="w-4 h-4 text-blue-400" />
+              <span>Full Market Book</span>
+            </Link>
+
+            <a
+              href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-3.5 rounded-xl text-zinc-400 hover:text-zinc-200 text-xs font-mono font-medium transition inline-flex items-center gap-1.5"
+            >
+              <span>Verified Onchain Tx (Sepolia)</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
+
+        {/* Protocol Trust Stream */}
+        <div className="pt-6 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono text-zinc-400 relative z-10">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-blue-500" />
+            <span>Coinbase B20 Standard</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-purple-500" />
+            <span>Chainlink Equity Feeds</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span>SwapRouter02 Routing</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-sky-500" />
+            <span>Base ERC-8021 Suffix</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. THE PROOF STAGE SIMULATOR (Bursar Order Lifecycle Signature) */}
+      <ProofStage />
+
+      {/* 3. CLARASIGHT-STYLE BENTO GRID (Deep Feature Breakdown) */}
+      <BentoFeatures />
+
+      {/* 4. COMPARISON MATRIX (Blind DEX vs FairTick) */}
+      <ComparisonMatrix />
+
+      {/* 5. LIVE MARKET OVERVIEW (Interactive Ticker Terminal) */}
+      <section id="markets" className="space-y-6 pt-4 scroll-mt-24">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-medium">
+              <Terminal className="w-3.5 h-3.5" />
+              <span>Live Terminal</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-black text-zinc-100 tracking-tight">
-              Don’t overpay for onchain Apple.
-            </h1>
-            <p className="text-sm text-zinc-400 leading-relaxed">
-              Tokenized equities trade 24/7 on Base DEXs, but official equity feeds freeze after-hours. FairTick guards your execution against stale prints, paused corporate feeds, and rich DEX markups.
+            <h2 className="text-2xl md:text-3xl font-bold text-zinc-100 tracking-tight mt-1">
+              Active Coinbase B20 Markets on Base
+            </h2>
+            <p className="text-xs text-zinc-400 mt-1">
+              Select any tokenized equity below to launch the protected execution ticket.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
-            {/* Market Hours Status & Simulation Toggle */}
-            <div className="px-3.5 py-2 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-2">
-                <Clock className="w-3.5 h-3.5 text-zinc-400" />
-                <span className="text-zinc-300 font-medium">Simulate Market Open:</span>
-              </div>
+          {/* Toggles using Custom Uiverse component */}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="px-3.5 py-2 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center gap-2.5 text-xs">
+              <Clock className="w-3.5 h-3.5 text-zinc-400" />
+              <span className="text-zinc-300 font-medium">Simulate Market Open:</span>
               <ToggleSwitch
                 checked={forceOpen}
                 onChange={(next) => {
@@ -92,17 +190,13 @@ export default function MarketListPage() {
                   fetchMarkets(false, forceStale, next);
                 }}
                 size="sm"
-                title="Toggle between real-world after-hours (HELD) and simulated regular trading hours (LIVE)"
                 activeColor="#10b981"
               />
             </div>
 
-            {/* Demo Force Stale Toggle for Loom Presentation */}
-            <div className="px-3.5 py-2 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-2">
-                <Sliders className="w-3.5 h-3.5 text-zinc-400" />
-                <span className="text-zinc-300 font-medium">Demo Stale Feed:</span>
-              </div>
+            <div className="px-3.5 py-2 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center gap-2.5 text-xs">
+              <Sliders className="w-3.5 h-3.5 text-zinc-400" />
+              <span className="text-zinc-300 font-medium">Demo Stale Feed:</span>
               <ToggleSwitch
                 checked={forceStale}
                 onChange={(next) => {
@@ -110,7 +204,6 @@ export default function MarketListPage() {
                   fetchMarkets(false, next, forceOpen);
                 }}
                 size="sm"
-                title="Simulate stale oracle feed to test safety lockout"
                 activeColor="#d97706"
               />
             </div>
@@ -118,197 +211,159 @@ export default function MarketListPage() {
             <button
               onClick={() => fetchMarkets(true)}
               disabled={isRefreshing}
-              className="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-200 text-xs font-semibold transition flex items-center justify-center gap-2 disabled:opacity-60"
+              className="px-3.5 py-2 rounded-xl bg-zinc-850 hover:bg-zinc-800 border border-zinc-750 text-zinc-300 text-xs font-semibold transition flex items-center gap-1.5"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin text-blue-400" : ""}`} />
-              Refresh
+              <span>Refresh</span>
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Market Cards Grid */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <h2 className="text-lg font-bold text-zinc-100">Live Equities on Base</h2>
-            <span className="text-xs text-zinc-400 font-mono bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">
-              {displayedMarkets.length} assets
-            </span>
-          </div>
-
-          {lastRefreshed && (
-            <div className="text-[11px] text-zinc-500 font-mono flex items-center gap-1.5">
-              <Clock className="w-3 h-3" />
-              Synced {lastRefreshed.toLocaleTimeString()}
-            </div>
-          )}
-        </div>
-
-        {isInitialLoading && displayedMarkets.length === 0 ? (
+        {/* Ticker Cards Grid */}
+        {isInitialLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div
-                key={i}
-                className="rounded-xl bg-zinc-900/50 border border-zinc-800 p-5 space-y-4 animate-pulse"
-              >
-                <div className="flex justify-between items-start">
-                  <div className="space-y-2">
-                    <div className="w-20 h-5 bg-zinc-800 rounded" />
-                    <div className="w-32 h-3.5 bg-zinc-800/60 rounded" />
-                  </div>
-                  <div className="w-16 h-5 bg-zinc-800/80 rounded-full" />
-                </div>
-                <div className="p-3 bg-zinc-950/60 rounded-lg space-y-2 border border-zinc-850">
-                  <div className="flex justify-between">
-                    <div className="w-20 h-3 bg-zinc-800 rounded" />
-                    <div className="w-16 h-3 bg-zinc-800 rounded" />
-                  </div>
-                  <div className="flex justify-between">
-                    <div className="w-24 h-3 bg-zinc-800 rounded" />
-                    <div className="w-16 h-3 bg-zinc-800 rounded" />
-                  </div>
-                </div>
-                <div className="w-full h-9 bg-zinc-800/40 rounded-lg" />
-              </div>
+              <div key={i} className="h-44 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 animate-pulse" />
             ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {displayedMarkets.map((m) => {
-            const isDiscount = m.premiumBps < 0;
-            const isRich = m.premiumBps > 0;
-            const absBps = Math.abs(m.premiumBps);
+            {markets.map((m) => {
+              const absPremium = Math.abs(m.premiumBps);
+              const isRich = m.premiumBps > 0;
+              const isOverCap = absPremium > 50;
 
-            return (
-              <div
-                key={m.stock.symbol}
-                className="group relative rounded-xl bg-zinc-900/70 border border-zinc-800 hover:border-zinc-700 p-5 transition-all flex flex-col justify-between hover:shadow-lg hover:shadow-blue-500/5"
-              >
-                <div>
-                  <div className="flex items-start justify-between gap-2 mb-3">
+              return (
+                <Link
+                  key={m.stock.symbol}
+                  href={`/trade/${m.stock.symbol}`}
+                  className="rounded-2xl hairline-card hairline-frame p-5 space-y-4 hover:border-zinc-700 transition group block relative"
+                >
+                  <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <StockLogo symbol={m.stock.symbol} size="md" />
+                      <StockLogo
+                        symbol={m.stock.symbol}
+                        size="md"
+                      />
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-base font-bold text-zinc-100 group-hover:text-blue-400 transition">
+                          <span className="font-bold text-zinc-100 group-hover:text-blue-400 transition text-base">
                             {m.stock.symbol}
                           </span>
-                          <span className="text-xs text-zinc-500 font-mono">
+                          <span className="text-[10px] font-mono text-zinc-400 bg-zinc-850 px-1.5 py-0.5 rounded">
                             {m.stock.underlying}
                           </span>
                         </div>
-                        <div className="text-xs text-zinc-400 truncate max-w-[160px]">
-                          {m.stock.name}
-                        </div>
+                        <p className="text-xs text-zinc-400 truncate max-w-[150px]">{m.stock.name}</p>
                       </div>
                     </div>
 
-                    {/* Status Pill */}
-                    <div className="shrink-0">
-                      {m.feed.status === "LIVE" ? (
-                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          LIVE FEED
-                        </span>
-                      ) : m.feed.status === "HELD" ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">
-                          FEED HELD
-                        </span>
-                      ) : m.feed.status === "STALE" ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-500/15 text-red-400 border border-red-500/30">
-                          <AlertOctagon className="w-2.5 h-2.5" />
-                          STALE
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-zinc-800 text-zinc-400 border border-zinc-700">
-                          UNAVAILABLE
-                        </span>
-                      )}
+                    <div className="text-right">
+                      <div className="text-sm font-bold font-mono text-zinc-100">
+                        {m.dexPriceUsd > 0 ? `$${m.dexPriceUsd.toFixed(2)}` : "—"}
+                      </div>
+                      <div className="text-[10px] text-zinc-500 font-mono">DEX Mid</div>
                     </div>
                   </div>
 
-                  {/* Price & Premium Matrix */}
-                  <div className="bg-zinc-950/80 rounded-lg p-3 border border-zinc-850 space-y-2 mb-4">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-zinc-400">Onchain DEX Mid:</span>
-                      <span className="font-mono font-bold text-zinc-100">
-                        {m.dexPriceUsd > 0 ? (
-                          `$${m.dexPriceUsd.toFixed(2)}`
-                        ) : (
-                          <span className="text-zinc-500 text-[11px] font-normal">No Active Pool</span>
-                        )}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-zinc-400">Chainlink Total-Return:</span>
-                      <span className="font-mono text-zinc-300">
+                  <div className="p-2.5 rounded-xl bg-zinc-950/70 border border-zinc-850 space-y-1.5">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="text-zinc-400">Chainlink Print</span>
+                      <span className="text-zinc-200 font-mono font-medium">
                         {m.fairPriceUsd > 0 ? `$${m.fairPriceUsd.toFixed(2)}` : "—"}
                       </span>
                     </div>
-
-                    <div className="pt-1.5 border-t border-zinc-850 flex items-center justify-between text-xs">
-                      <span className="text-zinc-400">DEX Premium:</span>
-                      <div className="flex items-center gap-1 font-mono font-bold">
-                        {m.dexPriceUsd <= 0 ? (
-                          <span className="text-zinc-500 font-normal text-xs">—</span>
-                        ) : isDiscount ? (
-                          <span className="text-emerald-400 flex items-center gap-0.5">
-                            <TrendingDown className="w-3 h-3" />
-                            -{absBps} bps (Cheap)
-                          </span>
-                        ) : isRich ? (
-                          <span className="text-rose-400 flex items-center gap-0.5">
-                            <TrendingUp className="w-3 h-3" />
-                            +{absBps} bps (Rich)
-                          </span>
-                        ) : (
-                          <span className="text-zinc-400">0 bps (At Par)</span>
-                        )}
-                      </div>
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="text-zinc-400">DEX vs Fair Value</span>
+                      <span
+                        className={`font-mono font-bold ${
+                          m.dexPriceUsd <= 0
+                            ? "text-zinc-500"
+                            : isOverCap
+                            ? "text-rose-400"
+                            : isRich
+                            ? "text-amber-400"
+                            : "text-emerald-400"
+                        }`}
+                      >
+                        {m.dexPriceUsd <= 0 ? "No Pool" : `${m.premiumBps > 0 ? `+${m.premiumBps}` : m.premiumBps} bps`}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Multiplier Info */}
-                  <div className="text-[11px] text-zinc-500 flex items-center justify-between px-1 mb-4">
-                    <span>B20 Multiplier:</span>
-                    <span className="font-mono text-zinc-400">
-                      {m.multiplierNumber.toFixed(4)}x
+                  <div className="flex items-center justify-between pt-1 text-[11px]">
+                    <span
+                      className={`px-2 py-0.5 rounded text-[10px] font-semibold font-mono ${
+                        m.feed.status === "LIVE"
+                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                          : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                      }`}
+                    >
+                      {m.feed.status === "LIVE" ? "LIVE FEED" : "FEED HELD"}
+                    </span>
+
+                    <span className="text-blue-400 font-semibold group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+                      <span>Trade Ticket</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
-                </div>
-
-                {/* Ticket Link CTA */}
-                <Link
-                  href={`/trade/${m.stock.symbol}`}
-                  className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 border shadow ${
-                    m.stock.poolAddress && m.dexPriceUsd > 0
-                      ? "bg-zinc-800 hover:bg-blue-600 text-zinc-200 hover:text-white group-hover:border-blue-500 border-transparent"
-                      : "bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-800"
-                  }`}
-                >
-                  {m.stock.poolAddress && m.dexPriceUsd > 0 ? "Open Trade Ticket" : "View Details (No Pool)"}
-                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
                 </Link>
-              </div>
-            );
-          })}
-        </div>
-        )}
-
-        {/* View all button */}
-        {!showAll && secondaryMarkets.length > 0 && (
-          <div className="text-center pt-2">
-            <button
-              onClick={() => setShowAll(true)}
-              className="px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 text-xs font-semibold transition"
-            >
-              Show all {markets.length} tokenized assets
-            </button>
+              );
+            })}
           </div>
         )}
-      </div>
+      </section>
+
+      {/* 6. TECHNICAL FAQ */}
+      <TechnicalFAQ />
+
+      {/* 7. INSTITUTIONAL FOOTER */}
+      <footer className="pt-10 border-t border-zinc-800/80 space-y-6 text-xs text-zinc-500">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-zinc-200">FairTick</span>
+              <span className="text-[10px] font-mono bg-zinc-850 px-1.5 py-0.5 rounded text-zinc-400">
+                Base B20 Execution Standard
+              </span>
+            </div>
+            <p className="text-[11px] text-zinc-400">
+              Fair price discovery and oracle-protected execution for Coinbase Tokenized Stocks on Base.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4 font-mono text-[11px]">
+            <a
+              href="https://docs.base.org/specifications/b20/tokenized-stocks-on-base"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-zinc-300 transition underline"
+            >
+              Base B20 Specification
+            </a>
+            <a
+              href="https://github.com/ritesh59697/fairtick"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-zinc-300 transition underline"
+            >
+              GitHub Source
+            </a>
+            <a
+              href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-zinc-300 transition underline"
+            >
+              Verified Tx Receipt
+            </a>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-xl bg-zinc-950/60 border border-zinc-850 text-[11px] leading-relaxed text-zinc-500">
+          FairTick is an open-source execution routing interface for existing Coinbase Tokenized Stocks (B20) on Base. It is not a broker-dealer, not an offer of securities, and not available to US persons. Tokenized stocks are issued by Coinbase and only available to eligible users in permitted non-US jurisdictions.
+        </div>
+      </footer>
     </div>
   );
 }

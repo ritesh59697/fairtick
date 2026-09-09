@@ -185,3 +185,56 @@ body {
   transform: translateX(19px);
 }
 
+/* Bursar + Clarasight Hybrid: Dusk Gradient Mesh & Atmospheric Lighting */
+.bg-dusk-mesh {
+  background: 
+    radial-gradient(ellipse 60% 45% at 80% 10%, rgba(192, 132, 252, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 20% 25%, rgba(59, 130, 246, 0.16) 0%, transparent 70%),
+    radial-gradient(circle 800px at 50% -100px, rgba(99, 102, 241, 0.2) 0%, transparent 80%),
+    #09090b;
+}
+
+.hairline-frame {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+}
+
+.hairline-card {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(18, 18, 22, 0.75);
+  backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.hairline-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Double-label slide button (Bursar signature) */
+.btn-slide {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-slide .btn-inner {
+  display: flex;
+  flex-direction: column;
+  height: 1.25em;
+  overflow: hidden;
+}
+
+.btn-slide .btn-inner span {
+  display: block;
+  transform: translateY(0);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-slide:hover .btn-inner span {
+  transform: translateY(-100%);
+}
+
