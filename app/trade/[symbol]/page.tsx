@@ -12,7 +12,7 @@ import {
   useChainId,
   useSwitchChain,
 } from "wagmi";
-import { parseUnits, formatUnits, Address, erc20Abi, maxUint256 } from "viem";
+import { parseUnits, formatUnits, Address, erc20Abi } from "viem";
 import { getTokenBySymbol, USDC_ADDRESS, USDC_DECIMALS, UNISWAP_V3_ROUTER } from "@/lib/tokens";
 import { B20_TOKEN_ABI, rawToScaledShares } from "@/lib/b20";
 import { TokenMarketSummary } from "@/app/api/markets/route";
@@ -249,14 +249,14 @@ export default function TradeTicketPage({
 
       const currentAllowance = allowanceData || 0n;
 
-      // 1. Check & handle ERC20 approve if needed - strictly for UNISWAP_V3_ROUTER
+      // 1. Check & handle ERC20 approve if needed - strictly for UNISWAP_V3_ROUTER (exact amount only)
       if (currentAllowance < targetAmountUnits) {
         const approveToken = side === "BUY" ? USDC_ADDRESS : currentStock.address;
         await writeContractAsync({
           address: approveToken,
           abi: erc20Abi,
           functionName: "approve",
-          args: [UNISWAP_V3_ROUTER, maxUint256],
+          args: [UNISWAP_V3_ROUTER, targetAmountUnits],
           chainId: 8453,
         });
       }
