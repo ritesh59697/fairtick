@@ -24,8 +24,8 @@ export function Header() {
 
   return (
     <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
-      {/* Top US compliance / warning banner */}
-      {isBlocked ? (
+      {/* Only show warning banner if user is actually blocked */}
+      {isBlocked && (
         <div className="bg-red-500/15 border-b border-red-500/30 px-4 py-2 text-xs text-red-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-4 h-4 text-red-400 shrink-0" />
@@ -35,22 +35,9 @@ export function Header() {
           </div>
           <button
             onClick={toggleSimulateUs}
-            className="text-[11px] underline text-red-300 hover:text-red-100 ml-4 shrink-0"
+            className="text-[11px] underline text-red-300 hover:text-red-100 ml-4 shrink-0 cursor-pointer"
           >
             {simulatedUs ? "Reset Geo" : "Simulate Non-US"}
-          </button>
-        </div>
-      ) : (
-        <div className="bg-emerald-950/40 border-b border-emerald-500/20 px-4 py-1 text-[11px] text-emerald-300 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            <span>Eligible jurisdiction confirmed ({country}). Helper for onchain swaps of existing B20 tokens.</span>
-          </div>
-          <button
-            onClick={toggleSimulateUs}
-            className="text-[10px] text-zinc-400 hover:text-zinc-200 underline shrink-0"
-          >
-            Simulate US IP (Demo)
           </button>
         </div>
       )}
