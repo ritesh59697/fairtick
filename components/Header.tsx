@@ -3,7 +3,20 @@
 import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { BASE_CHAIN_ID } from "@/lib/tokens";
 import { useGeoCheck } from "@/lib/geo";
-import { ShieldAlert, ShieldCheck, ExternalLink, Globe, AlertTriangle, Wallet, Sparkles } from "lucide-react";
+import {
+  ShieldAlert,
+  ShieldCheck,
+  ExternalLink,
+  Globe,
+  AlertTriangle,
+  Wallet,
+  Sparkles,
+  TrendingUp,
+  CircleDot,
+  LineChart,
+  FileText,
+  LayoutDashboard,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BUILDER_CODE_ENV } from "@/lib/attribution";
@@ -65,13 +78,13 @@ export function Header() {
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-black text-white text-sm shadow-lg shadow-blue-500/20">
-              FT
+            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+              <TrendingUp className="w-4 h-4" />
             </div>
             <div>
               <div className="font-bold text-zinc-100 leading-none text-base tracking-tight flex items-center gap-2">
                 FairTick
-                <span className="text-[10px] font-semibold uppercase bg-blue-500/20 text-blue-400 border border-blue-500/30 px-1.5 py-0.5 rounded">
+                <span className="text-[10px] font-semibold uppercase bg-white/10 text-zinc-300 border border-white/15 px-1.5 py-0.5 rounded">
                   Base B20
                 </span>
               </div>
@@ -81,33 +94,36 @@ export function Header() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-2 text-xs font-medium">
+          <nav className="hidden md:flex items-center gap-1.5 text-xs font-medium">
             <Link
               href="/"
-              className={`px-3.5 py-1.5 rounded-full transition ${
+              className={`px-3.5 py-1.5 rounded-full transition inline-flex items-center gap-1.5 ${
                 isOverviewActive
-                  ? "bg-zinc-850 text-zinc-100 font-semibold border border-zinc-700 shadow-sm"
-                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60"
+                  ? "bg-white/10 text-white font-semibold border border-white/15 shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05]"
               }`}
             >
-              Overview
+              <LayoutDashboard className="w-3.5 h-3.5 text-zinc-400" />
+              <span>Overview</span>
             </Link>
             <Link
               href="/markets"
-              className={`px-3.5 py-1.5 rounded-full transition flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full transition inline-flex items-center gap-1.5 ${
                 isMarketsActive
-                  ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-400/40 shadow-sm"
-                  : "text-zinc-400 hover:text-blue-300 hover:bg-zinc-900/60"
+                  ? "bg-white/10 text-white font-semibold border border-white/15 shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05]"
               }`}
             >
+              <LineChart className="w-3.5 h-3.5 text-zinc-400" />
               <span>Markets Terminal</span>
             </Link>
             <a
               href="https://docs.base.org/specifications/b20/tokenized-stocks-on-base"
               target="_blank"
               rel="noreferrer"
-              className="px-3.5 py-1.5 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60 rounded-full transition inline-flex items-center gap-1"
+              className="px-3.5 py-1.5 text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05] rounded-full transition inline-flex items-center gap-1.5"
             >
+              <FileText className="w-3.5 h-3.5 text-zinc-400" />
               <span>B20 Specs</span>
               <ExternalLink className="w-3 h-3 text-zinc-500" />
             </a>
@@ -123,8 +139,8 @@ export function Header() {
               Switch to Base
             </button>
           ) : (
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-zinc-900/90 border border-zinc-800 rounded-full text-xs text-zinc-300">
-              <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-zinc-900/90 border border-white/10 rounded-full text-xs text-zinc-300">
+              <CircleDot className="w-2.5 h-2.5 text-emerald-400" />
               <span>Base Mainnet</span>
             </div>
           )}

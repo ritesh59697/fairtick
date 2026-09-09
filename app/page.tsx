@@ -16,7 +16,15 @@ import {
   Terminal,
   Activity,
   CheckCircle2,
-  Cpu,
+  PauseCircle,
+  BadgeCheck,
+  Radio,
+  ArrowLeftRight,
+  Binary,
+  Compass,
+  Scale,
+  ShieldAlert,
+  Route,
 } from "lucide-react";
 import { StockLogo } from "@/components/StockLogo";
 import { ToggleSwitch } from "@/components/ToggleSwitch";
@@ -89,7 +97,7 @@ export default function LandingPage() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 text-xs text-zinc-300 hover:text-white transition backdrop-blur-md shadow-lg shadow-black/20"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               <span>Base B20 Execution Standard</span>
               <span className="text-white/20">|</span>
               <span className="text-white font-medium inline-flex items-center gap-1">
@@ -122,30 +130,30 @@ export default function LandingPage() {
 
             <Link
               href="#guardrails"
-              className="px-8 py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.15] border border-white/15 text-white font-semibold text-sm backdrop-blur-md inline-flex items-center gap-1.5 shadow-lg shadow-black/20 transition transform active:scale-95"
+              className="px-8 py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.15] border border-white/15 text-white font-semibold text-sm backdrop-blur-md inline-flex items-center gap-2 shadow-lg shadow-black/20 transition transform active:scale-95"
             >
+              <Compass className="w-4 h-4 text-zinc-300" />
               <span>Explore Guardrails</span>
-              <ChevronRight className="w-4 h-4 text-zinc-400" />
             </Link>
           </div>
         </div>
 
-        {/* Protocol Trust Stream */}
+        {/* Protocol Trust Stream with Real Lucide Icons */}
         <div className="max-w-4xl mx-auto pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-mono text-zinc-300 relative z-10">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-400" />
+            <BadgeCheck className="w-4 h-4 text-emerald-400" />
             <span>Coinbase B20 Standard</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-blue-400" />
+            <Radio className="w-4 h-4 text-sky-400" />
             <span>Chainlink Equity Oracles</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-indigo-400" />
+            <ArrowLeftRight className="w-4 h-4 text-indigo-400" />
             <span>Uniswap SwapRouter02</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-sky-400" />
+            <Binary className="w-4 h-4 text-blue-400" />
             <span>Base ERC-8021 Suffix</span>
           </div>
         </div>
@@ -295,18 +303,28 @@ export default function LandingPage() {
 
                       <div className="flex items-center justify-between pt-1 text-[11px]">
                         <span
-                          className={`px-2 py-0.5 rounded text-[10px] font-semibold font-mono ${
+                          className={`px-2 py-0.5 rounded text-[10px] font-semibold font-mono inline-flex items-center gap-1 ${
                             m.feed.status === "LIVE"
                               ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                               : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
                           }`}
                         >
-                          {m.feed.status === "LIVE" ? "LIVE FEED" : "FEED HELD"}
+                          {m.feed.status === "LIVE" ? (
+                            <>
+                              <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                              <span>LIVE FEED</span>
+                            </>
+                          ) : (
+                            <>
+                              <PauseCircle className="w-3 h-3 text-amber-400" />
+                              <span>FEED HELD</span>
+                            </>
+                          )}
                         </span>
 
                         <span className="text-zinc-300 font-semibold group-hover:text-white group-hover:translate-x-0.5 transition flex items-center gap-1">
                           <span>Trade Ticket</span>
-                          <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                          <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-white" />
                         </span>
                       </div>
                     </Link>
@@ -334,8 +352,8 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Pillar 1 */}
               <div className="rounded-2xl hairline-card hairline-frame p-6 space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-zinc-200">
-                  <Activity className="w-5 h-5" />
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-emerald-400">
+                  <Scale className="w-5 h-5" />
                 </div>
                 <div className="text-xs font-mono text-zinc-400">01 / CALIBRATION</div>
                 <h3 className="text-base font-bold text-white tracking-tight">
@@ -348,8 +366,8 @@ export default function LandingPage() {
 
               {/* Pillar 2 */}
               <div className="rounded-2xl hairline-card hairline-frame p-6 space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-zinc-200">
-                  <Lock className="w-5 h-5" />
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-amber-400">
+                  <ShieldAlert className="w-5 h-5" />
                 </div>
                 <div className="text-xs font-mono text-zinc-400">02 / CIRCUIT BREAKER</div>
                 <h3 className="text-base font-bold text-white tracking-tight">
@@ -362,8 +380,8 @@ export default function LandingPage() {
 
               {/* Pillar 3 */}
               <div className="rounded-2xl hairline-card hairline-frame p-6 space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-zinc-200">
-                  <Cpu className="w-5 h-5" />
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-sky-400">
+                  <Route className="w-5 h-5" />
                 </div>
                 <div className="text-xs font-mono text-zinc-400">03 / ATOMIC ROUTING</div>
                 <h3 className="text-base font-bold text-white tracking-tight">

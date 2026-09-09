@@ -13,6 +13,10 @@ import {
   Code2,
   Clock,
   Terminal,
+  Radio,
+  ShieldAlert,
+  ArrowLeftRight,
+  Binary,
 } from "lucide-react";
 
 export function ProofStage() {
@@ -24,21 +28,25 @@ export function ProofStage() {
       num: "01",
       title: "Chainlink Feed Check",
       desc: "Live print & freshness validation before quote",
+      icon: Radio,
     },
     {
       num: "02",
       title: "50 bps Safety Gate",
       desc: "Instant lockout on off-hours market gouging",
+      icon: ShieldAlert,
     },
     {
       num: "03",
       title: "SwapRouter02 Routing",
       desc: "Exact-approval execution directly on Base",
+      icon: ArrowLeftRight,
     },
     {
       num: "04",
       title: "ERC-8021 Attribution",
       desc: "Cryptographic builder attribution suffix",
+      icon: Binary,
     },
   ];
 
@@ -68,27 +76,29 @@ export function ProofStage() {
         </div>
       </div>
 
-      {/* Step Tabs (Full-width 4-column grid, responsive, no truncation) */}
+      {/* Step Tabs (Full-width 4-column grid with real icons) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
         {steps.map((s, idx) => {
           const isActive = activeStep === idx;
+          const Icon = s.icon;
           return (
             <button
               key={s.num}
               onClick={() => setActiveStep(idx)}
-              className={`p-3 rounded-xl border text-left transition-all relative group cursor-pointer ${
+              className={`p-3.5 rounded-xl border text-left transition-all relative group cursor-pointer ${
                 isActive
                   ? "bg-white/[0.09] border-white/30 shadow-lg shadow-black/40 text-white"
                   : "bg-zinc-900/50 border-white/5 hover:border-white/15 text-zinc-400 hover:text-zinc-200"
               }`}
             >
-              <div className="flex items-center justify-between mb-1.5">
+              <div className="flex items-center justify-between mb-2">
                 <span
-                  className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                  className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded inline-flex items-center gap-1.5 ${
                     isActive ? "bg-white/20 text-white" : "bg-zinc-800 text-zinc-400"
                   }`}
                 >
-                  Step {s.num}
+                  <Icon className="w-3 h-3 text-zinc-300" />
+                  <span>Step {s.num}</span>
                 </span>
                 {isActive && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />}
               </div>

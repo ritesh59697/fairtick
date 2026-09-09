@@ -56,10 +56,13 @@ export function TechnicalFAQ() {
                 onClick={() => setOpenIdx(isOpen ? null : idx)}
                 className="w-full p-4 md:p-5 text-left flex items-center justify-between gap-4 font-bold text-sm text-zinc-200 hover:text-white transition"
               >
-                <span>{faq.q}</span>
+                <div className="flex items-center gap-3">
+                  <HelpCircle className="w-4 h-4 text-zinc-400 shrink-0" />
+                  <span>{faq.q}</span>
+                </div>
                 <ChevronDown
                   className={`w-4 h-4 text-zinc-400 transition-transform duration-200 shrink-0 ${
-                    isOpen ? "rotate-180 text-blue-400" : ""
+                    isOpen ? "rotate-180 text-white" : ""
                   }`}
                 />
               </button>
