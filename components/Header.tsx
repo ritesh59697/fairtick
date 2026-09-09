@@ -21,6 +21,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BUILDER_CODE_ENV } from "@/lib/attribution";
 import { useAppWallet } from "@/lib/wallet-context";
+import { BaseLogo } from "@/components/BaseLogo";
 
 export function Header() {
   const pathname = usePathname();
@@ -84,8 +85,9 @@ export function Header() {
             <div>
               <div className="font-bold text-zinc-100 leading-none text-base tracking-tight flex items-center gap-2">
                 FairTick
-                <span className="text-[10px] font-semibold uppercase bg-white/10 text-zinc-300 border border-white/15 px-1.5 py-0.5 rounded">
-                  Base B20
+                <span className="text-[10px] font-semibold uppercase bg-white/10 text-zinc-300 border border-white/15 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
+                  <BaseLogo className="w-2.5 h-2.5" fill="#0052FF" />
+                  <span>Base B20</span>
                 </span>
               </div>
               <p className="text-[11px] text-zinc-400 leading-tight mt-0.5">
@@ -140,7 +142,7 @@ export function Header() {
             </button>
           ) : (
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-zinc-900/90 border border-white/10 rounded-full text-xs text-zinc-300">
-              <CircleDot className="w-2.5 h-2.5 text-emerald-400" />
+              <BaseLogo className="w-3 h-3" fill="#0052FF" />
               <span>Base Mainnet</span>
             </div>
           )}

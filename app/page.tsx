@@ -27,6 +27,7 @@ import {
   Route,
 } from "lucide-react";
 import { StockLogo } from "@/components/StockLogo";
+import { BaseLogo } from "@/components/BaseLogo";
 import { ToggleSwitch } from "@/components/ToggleSwitch";
 import { ProofStage } from "@/components/landing/ProofStage";
 import { BentoFeatures } from "@/components/landing/BentoFeatures";
@@ -97,7 +98,7 @@ export default function LandingPage() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 text-xs text-zinc-300 hover:text-white transition backdrop-blur-md shadow-lg shadow-black/20"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <BaseLogo className="w-3.5 h-3.5" fill="#0052FF" />
               <span>Base B20 Execution Standard</span>
               <span className="text-white/20">|</span>
               <span className="text-white font-medium inline-flex items-center gap-1">
@@ -138,7 +139,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Protocol Trust Stream with Real Lucide Icons */}
+        {/* Protocol Trust Stream with Real Lucide & Base Icons */}
         <div className="max-w-4xl mx-auto pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-mono text-zinc-300 relative z-10">
           <div className="flex items-center gap-2">
             <BadgeCheck className="w-4 h-4 text-emerald-400" />
@@ -153,7 +154,7 @@ export default function LandingPage() {
             <span>Uniswap SwapRouter02</span>
           </div>
           <div className="flex items-center gap-2">
-            <Binary className="w-4 h-4 text-blue-400" />
+            <BaseLogo className="w-4 h-4" fill="#0052FF" />
             <span>Base ERC-8021 Suffix</span>
           </div>
         </div>
