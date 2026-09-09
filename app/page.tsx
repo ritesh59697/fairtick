@@ -65,14 +65,29 @@ export default function LandingPage() {
   }, [forceStale, forceOpen]);
 
   return (
-    <div className="w-full">
-      {/* 1. FULL-WIDTH HERO SECTION (Night Sky Yaten Theme - Edge to Edge) */}
-      <section className="w-full gradient-yaten border-b border-white/10 py-16 sm:py-20 md:py-28 px-4 sm:px-6 relative overflow-hidden">
+    <div className="relative w-full">
+      {/* Background Video Theme: Edge of the Universe (Fixed behind entire landing page) */}
+      <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src="/vid/edge-of-the-universe.1920x1080.mp4" type="video/mp4" />
+        </video>
+        {/* Atmospheric cosmic scrim to ensure text & card contrast while keeping the universe video vivid */}
+        <div className="absolute inset-0 bg-slate-950/65" />
+      </div>
+
+      {/* 1. FULL-WIDTH HERO SECTION (Over Edge-of-the-Universe Video Background) */}
+      <section className="w-full border-b border-white/10 py-16 sm:py-20 md:py-28 px-4 sm:px-6 relative z-10 overflow-hidden">
         {/* Subtle dot matrix watermark background */}
         <div className="absolute inset-0 clarasight-dot-pattern pointer-events-none opacity-20" />
 
         {/* Ambient illumination glow spot */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[#33406E]/30 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-600/15 rounded-full blur-[140px] pointer-events-none" />
 
         <div className="max-w-4xl mx-auto space-y-6 relative z-10 text-center">
           {/* Centered Top Announcement Pill */}
@@ -147,8 +162,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 2-6. REST OF CONTENT IN CENTERED CONTAINER */}
-      <div className="max-w-6xl w-full mx-auto px-4 py-12 md:py-16 space-y-16 md:space-y-24">
+      {/* 2-6. REST OF CONTENT IN CENTERED CONTAINER (Sits cleanly on top of cosmic video bg) */}
+      <div className="max-w-6xl w-full mx-auto px-4 py-12 md:py-16 space-y-16 md:space-y-24 relative z-10">
 
       {/* 2. THE PROOF STAGE SIMULATOR (Bursar Order Lifecycle Signature) */}
       <section id="proof-stage" className="scroll-mt-24">
