@@ -21,6 +21,7 @@ import { BUILDER_CODE_ENV, hasValidBuilderCode } from "@/lib/attribution";
 import { buildSwapTransaction } from "@/lib/aerodrome";
 import { useAppWallet } from "@/lib/wallet-context";
 import { StockLogo } from "@/components/StockLogo";
+import { ToggleSwitch } from "@/components/ToggleSwitch";
 import {
   ShieldAlert,
   ShieldCheck,
@@ -309,44 +310,31 @@ export default function TradeTicketPage({
           {/* Simulate Market Open Toggle */}
           <div className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center gap-2.5 text-xs">
             <span className="text-zinc-400 text-[11px]">Simulate Market Open:</span>
-            <button
-              onClick={() => {
-                const next = !forceOpen;
+            <ToggleSwitch
+              checked={forceOpen}
+              onChange={(next) => {
                 setForceOpen(next);
                 loadData(forceStale, next);
               }}
-              className={`relative inline-flex h-4 w-7 items-center rounded-full transition-colors ${
-                forceOpen ? "bg-emerald-600" : "bg-zinc-700"
-              }`}
+              size="sm"
               title="Toggle between real-world after-hours (HELD) and simulated regular trading hours (LIVE)"
-            >
-              <span
-                className={`inline-block h-2.5 w-2.5 transform rounded-full bg-white transition-transform ${
-                  forceOpen ? "translate-x-3.5" : "translate-x-0.5"
-                }`}
-              />
-            </button>
+              activeColor="#10b981"
+            />
           </div>
 
           {/* Demo Force Stale Toggle */}
           <div className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center gap-2.5 text-xs">
             <span className="text-zinc-400 text-[11px]">Demo Stale Feed:</span>
-            <button
-              onClick={() => {
-                const next = !forceStale;
+            <ToggleSwitch
+              checked={forceStale}
+              onChange={(next) => {
                 setForceStale(next);
                 loadData(next, forceOpen);
               }}
-              className={`relative inline-flex h-4 w-7 items-center rounded-full transition-colors ${
-                forceStale ? "bg-amber-600" : "bg-zinc-700"
-              }`}
-            >
-              <span
-                className={`inline-block h-2.5 w-2.5 transform rounded-full bg-white transition-transform ${
-                  forceStale ? "translate-x-3.5" : "translate-x-0.5"
-                }`}
-              />
-            </button>
+              size="sm"
+              title="Simulate stale oracle feed to test safety lockout"
+              activeColor="#d97706"
+            />
           </div>
         </div>
       </div>

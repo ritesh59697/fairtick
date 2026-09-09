@@ -16,6 +16,7 @@ import {
   Layers,
 } from "lucide-react";
 import { StockLogo } from "@/components/StockLogo";
+import { ToggleSwitch } from "@/components/ToggleSwitch";
 
 // Client-side cache to make back-navigation and re-renders instantaneous
 let clientSideMarketsCache: TokenMarketSummary[] = [];
@@ -84,23 +85,16 @@ export default function MarketListPage() {
                 <Clock className="w-3.5 h-3.5 text-zinc-400" />
                 <span className="text-zinc-300 font-medium">Simulate Market Open:</span>
               </div>
-              <button
-                onClick={() => {
-                  const next = !forceOpen;
+              <ToggleSwitch
+                checked={forceOpen}
+                onChange={(next) => {
                   setForceOpen(next);
                   fetchMarkets(false, forceStale, next);
                 }}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
-                  forceOpen ? "bg-emerald-600" : "bg-zinc-700"
-                }`}
+                size="sm"
                 title="Toggle between real-world after-hours (HELD) and simulated regular trading hours (LIVE)"
-              >
-                <span
-                  className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
-                    forceOpen ? "translate-x-4" : "translate-x-1"
-                  }`}
-                />
-              </button>
+                activeColor="#10b981"
+              />
             </div>
 
             {/* Demo Force Stale Toggle for Loom Presentation */}
@@ -109,22 +103,16 @@ export default function MarketListPage() {
                 <Sliders className="w-3.5 h-3.5 text-zinc-400" />
                 <span className="text-zinc-300 font-medium">Demo Stale Feed:</span>
               </div>
-              <button
-                onClick={() => {
-                  const next = !forceStale;
+              <ToggleSwitch
+                checked={forceStale}
+                onChange={(next) => {
                   setForceStale(next);
                   fetchMarkets(false, next, forceOpen);
                 }}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
-                  forceStale ? "bg-amber-600" : "bg-zinc-700"
-                }`}
-              >
-                <span
-                  className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
-                    forceStale ? "translate-x-4" : "translate-x-1"
-                  }`}
-                />
-              </button>
+                size="sm"
+                title="Simulate stale oracle feed to test safety lockout"
+                activeColor="#d97706"
+              />
             </div>
 
             <button
