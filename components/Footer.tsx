@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ExternalLink, ShieldCheck, CheckCircle2, Terminal, Code2, Layers, ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BaseLogo } from "@/components/BaseLogo";
+import { FairTickLogo } from "@/components/FairTickLogo";
 
 export function Footer() {
   return (
@@ -23,6 +24,7 @@ export function Footer() {
           {/* Column 1 & 2: Brand & Mission */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
+              <FairTickLogo size={28} variant="badge" />
               <span className="font-bold text-white text-lg tracking-tight">FairTick</span>
               <Badge variant="outline" className="font-mono text-[10px] gap-1.5 py-0.5">
                 <BaseLogo className="w-2.5 h-2.5" fill="#0052FF" />

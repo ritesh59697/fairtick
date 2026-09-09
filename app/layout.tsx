@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   title: "FairTick — Protected Trade Ticket for Coinbase Tokenized Stocks on Base",
   description:
     "Don’t overpay for onchain Apple. FairTick guards your execution against stale equity feeds, paused corporate splits, and rich DEX markups for B20 tokens on Base.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

@@ -23,6 +23,7 @@ import { BUILDER_CODE_ENV } from "@/lib/attribution";
 import { useAppWallet } from "@/lib/wallet-context";
 import { BaseLogo } from "@/components/BaseLogo";
 import { Badge } from "@/components/ui/badge";
+import { FairTickLogo } from "@/components/FairTickLogo";
 
 export function Header() {
   const pathname = usePathname();
@@ -79,10 +80,8 @@ export function Header() {
 
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
-              <TrendingUp className="w-4 h-4" />
-            </div>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <FairTickLogo size={34} variant="badge" />
             <div>
               <div className="font-bold text-zinc-100 leading-none text-base tracking-tight flex items-center gap-2">
                 FairTick
