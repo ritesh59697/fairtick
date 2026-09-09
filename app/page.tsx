@@ -66,13 +66,13 @@ export default function LandingPage() {
 
   return (
     <div className="space-y-16 md:space-y-24 py-6 md:py-10">
-      {/* 1. HERO SECTION (Clarasight Luminous Ultramarine Lighting + Pure White Geometric Typography) */}
-      <section className="relative rounded-3xl bg-clarasight-hero hairline-frame p-8 sm:p-12 md:p-16 overflow-hidden space-y-8">
-        {/* Clarasight dot matrix watermark background */}
-        <div className="absolute inset-0 clarasight-dot-pattern pointer-events-none opacity-40" />
+      {/* 1. HERO SECTION (Night Sky Yaten Theme: Ice Hanada -> Glazed Azure -> Clear Hanada -> Storm Blue) */}
+      <section className="relative rounded-3xl gradient-yaten hairline-frame p-8 sm:p-12 md:p-16 overflow-hidden space-y-8 shadow-2xl shadow-blue-950/50">
+        {/* Subtle dot matrix watermark background */}
+        <div className="absolute inset-0 clarasight-dot-pattern pointer-events-none opacity-25" />
 
-        {/* Ambient illumination glow spots */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-blue-500/25 rounded-full blur-[100px] pointer-events-none" />
+        {/* Ambient illumination glow spot */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#33406E]/40 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="max-w-4xl mx-auto space-y-6 relative z-10 text-center">
           {/* Centered Top Announcement Pill */}
@@ -81,19 +81,19 @@ export default function LandingPage() {
               href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/70 border border-blue-400/30 text-xs text-blue-200 hover:text-white hover:border-blue-400/50 transition backdrop-blur-md shadow-lg shadow-blue-950/50"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#33406E]/70 border border-white/20 text-xs text-blue-100 hover:text-white hover:border-white/40 transition backdrop-blur-md shadow-lg shadow-black/20"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-300 animate-pulse" />
               <span>FairTick launches Base B20 Guardrails</span>
-              <span className="text-zinc-600">|</span>
-              <span className="text-blue-300 font-semibold inline-flex items-center gap-1">
+              <span className="text-white/30">|</span>
+              <span className="text-white font-semibold inline-flex items-center gap-1">
                 Verified onchain <ChevronRight className="w-3 h-3" />
               </span>
             </a>
           </div>
 
-          {/* Clarasight Multi-line Headline: Crisp Pure White, Authoritative, Centered */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.12] text-center max-w-4xl mx-auto">
+          {/* Multi-line Headline: Crisp Pure White, Authoritative, Centered */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.12] text-center max-w-4xl mx-auto drop-shadow-md">
             The execution guardrail
             <br className="hidden sm:block" />
             {" "}for onchain Apple and
@@ -101,12 +101,12 @@ export default function LandingPage() {
             {" "}tokenized US stocks
           </h1>
 
-          {/* Centered Subheadline in Soft Periwinkle */}
-          <p className="text-sm sm:text-base md:text-lg text-slate-200/90 leading-relaxed text-center max-w-2xl mx-auto font-normal">
+          {/* Centered Subheadline in Soft Periwinkle/White */}
+          <p className="text-sm sm:text-base md:text-lg text-white/90 leading-relaxed text-center max-w-2xl mx-auto font-normal drop-shadow-sm">
             Purpose-built operating guardrails for Base B20 tokenized equities. Defending against weekend spread drift, uncalibrated stock splits, and predatory DEX markups.
           </p>
 
-          {/* Centered Action Pill Buttons (Exact Clarasight CTA Architecture) */}
+          {/* Centered Action Pill Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
             <Link
               href="/markets"
@@ -118,7 +118,7 @@ export default function LandingPage() {
 
             <Link
               href="#proof-stage"
-              className="clarasight-pill-btn px-8 py-3.5 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-sm backdrop-blur-md inline-flex items-center gap-1.5"
+              className="clarasight-pill-btn px-8 py-3.5 bg-slate-950/40 hover:bg-slate-950/60 border border-white/20 text-white font-semibold text-sm backdrop-blur-md inline-flex items-center gap-1.5 shadow-lg shadow-black/10"
             >
               <span>See how it works</span>
               <ChevronRight className="w-4 h-4 text-blue-200" />
