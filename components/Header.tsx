@@ -81,19 +81,10 @@ export function Header() {
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <FairTickLogo size={34} variant="badge" />
-            <div>
-              <div className="font-bold text-zinc-100 leading-none text-base tracking-tight flex items-center gap-2">
-                FairTick
-                <Badge variant="outline" className="text-[10px] font-semibold uppercase gap-1 py-0.5 px-1.5 font-mono">
-                  <BaseLogo className="w-2.5 h-2.5" fill="#0052FF" />
-                  <span>Base B20</span>
-                </Badge>
-              </div>
-              <p className="text-[11px] text-zinc-400 leading-tight mt-0.5">
-                Don’t overpay for onchain Apple
-              </p>
-            </div>
+            <FairTickLogo size={32} variant="badge" />
+            <span className="font-bold text-zinc-100 text-lg tracking-tight group-hover:text-white transition">
+              FairTick
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1.5 text-xs font-medium">
