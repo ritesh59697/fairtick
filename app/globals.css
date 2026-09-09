@@ -242,20 +242,20 @@ body {
 }
 
 .hairline-frame {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 20px 40px -20px rgba(0, 0, 0, 0.8);
 }
 
 .hairline-card {
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(11, 18, 38, 0.7);
-  backdrop-filter: blur(14px);
+  background: rgba(13, 17, 26, 0.75);
+  backdrop-filter: blur(16px);
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hairline-card:hover {
-  border-color: rgba(59, 130, 246, 0.35);
-  box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.6);
 }
 
 /* Double-label slide button (Bursar signature) */

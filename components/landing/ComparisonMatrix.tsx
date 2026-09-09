@@ -72,45 +72,45 @@ export function ComparisonMatrix() {
   return (
     <section className="space-y-6">
       <div className="text-center max-w-2xl mx-auto space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-950/60 border border-white/20 text-blue-200 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
-          <Sparkles className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-zinc-300 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
+          <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
           <span>The FairTick Standard</span>
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow-md">
           Why Blind DEX Swaps Cost You Money
         </h2>
-        <p className="text-xs md:text-sm text-slate-200/90 leading-relaxed font-normal">
+        <p className="text-xs md:text-sm text-zinc-400 leading-relaxed font-normal">
           See how FairTick transforms onchain equity trading from high-risk speculation into institutional-grade execution.
         </p>
       </div>
 
       <div className="rounded-2xl hairline-card hairline-frame overflow-hidden">
         {/* Desktop Table Header */}
-        <div className="hidden md:grid md:grid-cols-12 border-b border-zinc-800/80 bg-zinc-950/70 text-xs font-semibold">
+        <div className="hidden md:grid md:grid-cols-12 border-b border-white/10 bg-zinc-950/80 text-xs font-semibold">
           <div className="md:col-span-5 p-4 text-zinc-400">Execution Capability</div>
-          <div className="md:col-span-3 p-4 text-rose-400/90 flex items-center gap-1.5 border-l border-zinc-850/60">
+          <div className="md:col-span-3 p-4 text-rose-400/90 flex items-center gap-1.5 border-l border-white/10">
             <X className="w-3.5 h-3.5" />
             <span>Blind Naive DEX Swap</span>
           </div>
-          <div className="md:col-span-4 p-4 text-blue-400 flex items-center gap-1.5 border-l border-zinc-850/60 bg-blue-950/20">
-            <ShieldCheck className="w-4 h-4 text-blue-400" />
+          <div className="md:col-span-4 p-4 text-emerald-400 flex items-center gap-1.5 border-l border-white/10 bg-white/[0.03]">
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>FairTick Protected Execution</span>
           </div>
         </div>
 
-        <div className="divide-y divide-zinc-850/60">
+        <div className="divide-y divide-white/5">
           {rows.map((row, i) => (
             <div
               key={i}
-              className="grid grid-cols-1 md:grid-cols-12 p-4 md:p-5 gap-4 items-center hover:bg-zinc-900/30 transition"
+              className="grid grid-cols-1 md:grid-cols-12 p-4 md:p-5 gap-4 items-center hover:bg-white/[0.02] transition"
             >
               <div className="md:col-span-5 space-y-1">
-                <div className="text-sm font-bold text-zinc-200">{row.label}</div>
+                <div className="text-sm font-bold text-zinc-100">{row.label}</div>
                 <div className="text-xs text-zinc-400 leading-relaxed">{row.desc}</div>
               </div>
 
               {/* Naive column */}
-              <div className="md:col-span-3 p-3.5 rounded-xl bg-rose-950/15 border border-rose-900/30 text-xs space-y-1 md:border-l md:border-zinc-850/60">
+              <div className="md:col-span-3 p-3.5 rounded-xl bg-rose-950/15 border border-rose-900/30 text-xs space-y-1 md:border-l md:border-white/10">
                 <div className="flex items-center gap-1.5 text-rose-400 font-bold text-[11px] uppercase tracking-wider">
                   <X className="w-3.5 h-3.5 shrink-0" />
                   <span>Unprotected</span>
@@ -119,7 +119,7 @@ export function ComparisonMatrix() {
               </div>
 
               {/* FairTick column */}
-              <div className="md:col-span-4 p-3.5 rounded-xl bg-blue-950/25 border border-blue-500/30 ring-1 ring-blue-500/20 shadow-md shadow-blue-500/5 text-xs space-y-1 md:border-l md:border-blue-500/20">
+              <div className="md:col-span-4 p-3.5 rounded-xl bg-white/[0.05] border border-white/15 text-xs space-y-1 md:border-l md:border-white/10">
                 <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-[11px] uppercase tracking-wider">
                   <Check className="w-3.5 h-3.5 shrink-0" />
                   <span>FairTick Enforced</span>

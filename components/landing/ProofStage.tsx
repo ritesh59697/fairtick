@@ -44,9 +44,6 @@ export function ProofStage() {
 
   return (
     <div className="rounded-2xl hairline-card hairline-frame p-6 md:p-8 space-y-6 relative overflow-hidden">
-      {/* Background glow spot */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-
       {/* Header bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-zinc-800/80 pb-5">
         <div>
@@ -65,7 +62,7 @@ export function ProofStage() {
         </div>
 
         <div className="hidden sm:flex items-center gap-2 self-start md:self-auto">
-          <span className="text-[11px] font-mono text-zinc-400 bg-zinc-900 border border-zinc-800 px-3 py-1 rounded-lg">
+          <span className="text-[11px] font-mono text-zinc-300 bg-zinc-900 border border-white/10 px-3 py-1 rounded-lg">
             Base Mainnet (8453)
           </span>
         </div>
@@ -81,24 +78,24 @@ export function ProofStage() {
               onClick={() => setActiveStep(idx)}
               className={`p-3 rounded-xl border text-left transition-all relative group cursor-pointer ${
                 isActive
-                  ? "bg-blue-600/15 border-blue-500/60 shadow-lg shadow-blue-500/10 text-white"
-                  : "bg-zinc-900/60 border-zinc-800/80 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200"
+                  ? "bg-white/[0.09] border-white/30 shadow-lg shadow-black/40 text-white"
+                  : "bg-zinc-900/50 border-white/5 hover:border-white/15 text-zinc-400 hover:text-zinc-200"
               }`}
             >
               <div className="flex items-center justify-between mb-1.5">
                 <span
                   className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                    isActive ? "bg-blue-500/30 text-blue-300" : "bg-zinc-800 text-zinc-400"
+                    isActive ? "bg-white/20 text-white" : "bg-zinc-800 text-zinc-400"
                   }`}
                 >
                   Step {s.num}
                 </span>
-                {isActive && <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />}
+                {isActive && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />}
               </div>
               <div className={`text-xs font-bold leading-snug ${isActive ? "text-zinc-100" : "text-zinc-300"}`}>
                 {s.title}
               </div>
-              <div className="text-[11px] text-zinc-500 truncate mt-1">
+              <div className="text-[11px] text-zinc-400 truncate mt-1">
                 {s.desc}
               </div>
             </button>
@@ -110,7 +107,7 @@ export function ProofStage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center min-h-[300px]">
         {/* Left: Explanation & Technical Rationale */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-medium">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-zinc-300 text-xs font-mono font-medium">
             <span>Step {steps[activeStep].num} of 04</span>
           </div>
 
@@ -135,7 +132,7 @@ export function ProofStage() {
           <div className="pt-2 flex items-center gap-3">
             <button
               onClick={() => setActiveStep((prev) => (prev + 1) % 4)}
-              className="px-4 py-2 bg-zinc-800 hover:bg-zinc-750 border border-zinc-700 text-zinc-200 text-xs font-semibold rounded-xl transition inline-flex items-center gap-2"
+              className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 text-zinc-200 text-xs font-semibold rounded-xl transition inline-flex items-center gap-2"
             >
               <span>Next Check</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -146,7 +143,7 @@ export function ProofStage() {
                 href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
                 target="_blank"
                 rel="noreferrer"
-                className="px-4 py-2 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 text-xs font-semibold rounded-xl transition inline-flex items-center gap-1.5"
+                className="px-4 py-2 bg-white/[0.08] hover:bg-white/[0.15] border border-white/20 text-white text-xs font-semibold rounded-xl transition inline-flex items-center gap-1.5"
               >
                 <span>View Real Basescan Tx</span>
                 <ExternalLink className="w-3 h-3" />
@@ -268,7 +265,7 @@ export function ProofStage() {
               <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-lg space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-zinc-400">Router Address</span>
-                  <span className="text-blue-400 font-mono">0x2626664c2603336E57B271c5C0b26F421741e481</span>
+                  <span className="text-sky-400 font-mono">0x2626664c2603336E57B271c5C0b26F421741e481</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-zinc-400">Target Protocol</span>

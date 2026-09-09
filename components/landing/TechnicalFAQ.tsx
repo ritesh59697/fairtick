@@ -32,14 +32,14 @@ export function TechnicalFAQ() {
   return (
     <section className="space-y-6 max-w-3xl mx-auto">
       <div className="text-center space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-950/60 border border-white/20 text-blue-200 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
-          <HelpCircle className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-zinc-300 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
+          <HelpCircle className="w-3.5 h-3.5 text-zinc-400" />
           <span>Technical FAQ</span>
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow-md">
           Frequently Answered Questions
         </h2>
-        <p className="text-xs md:text-sm text-slate-200/90 font-normal">
+        <p className="text-xs md:text-sm text-zinc-400 font-normal">
           Everything you need to know about trading tokenized equities on Base.
         </p>
       </div>
