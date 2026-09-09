@@ -3,7 +3,14 @@
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useReadContract, useWriteContract, useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
+import {
+  useReadContract,
+  useWriteContract,
+  useSendTransaction,
+  useWaitForTransactionReceipt,
+  useChainId,
+  useSwitchChain,
+} from "wagmi";
 import { parseUnits, formatUnits, Address, erc20Abi, maxUint256 } from "viem";
 import { getTokenBySymbol, USDC_ADDRESS, USDC_DECIMALS, UNISWAP_V3_ROUTER } from "@/lib/tokens";
 import { B20_TOKEN_ABI, rawToScaledShares } from "@/lib/b20";
@@ -104,6 +111,8 @@ export default function TradeTicketPage({
   });
 
   // Contract write & transaction actions
+  const chainId = useChainId();
+  const { switchChainAsync } = useSwitchChain();
   const { writeContractAsync } = useWriteContract();
   const { sendTransactionAsync } = useSendTransaction();
 
@@ -220,6 +229,16 @@ export default function TradeTicketPage({
         return;
       }
 
+      // Enforce Base Mainnet (8453) for real wallet execution
+      if (!isDemo && chainId !== 8453) {
+        try {
+          await switchChainAsync({ chainId: 8453 });
+        } catch (switchErr: any) {
+          setErrorMessage("Please switch network to Base Mainnet (8453) in your wallet.");
+          return;
+        }
+      }
+
       const targetAmountUnits =
         side === "BUY"
           ? parseUnits(numAmount.toFixed(6), USDC_DECIMALS)
@@ -235,6 +254,7 @@ export default function TradeTicketPage({
           abi: erc20Abi,
           functionName: "approve",
           args: [UNISWAP_V3_ROUTER, maxUint256],
+          chainId: 8453,
         });
       }
 
@@ -253,6 +273,7 @@ export default function TradeTicketPage({
       const txHash = await sendTransactionAsync({
         to: swapPrep.routerAddress,
         data: swapPrep.calldata,
+        chainId: 8453,
       });
 
       // Redirect to Receipt Screen (Screen 3)
@@ -641,6 +662,14 @@ export default function TradeTicketPage({
                 >
                   <Wallet className="w-4 h-4" />
                   <span>Connect Wallet to Trade</span>
+                </button>
+              ) : !isDemo && chainId !== 8453 ? (
+                <button
+                  onClick={() => switchChainAsync({ chainId: 8453 })}
+                  className="w-full py-3.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-sm transition shadow-lg shadow-amber-600/25 flex items-center justify-center gap-2"
+                >
+                  <AlertTriangle className="w-4 h-4" />
+                  <span>Switch Wallet to Base Mainnet (8453)</span>
                 </button>
               ) : isGeoBlocked ? (
                 <button

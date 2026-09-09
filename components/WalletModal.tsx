@@ -21,9 +21,11 @@ export function WalletModal() {
   if (!isModalOpen) return null;
 
   async function handleConnectReal(connectorId: string) {
-    const target = connectors.find(
-      (c) => c.id === connectorId || c.name.toLowerCase().includes(connectorId.toLowerCase())
-    );
+    const target =
+      connectors.find(
+        (c) => c.id === connectorId || c.name.toLowerCase().includes(connectorId.toLowerCase())
+      ) ||
+      (connectorId === "rabby" ? connectors.find((c) => c.id === "injected") : undefined);
     if (!target) return;
 
     try {
@@ -155,7 +157,33 @@ export function WalletModal() {
             )}
           </button>
 
-          {/* Browser / Injected (MetaMask, Rabby, Rainbow) */}
+          {/* Rabby Wallet */}
+          <button
+            onClick={() => handleConnectReal("rabby")}
+            disabled={isPending}
+            className="w-full p-3.5 rounded-xl bg-zinc-950/70 hover:bg-zinc-800/80 border border-zinc-800 hover:border-zinc-700 transition flex items-center justify-between text-left group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold text-xs shadow-sm shadow-sky-500/20">
+                RB
+              </div>
+              <div>
+                <div className="text-xs font-bold text-zinc-100 group-hover:text-sky-400 transition">
+                  Rabby Wallet
+                </div>
+                <div className="text-[11px] text-zinc-400">
+                  Game-changing Web3 wallet for Ethereum & Base
+                </div>
+              </div>
+            </div>
+            {connectingId?.toLowerCase().includes("rabby") ? (
+              <span className="text-[11px] text-sky-400 font-medium animate-pulse">Connecting...</span>
+            ) : (
+              <div className="w-2 h-2 rounded-full bg-zinc-700 group-hover:bg-sky-400 transition" />
+            )}
+          </button>
+
+          {/* Browser / Injected (MetaMask, Rainbow) */}
           <button
             onClick={() => handleConnectReal("injected")}
             disabled={isPending}
@@ -170,7 +198,7 @@ export function WalletModal() {
                   Browser Wallet
                 </div>
                 <div className="text-[11px] text-zinc-400">
-                  MetaMask, Rabby, Rainbow, Brave, or Phantom
+                  MetaMask, Rainbow, Brave, or Phantom
                 </div>
               </div>
             </div>
