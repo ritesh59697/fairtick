@@ -1,6 +1,7 @@
 "use client";
 
 import { useAccount, useChainId, useSwitchChain } from "wagmi";
+import { useConnectModal, useAccountModal, useChainModal } from "@rainbow-me/rainbowkit";
 import { BASE_CHAIN_ID } from "@/lib/tokens";
 import { useGeoCheck } from "@/lib/geo";
 import {
@@ -27,12 +28,16 @@ import { FairTickLogo } from "@/components/FairTickLogo";
 
 export function Header() {
   const pathname = usePathname();
-  const { address, isConnected, isDemo, openModal, disconnectAll } = useAppWallet();
+  const { address, isConnected, isDemo, openModal, connectDemo, disconnectAll } = useAppWallet();
+  const { openConnectModal } = useConnectModal();
+  const { openAccountModal } = useAccountModal();
+  const { openChainModal } = useChainModal();
   const defaultChainId = useChainId();
   const { chainId: walletChainId } = useAccount();
   const chainId = walletChainId ?? defaultChainId;
   const { switchChain } = useSwitchChain();
   const { isBlocked, country, simulatedUs, toggleSimulateUs } = useGeoCheck();
+
 
   const isWrongNetwork = !isDemo && isConnected && chainId !== BASE_CHAIN_ID;
   const isOverviewActive = pathname === "/";
@@ -123,19 +128,23 @@ export function Header() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           {isWrongNetwork ? (
             <button
-              onClick={() => switchChain({ chainId: BASE_CHAIN_ID })}
+              onClick={() => (openChainModal ? openChainModal() : switchChain({ chainId: BASE_CHAIN_ID }))}
               className="px-3.5 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 rounded-full text-xs font-semibold transition cursor-pointer"
             >
               Switch to Base
             </button>
           ) : (
-            <Badge variant="outline" className="hidden sm:inline-flex items-center gap-1.5 py-1 px-3 text-xs text-zinc-300 font-normal">
+            <button
+              onClick={() => openChainModal?.()}
+              className="hidden sm:inline-flex items-center gap-1.5 py-1 px-3 rounded-full border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800/80 text-xs text-zinc-300 font-normal transition cursor-pointer"
+              title="Chain selector"
+            >
               <BaseLogo className="w-3 h-3" fill="#0052FF" />
               <span>Base Mainnet</span>
-            </Badge>
+            </button>
           )}
 
           {isConnected ? (
@@ -147,9 +156,14 @@ export function Header() {
                   <span className="font-mono text-[10px] text-emerald-200/90 hidden sm:inline">($500 USDC)</span>
                 </Badge>
               ) : (
-                <div className="px-3.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-full text-xs font-mono text-zinc-300">
-                  {address?.slice(0, 6)}...{address?.slice(-4)}
-                </div>
+                <button
+                  onClick={() => openAccountModal?.()}
+                  className="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 rounded-full text-xs font-mono text-zinc-200 transition cursor-pointer flex items-center gap-1.5"
+                  title="View Account details"
+                >
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>{address?.slice(0, 6)}...{address?.slice(-4)}</span>
+                </button>
               )}
               <button
                 onClick={() => disconnectAll()}
@@ -159,13 +173,29 @@ export function Header() {
               </button>
             </div>
           ) : (
-            <button
-              onClick={openModal}
-              className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full text-xs font-semibold transition shadow-lg shadow-blue-600/30 flex items-center gap-1.5 cursor-pointer"
-            >
-              <Wallet className="w-3.5 h-3.5" />
-              Connect Wallet
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={connectDemo}
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600/15 hover:bg-blue-600/25 border border-blue-500/30 text-blue-400 rounded-full text-xs font-semibold transition cursor-pointer"
+                title="Test instantly with preloaded $500 USDC & 1.25 NVDAc without real funds"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                <span>Demo Mode</span>
+              </button>
+              <button
+                onClick={() => {
+                  if (openConnectModal) {
+                    openConnectModal();
+                  } else {
+                    openModal();
+                  }
+                }}
+                className="px-4.5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full text-xs font-semibold transition shadow-lg shadow-blue-600/30 flex items-center gap-1.5 cursor-pointer"
+              >
+                <Wallet className="w-3.5 h-3.5" />
+                <span>Connect Wallet</span>
+              </button>
+            </div>
           )}
         </div>
       </div>

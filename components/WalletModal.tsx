@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useConnect } from "wagmi";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAppWallet } from "@/lib/wallet-context";
 import {
   X,
@@ -9,18 +10,32 @@ import {
   Sparkles,
   ShieldCheck,
   AlertCircle,
-  CheckCircle2,
-  ExternalLink,
+  ArrowRight,
+  Layers,
 } from "lucide-react";
 
 export function WalletModal() {
   const { isModalOpen, closeModal, connectDemo } = useAppWallet();
   const { connect, connectors, isPending, error } = useConnect();
+  const { openConnectModal } = useConnectModal();
   const [connectingId, setConnectingId] = useState<string | null>(null);
 
   if (!isModalOpen) return null;
 
+  function handleOpenRainbowKit() {
+    closeModal();
+    setTimeout(() => {
+      openConnectModal?.();
+    }, 100);
+  }
+
   async function handleConnectReal(connectorId: string) {
+    // If openConnectModal is available, use RainbowKit for complete wallet coverage
+    if (openConnectModal) {
+      handleOpenRainbowKit();
+      return;
+    }
+
     const target =
       connectors.find(
         (c) => c.id === connectorId || c.name.toLowerCase().includes(connectorId.toLowerCase())
@@ -39,22 +54,8 @@ export function WalletModal() {
     }
   }
 
-  // Find Coinbase connector and Injected connector
-  const cbConnector = connectors.find(
-    (c) =>
-      c.id.toLowerCase().includes("coinbase") ||
-      c.name.toLowerCase().includes("coinbase")
-  );
-
-  const injectedConnector = connectors.find(
-    (c) =>
-      c.id === "injected" ||
-      c.name.toLowerCase().includes("injected") ||
-      c.name.toLowerCase().includes("metamask")
-  );
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
       <div
         className="relative w-full max-w-md rounded-2xl bg-zinc-900 border border-zinc-800 p-6 shadow-2xl space-y-5 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
@@ -72,7 +73,7 @@ export function WalletModal() {
           </div>
           <button
             onClick={closeModal}
-            className="p-1.5 rounded-lg bg-zinc-800/80 hover:bg-zinc-750 text-zinc-400 hover:text-zinc-200 transition"
+            className="p-1.5 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -117,7 +118,7 @@ export function WalletModal() {
             </p>
             <button
               onClick={connectDemo}
-              className="w-full py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-md shadow-blue-600/25 flex items-center justify-center gap-1.5"
+              className="w-full py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shadow-md shadow-blue-600/25 flex items-center justify-center gap-1.5 cursor-pointer"
             >
               Connect Demo Wallet (Instant)
             </button>
@@ -125,20 +126,48 @@ export function WalletModal() {
 
           <div className="relative flex py-1 items-center">
             <div className="flex-grow border-t border-zinc-800"></div>
-            <span className="flex-shrink mx-3 text-[10px] uppercase font-semibold text-zinc-500">
+            <span className="flex-shrink mx-3 text-[10px] uppercase font-semibold text-zinc-500 tracking-wider">
               Or Connect Real Web3 Wallet
             </span>
             <div className="flex-grow border-t border-zinc-800"></div>
           </div>
 
+          {/* RainbowKit Full Suite Trigger */}
+          <button
+            onClick={handleOpenRainbowKit}
+            className="w-full p-3.5 rounded-xl bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 hover:from-zinc-900 hover:to-zinc-850 border border-blue-500/40 hover:border-blue-500/70 transition flex items-center justify-between text-left group shadow-lg cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 via-yellow-500 to-blue-500 p-[1.5px] flex items-center justify-center shadow-md">
+                <div className="w-full h-full bg-zinc-950 rounded-[10px] flex items-center justify-center">
+                  <Layers className="w-5 h-5 text-blue-400" />
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-zinc-100 group-hover:text-blue-400 transition">
+                    RainbowKit Wallet Adapter
+                  </span>
+                  <span className="text-[9px] font-semibold px-1.5 py-0.2 bg-blue-500/20 text-blue-300 rounded border border-blue-500/30">
+                    300+ Wallets
+                  </span>
+                </div>
+                <div className="text-[11px] text-zinc-400 mt-0.5">
+                  Rainbow, MetaMask, Rabby, Phantom, WalletConnect QR
+                </div>
+              </div>
+            </div>
+            <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-blue-400 group-hover:translate-x-0.5 transition" />
+          </button>
+
           {/* Coinbase Wallet */}
           <button
             onClick={() => handleConnectReal("coinbase")}
             disabled={isPending}
-            className="w-full p-3.5 rounded-xl bg-zinc-950/70 hover:bg-zinc-800/80 border border-zinc-800 hover:border-zinc-700 transition flex items-center justify-between text-left group"
+            className="w-full p-3 rounded-xl bg-zinc-950/70 hover:bg-zinc-800/80 border border-zinc-800 hover:border-zinc-700 transition flex items-center justify-between text-left group cursor-pointer"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-blue-500/20">
+              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-blue-500/20">
                 CB
               </div>
               <div>
@@ -161,10 +190,10 @@ export function WalletModal() {
           <button
             onClick={() => handleConnectReal("rabby")}
             disabled={isPending}
-            className="w-full p-3.5 rounded-xl bg-zinc-950/70 hover:bg-zinc-800/80 border border-zinc-800 hover:border-zinc-700 transition flex items-center justify-between text-left group"
+            className="w-full p-3 rounded-xl bg-zinc-950/70 hover:bg-zinc-800/80 border border-zinc-800 hover:border-zinc-700 transition flex items-center justify-between text-left group cursor-pointer"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold text-xs shadow-sm shadow-sky-500/20">
+              <div className="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold text-xs shadow-sm shadow-sky-500/20">
                 RB
               </div>
               <div>
@@ -172,7 +201,7 @@ export function WalletModal() {
                   Rabby Wallet
                 </div>
                 <div className="text-[11px] text-zinc-400">
-                  Game-changing Web3 wallet for Ethereum & Base
+                  Game-changing Web3 wallet for Ethereum &amp; Base
                 </div>
               </div>
             </div>
@@ -187,15 +216,15 @@ export function WalletModal() {
           <button
             onClick={() => handleConnectReal("injected")}
             disabled={isPending}
-            className="w-full p-3.5 rounded-xl bg-zinc-950/70 hover:bg-zinc-800/80 border border-zinc-800 hover:border-zinc-700 transition flex items-center justify-between text-left group"
+            className="w-full p-3 rounded-xl bg-zinc-950/70 hover:bg-zinc-800/80 border border-zinc-800 hover:border-zinc-700 transition flex items-center justify-between text-left group cursor-pointer"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
                 <Wallet className="w-4 h-4" />
               </div>
               <div>
                 <div className="text-xs font-bold text-zinc-100 group-hover:text-amber-400 transition">
-                  Browser Wallet
+                  Browser &amp; Injected
                 </div>
                 <div className="text-[11px] text-zinc-400">
                   MetaMask, Rainbow, Brave, or Phantom
@@ -222,3 +251,4 @@ export function WalletModal() {
     </div>
   );
 }
+
