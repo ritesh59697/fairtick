@@ -23,7 +23,7 @@ export function Header() {
   const isMarketsActive = pathname.startsWith("/markets");
 
   return (
-    <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
+    <header className="border-b border-white/10 bg-slate-950/40 backdrop-blur-md sticky top-0 z-50">
       {/* Only show warning banner if user is actually blocked */}
       {isBlocked && (
         <div className="bg-red-500/15 border-b border-red-500/30 px-4 py-2 text-xs text-red-200 flex items-center justify-between">

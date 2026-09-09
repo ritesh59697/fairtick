@@ -72,14 +72,14 @@ export function ComparisonMatrix() {
   return (
     <section className="space-y-6">
       <div className="text-center max-w-2xl mx-auto space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-medium">
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-950/60 border border-white/20 text-blue-200 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
           <Sparkles className="w-3.5 h-3.5" />
           <span>The FairTick Standard</span>
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-zinc-100 tracking-tight">
+        <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow-md">
           Why Blind DEX Swaps Cost You Money
         </h2>
-        <p className="text-xs md:text-sm text-zinc-400 leading-relaxed">
+        <p className="text-xs md:text-sm text-slate-200/90 leading-relaxed font-normal">
           See how FairTick transforms onchain equity trading from high-risk speculation into institutional-grade execution.
         </p>
       </div>

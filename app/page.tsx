@@ -65,14 +65,14 @@ export default function LandingPage() {
   }, [forceStale, forceOpen]);
 
   return (
-    <div className="space-y-16 md:space-y-24 py-6 md:py-10">
-      {/* 1. HERO SECTION (Night Sky Yaten Theme: Ice Hanada -> Glazed Azure -> Clear Hanada -> Storm Blue) */}
-      <section className="relative rounded-3xl gradient-yaten hairline-frame p-8 sm:p-12 md:p-16 overflow-hidden space-y-8 shadow-2xl shadow-blue-950/50">
+    <div className="w-full">
+      {/* 1. FULL-WIDTH HERO SECTION (Night Sky Yaten Theme - Edge to Edge) */}
+      <section className="w-full gradient-yaten border-b border-white/10 py-16 sm:py-20 md:py-28 px-4 sm:px-6 relative overflow-hidden">
         {/* Subtle dot matrix watermark background */}
-        <div className="absolute inset-0 clarasight-dot-pattern pointer-events-none opacity-25" />
+        <div className="absolute inset-0 clarasight-dot-pattern pointer-events-none opacity-20" />
 
         {/* Ambient illumination glow spot */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#33406E]/40 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[#33406E]/30 rounded-full blur-[140px] pointer-events-none" />
 
         <div className="max-w-4xl mx-auto space-y-6 relative z-10 text-center">
           {/* Centered Top Announcement Pill */}
@@ -127,7 +127,7 @@ export default function LandingPage() {
         </div>
 
         {/* Protocol Trust Stream */}
-        <div className="pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-mono text-slate-300 relative z-10">
+        <div className="max-w-4xl mx-auto pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-mono text-slate-200 relative z-10">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-blue-400" />
             <span>Coinbase B20 Standard</span>
@@ -146,6 +146,9 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* 2-6. REST OF CONTENT IN CENTERED CONTAINER */}
+      <div className="max-w-6xl w-full mx-auto px-4 py-12 md:py-16 space-y-16 md:space-y-24">
 
       {/* 2. THE PROOF STAGE SIMULATOR (Bursar Order Lifecycle Signature) */}
       <section id="proof-stage" className="scroll-mt-24">
@@ -166,14 +169,14 @@ export default function LandingPage() {
       <section id="markets" className="space-y-6 pt-4 scroll-mt-24">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-medium">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-950/60 border border-white/20 text-blue-200 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
               <Terminal className="w-3.5 h-3.5" />
               <span>Live Markets Ticker</span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-zinc-100 tracking-tight mt-1">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mt-1 drop-shadow-md">
               Active Coinbase B20 Markets on Base
             </h2>
-            <p className="text-xs text-zinc-400 mt-1">
+            <p className="text-xs text-slate-200/90 mt-1 font-normal">
               Select any tokenized equity below to launch the protected execution ticket.
             </p>
           </div>
@@ -324,6 +327,7 @@ export default function LandingPage() {
 
       {/* 6. TECHNICAL FAQ */}
       <TechnicalFAQ />
+      </div>
     </div>
   );
 }

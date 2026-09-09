@@ -20,10 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} bg-[#0b1021] text-zinc-100 min-h-screen flex flex-col antialiased`}>
+      <body className={`${inter.className} min-h-screen text-zinc-100 flex flex-col antialiased relative`}>
         <Providers>
           <Header />
-          <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-8">
+          <main className="flex-1 w-full">
             {children}
           </main>
           <Footer />
