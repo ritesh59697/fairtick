@@ -32,7 +32,7 @@ export function BentoFeatures() {
         {/* Card 1: Multiplier Engine (Large 7 cols) */}
         <div className="md:col-span-7 rounded-2xl hairline-card hairline-frame p-6 space-y-4 relative overflow-hidden flex flex-col justify-between">
           <div className="space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-emerald-400">
+            <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-blue-400">
               <Scale className="w-5 h-5" />
             </div>
             <h3 className="text-lg font-bold text-zinc-100 tracking-tight">
@@ -47,7 +47,7 @@ export function BentoFeatures() {
           <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/10 font-mono text-xs space-y-2">
             <div className="flex items-center justify-between text-zinc-400 text-[11px]">
               <span>Base B20 Contract Standard</span>
-              <span className="text-emerald-400 font-semibold">1.0000x Multiplier Active</span>
+              <span className="text-blue-400 font-semibold">1.0000x Multiplier Active</span>
             </div>
             <div className="p-2.5 rounded-lg bg-zinc-900 border border-white/5 flex items-center justify-between">
               <span className="text-zinc-300">0.0443 Tokens</span>
@@ -60,7 +60,7 @@ export function BentoFeatures() {
         {/* Card 2: Zero Infinite Approvals (5 cols) */}
         <div className="md:col-span-5 rounded-2xl hairline-card hairline-frame p-6 space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-emerald-400">
+            <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-blue-400">
               <KeyRound className="w-5 h-5" />
             </div>
             <h3 className="text-lg font-bold text-zinc-100 tracking-tight">
@@ -72,9 +72,9 @@ export function BentoFeatures() {
           </div>
 
           <div className="p-3 bg-zinc-950/80 border border-white/10 rounded-xl flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
             <div className="text-[11px] font-mono text-zinc-300">
-              Allowance Target: <span className="text-emerald-400 font-bold">targetAmountUnits</span>
+              Allowance Target: <span className="text-blue-400 font-bold">targetAmountUnits</span>
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@ export function BentoFeatures() {
         {/* Card 3: Geo-Fencing Compliance Engine (5 cols) */}
         <div className="md:col-span-5 rounded-2xl hairline-card hairline-frame p-6 space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-emerald-400">
+            <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-blue-400">
               <Globe className="w-5 h-5" />
             </div>
             <h3 className="text-lg font-bold text-zinc-100 tracking-tight">
@@ -95,7 +95,7 @@ export function BentoFeatures() {
 
           <div className="p-3 bg-zinc-950/80 border border-white/10 rounded-xl flex items-center justify-between text-xs font-mono">
             <span className="text-zinc-400">OFAC / US Person Gate</span>
-            <span className="text-emerald-400 font-bold">Enforced (DEV Override Mode)</span>
+            <span className="text-blue-400 font-bold">Enforced (Active Mode)</span>
           </div>
         </div>
 
