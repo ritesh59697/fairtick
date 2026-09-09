@@ -7,3 +7,10 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+# Browser Usage & Desktop Non-Interference Rules
+
+- **NEVER connect to the user's active Chrome browser via CDP (`127.0.0.1:9222`) or open visible browser tabs for routine testing, UI verification, or screenshots.**
+- **NEVER steal desktop focus or disrupt the user's active applications.**
+- Only connect to live Chrome if the user explicitly requests an on-screen product demo or live browser pilot.
+- For all automated tests, screenshots, and visual auditing, use an isolated headless browser process (`headless: true`) or command-line build verification (`npm run build`).
