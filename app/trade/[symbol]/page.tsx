@@ -53,14 +53,15 @@ export default function TradeTicketPage({
   const [slippagePct, setSlippagePct] = useState<number>(0.5);
   const [afterHoursRiskAcknowledged, setAfterHoursRiskAcknowledged] = useState(false);
   const [forceStale, setForceStale] = useState(false);
+  const [forceOpen, setForceOpen] = useState(false);
   const [txSubmitting, setTxSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Fetch token market details
-  async function loadData(staleOverride = forceStale) {
+  async function loadData(staleOverride = forceStale, openOverride = forceOpen) {
     if (!stock) return;
     try {
-      const res = await fetch(`/api/markets?forceStale=${staleOverride}`);
+      const res = await fetch(`/api/markets?forceStale=${staleOverride}&forceOpen=${openOverride}`);
       const json = await res.json();
       const current = json.data?.find((m: TokenMarketSummary) => m.stock.symbol === stock.symbol);
       if (current) setMarket(current);
@@ -75,7 +76,7 @@ export default function TradeTicketPage({
     loadData();
     const intv = setInterval(() => loadData(), 15000);
     return () => clearInterval(intv);
-  }, [stock?.symbol, forceStale]);
+  }, [stock?.symbol, forceStale, forceOpen]);
 
   // Read User's Wallet Balances
   const { data: usdcBalanceData } = useReadContract({
@@ -280,25 +281,49 @@ export default function TradeTicketPage({
           Back to Markets
         </Link>
 
-        {/* Demo Force Stale Toggle */}
-        <div className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center gap-2.5 text-xs">
-          <span className="text-zinc-400 text-[11px]">Demo Stale Feed:</span>
-          <button
-            onClick={() => {
-              const next = !forceStale;
-              setForceStale(next);
-              loadData(next);
-            }}
-            className={`relative inline-flex h-4 w-7 items-center rounded-full transition-colors ${
-              forceStale ? "bg-amber-600" : "bg-zinc-700"
-            }`}
-          >
-            <span
-              className={`inline-block h-2.5 w-2.5 transform rounded-full bg-white transition-transform ${
-                forceStale ? "translate-x-3.5" : "translate-x-0.5"
+        <div className="flex items-center gap-2">
+          {/* Simulate Market Open Toggle */}
+          <div className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center gap-2.5 text-xs">
+            <span className="text-zinc-400 text-[11px]">Simulate Market Open:</span>
+            <button
+              onClick={() => {
+                const next = !forceOpen;
+                setForceOpen(next);
+                loadData(forceStale, next);
+              }}
+              className={`relative inline-flex h-4 w-7 items-center rounded-full transition-colors ${
+                forceOpen ? "bg-emerald-600" : "bg-zinc-700"
               }`}
-            />
-          </button>
+              title="Toggle between real-world after-hours (HELD) and simulated regular trading hours (LIVE)"
+            >
+              <span
+                className={`inline-block h-2.5 w-2.5 transform rounded-full bg-white transition-transform ${
+                  forceOpen ? "translate-x-3.5" : "translate-x-0.5"
+                }`}
+              />
+            </button>
+          </div>
+
+          {/* Demo Force Stale Toggle */}
+          <div className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center gap-2.5 text-xs">
+            <span className="text-zinc-400 text-[11px]">Demo Stale Feed:</span>
+            <button
+              onClick={() => {
+                const next = !forceStale;
+                setForceStale(next);
+                loadData(next, forceOpen);
+              }}
+              className={`relative inline-flex h-4 w-7 items-center rounded-full transition-colors ${
+                forceStale ? "bg-amber-600" : "bg-zinc-700"
+              }`}
+            >
+              <span
+                className={`inline-block h-2.5 w-2.5 transform rounded-full bg-white transition-transform ${
+                  forceStale ? "translate-x-3.5" : "translate-x-0.5"
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </div>
 

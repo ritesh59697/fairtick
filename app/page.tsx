@@ -26,12 +26,13 @@ export default function MarketListPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [forceStale, setForceStale] = useState(false);
+  const [forceOpen, setForceOpen] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
 
-  async function fetchMarkets(isManual = false, staleToggle = forceStale) {
+  async function fetchMarkets(isManual = false, staleToggle = forceStale, openToggle = forceOpen) {
     if (isManual) setIsRefreshing(true);
     try {
-      const res = await fetch(`/api/markets?forceStale=${staleToggle}`);
+      const res = await fetch(`/api/markets?forceStale=${staleToggle}&forceOpen=${openToggle}`);
       const json = await res.json();
       if (json.data && Array.isArray(json.data) && json.data.length > 0) {
         clientSideMarketsCache = json.data;
@@ -50,7 +51,7 @@ export default function MarketListPage() {
     fetchMarkets(false);
     const interval = setInterval(() => fetchMarkets(false), 20000);
     return () => clearInterval(interval);
-  }, [forceStale]);
+  }, [forceStale, forceOpen]);
 
   const priorityMarkets = markets.filter((m) => m.stock.isPriority);
   const secondaryMarkets = markets.filter((m) => !m.stock.isPriority);
@@ -77,6 +78,31 @@ export default function MarketListPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+            {/* Market Hours Status & Simulation Toggle */}
+            <div className="px-3.5 py-2 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2">
+                <Clock className="w-3.5 h-3.5 text-zinc-400" />
+                <span className="text-zinc-300 font-medium">Simulate Market Open:</span>
+              </div>
+              <button
+                onClick={() => {
+                  const next = !forceOpen;
+                  setForceOpen(next);
+                  fetchMarkets(false, forceStale, next);
+                }}
+                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                  forceOpen ? "bg-emerald-600" : "bg-zinc-700"
+                }`}
+                title="Toggle between real-world after-hours (HELD) and simulated regular trading hours (LIVE)"
+              >
+                <span
+                  className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
+                    forceOpen ? "translate-x-4" : "translate-x-1"
+                  }`}
+                />
+              </button>
+            </div>
+
             {/* Demo Force Stale Toggle for Loom Presentation */}
             <div className="px-3.5 py-2 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center justify-between gap-3 text-xs">
               <div className="flex items-center gap-2">
@@ -87,7 +113,7 @@ export default function MarketListPage() {
                 onClick={() => {
                   const next = !forceStale;
                   setForceStale(next);
-                  fetchMarkets(next);
+                  fetchMarkets(false, next, forceOpen);
                 }}
                 className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
                   forceStale ? "bg-amber-600" : "bg-zinc-700"

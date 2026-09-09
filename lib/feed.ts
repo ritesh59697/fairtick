@@ -63,7 +63,8 @@ export function evaluateFeedData(
   answer: bigint,
   updatedAt: bigint,
   feedDecimals: number = 8,
-  forceStaleDemo: boolean = false
+  forceStaleDemo: boolean = false,
+  forceOpenDemo: boolean = false
 ): FeedResult {
   const nowSec = Math.floor(Date.now() / 1000);
   const price = Number(answer) / 10 ** feedDecimals;
@@ -92,10 +93,10 @@ export function evaluateFeedData(
     };
   }
 
-  const marketOpen = isUsMarketOpen();
+  const marketOpen = forceOpenDemo || isUsMarketOpen();
 
   if (marketOpen) {
-    if (ageSeconds > STALENESS_THRESHOLD_SECONDS) {
+    if (!forceOpenDemo && ageSeconds > STALENESS_THRESHOLD_SECONDS) {
       return {
         priceUsd: price,
         updatedAt: updatedSec,
@@ -109,7 +110,9 @@ export function evaluateFeedData(
       priceUsd: price,
       updatedAt: updatedSec,
       status: "LIVE",
-      statusReason: `Live feed: updated ${Math.max(1, Math.floor(ageSeconds / 60))}m ago`,
+      statusReason: forceOpenDemo
+        ? "Simulated Regular Market Hours (9:30 AM - 4:00 PM ET)"
+        : `Live feed: updated ${Math.max(1, Math.floor(ageSeconds / 60))}m ago`,
       roundId: "0",
       isTradeSafe: true,
     };
@@ -119,7 +122,7 @@ export function evaluateFeedData(
       priceUsd: price,
       updatedAt: updatedSec,
       status: "HELD",
-      statusReason: "FEED HELD — US market closed. Trading against last official close.",
+      statusReason: "FEED HELD — US market closed (after-hours). Trading against last official close.",
       roundId: "0",
       isTradeSafe: false, // Locked unless user toggles after-hours acknowledgement
     };

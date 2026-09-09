@@ -39,6 +39,7 @@ const CACHE_TTL_MS = 15_000; // 15 seconds
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const forceStale = searchParams.get("forceStale") === "true";
+  const forceOpen = searchParams.get("forceOpen") === "true";
 
   const now = Date.now();
 
@@ -53,6 +54,16 @@ export async function GET(request: Request) {
           status: "STALE",
           statusReason: "Simulated Demo Staleness (>30m threshold)",
           isTradeSafe: false,
+        },
+      }));
+    } else if (forceOpen) {
+      returnData = returnData.map((item) => ({
+        ...item,
+        feed: {
+          ...item.feed,
+          status: "LIVE",
+          statusReason: "Simulated Regular Market Hours (9:30 AM - 4:00 PM ET)",
+          isTradeSafe: true,
         },
       }));
     }
@@ -89,7 +100,7 @@ export async function GET(request: Request) {
           const answer = roundData[1];
           const updatedAt = roundData[3];
 
-          feedResult = evaluateFeedData(answer, updatedAt, stock.feedDecimals, forceStale);
+          feedResult = evaluateFeedData(answer, updatedAt, stock.feedDecimals, forceStale, forceOpen);
           fairPriceUsd = feedResult.priceUsd;
         } catch (e: any) {
           console.error("Feed error for", stock.symbol, stock.feedAddress, e.shortMessage || e.message);
@@ -195,6 +206,16 @@ export async function GET(request: Request) {
         status: "STALE",
         statusReason: "Simulated Demo Staleness (>30m threshold)",
         isTradeSafe: false,
+      },
+    }));
+  } else if (forceOpen) {
+    returnData = returnData.map((item) => ({
+      ...item,
+      feed: {
+        ...item.feed,
+        status: "LIVE",
+        statusReason: "Simulated Regular Market Hours (9:30 AM - 4:00 PM ET)",
+        isTradeSafe: true,
       },
     }));
   }
