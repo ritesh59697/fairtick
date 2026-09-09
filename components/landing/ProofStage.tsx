@@ -48,7 +48,7 @@ export function ProofStage() {
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-zinc-800/80 pb-5">
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -64,23 +64,46 @@ export function ProofStage() {
           </p>
         </div>
 
-        {/* Step Tabs */}
-        <div className="flex items-center gap-1 bg-zinc-950/80 border border-zinc-800 p-1 rounded-xl overflow-x-auto">
-          {steps.map((s, idx) => (
+        <div className="hidden sm:flex items-center gap-2 self-start md:self-auto">
+          <span className="text-[11px] font-mono text-zinc-400 bg-zinc-900 border border-zinc-800 px-3 py-1 rounded-lg">
+            Base Mainnet (8453)
+          </span>
+        </div>
+      </div>
+
+      {/* Step Tabs (Full-width 4-column grid, responsive, no truncation) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+        {steps.map((s, idx) => {
+          const isActive = activeStep === idx;
+          return (
             <button
               key={s.num}
               onClick={() => setActiveStep(idx)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 whitespace-nowrap ${
-                activeStep === idx
-                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
-                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850"
+              className={`p-3 rounded-xl border text-left transition-all relative group cursor-pointer ${
+                isActive
+                  ? "bg-blue-600/15 border-blue-500/60 shadow-lg shadow-blue-500/10 text-white"
+                  : "bg-zinc-900/60 border-zinc-800/80 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200"
               }`}
             >
-              <span className="opacity-60 font-mono text-[10px]">{s.num}</span>
-              <span>{s.title}</span>
+              <div className="flex items-center justify-between mb-1.5">
+                <span
+                  className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                    isActive ? "bg-blue-500/30 text-blue-300" : "bg-zinc-800 text-zinc-400"
+                  }`}
+                >
+                  Step {s.num}
+                </span>
+                {isActive && <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />}
+              </div>
+              <div className={`text-xs font-bold leading-snug ${isActive ? "text-zinc-100" : "text-zinc-300"}`}>
+                {s.title}
+              </div>
+              <div className="text-[11px] text-zinc-500 truncate mt-1">
+                {s.desc}
+              </div>
             </button>
-          ))}
-        </div>
+          );
+        })}
       </div>
 
       {/* Stage Panel Content */}

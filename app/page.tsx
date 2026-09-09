@@ -154,21 +154,27 @@ export default function LandingPage() {
       </section>
 
       {/* 2. THE PROOF STAGE SIMULATOR (Bursar Order Lifecycle Signature) */}
-      <ProofStage />
+      <section id="proof-stage" className="scroll-mt-24">
+        <ProofStage />
+      </section>
 
       {/* 3. CLARASIGHT-STYLE BENTO GRID (Deep Feature Breakdown) */}
-      <BentoFeatures />
+      <section id="features" className="scroll-mt-24">
+        <BentoFeatures />
+      </section>
 
       {/* 4. COMPARISON MATRIX (Blind DEX vs FairTick) */}
-      <ComparisonMatrix />
+      <section id="comparison" className="scroll-mt-24">
+        <ComparisonMatrix />
+      </section>
 
       {/* 5. LIVE MARKET OVERVIEW (Interactive Ticker Terminal) */}
       <section id="markets" className="space-y-6 pt-4 scroll-mt-24">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-medium">
               <Terminal className="w-3.5 h-3.5" />
-              <span>Live Terminal</span>
+              <span>Live Markets Ticker</span>
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-zinc-100 tracking-tight mt-1">
               Active Coinbase B20 Markets on Base
@@ -178,11 +184,19 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Toggles using Custom Uiverse component */}
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="px-3.5 py-2 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center gap-2.5 text-xs">
-              <Clock className="w-3.5 h-3.5 text-zinc-400" />
-              <span className="text-zinc-300 font-medium">Simulate Market Open:</span>
+          {/* Controls & Terminal CTA */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            <Link
+              href="/markets"
+              className="px-3.5 py-2 rounded-xl bg-blue-600/15 hover:bg-blue-600/25 border border-blue-500/30 text-blue-400 text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
+            >
+              <span>Full Terminal</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
+
+            <div className="px-3 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center gap-2 text-xs">
+              <Clock className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+              <span className="text-zinc-300 font-medium text-[11px]">Open:</span>
               <ToggleSwitch
                 checked={forceOpen}
                 onChange={(next) => {
@@ -194,9 +208,9 @@ export default function LandingPage() {
               />
             </div>
 
-            <div className="px-3.5 py-2 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center gap-2.5 text-xs">
-              <Sliders className="w-3.5 h-3.5 text-zinc-400" />
-              <span className="text-zinc-300 font-medium">Demo Stale Feed:</span>
+            <div className="px-3 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center gap-2 text-xs">
+              <Sliders className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+              <span className="text-zinc-300 font-medium text-[11px]">Stale:</span>
               <ToggleSwitch
                 checked={forceStale}
                 onChange={(next) => {
@@ -211,7 +225,7 @@ export default function LandingPage() {
             <button
               onClick={() => fetchMarkets(true)}
               disabled={isRefreshing}
-              className="px-3.5 py-2 rounded-xl bg-zinc-850 hover:bg-zinc-800 border border-zinc-750 text-zinc-300 text-xs font-semibold transition flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-xl bg-zinc-850 hover:bg-zinc-800 border border-zinc-750 text-zinc-300 text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin text-blue-400" : ""}`} />
               <span>Refresh</span>
@@ -316,54 +330,6 @@ export default function LandingPage() {
 
       {/* 6. TECHNICAL FAQ */}
       <TechnicalFAQ />
-
-      {/* 7. INSTITUTIONAL FOOTER */}
-      <footer className="pt-10 border-t border-zinc-800/80 space-y-6 text-xs text-zinc-500">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-zinc-200">FairTick</span>
-              <span className="text-[10px] font-mono bg-zinc-850 px-1.5 py-0.5 rounded text-zinc-400">
-                Base B20 Execution Standard
-              </span>
-            </div>
-            <p className="text-[11px] text-zinc-400">
-              Fair price discovery and oracle-protected execution for Coinbase Tokenized Stocks on Base.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-4 font-mono text-[11px]">
-            <a
-              href="https://docs.base.org/specifications/b20/tokenized-stocks-on-base"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-zinc-300 transition underline"
-            >
-              Base B20 Specification
-            </a>
-            <a
-              href="https://github.com/ritesh59697/fairtick"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-zinc-300 transition underline"
-            >
-              GitHub Source
-            </a>
-            <a
-              href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-zinc-300 transition underline"
-            >
-              Verified Tx Receipt
-            </a>
-          </div>
-        </div>
-
-        <div className="p-4 rounded-xl bg-zinc-950/60 border border-zinc-850 text-[11px] leading-relaxed text-zinc-500">
-          FairTick is an open-source execution routing interface for existing Coinbase Tokenized Stocks (B20) on Base. It is not a broker-dealer, not an offer of securities, and not available to US persons. Tokenized stocks are issued by Coinbase and only available to eligible users in permitted non-US jurisdictions.
-        </div>
-      </footer>
     </div>
   );
 }

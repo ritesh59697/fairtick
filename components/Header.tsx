@@ -5,10 +5,12 @@ import { BASE_CHAIN_ID } from "@/lib/tokens";
 import { useGeoCheck } from "@/lib/geo";
 import { ShieldAlert, ShieldCheck, ExternalLink, Globe, AlertTriangle, Wallet, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BUILDER_CODE_ENV } from "@/lib/attribution";
 import { useAppWallet } from "@/lib/wallet-context";
 
 export function Header() {
+  const pathname = usePathname();
   const { address, isConnected, isDemo, openModal, disconnectAll } = useAppWallet();
   const defaultChainId = useChainId();
   const { chainId: walletChainId } = useAccount();
@@ -17,6 +19,8 @@ export function Header() {
   const { isBlocked, country, simulatedUs, toggleSimulateUs } = useGeoCheck();
 
   const isWrongNetwork = !isDemo && isConnected && chainId !== BASE_CHAIN_ID;
+  const isOverviewActive = pathname === "/";
+  const isMarketsActive = pathname.startsWith("/markets");
 
   return (
     <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
@@ -90,20 +94,35 @@ export function Header() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-5 text-xs font-medium text-zinc-400">
-            <Link href="/" className="hover:text-zinc-200 transition">
+          <nav className="hidden md:flex items-center gap-2 text-xs font-medium">
+            <Link
+              href="/"
+              className={`px-3 py-1.5 rounded-lg transition ${
+                isOverviewActive
+                  ? "bg-zinc-850 text-zinc-100 font-semibold border border-zinc-750 shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
+              }`}
+            >
               Overview
             </Link>
-            <Link href="/markets" className="text-blue-400 hover:text-blue-300 font-semibold transition">
-              Markets Terminal
+            <Link
+              href="/markets"
+              className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 ${
+                isMarketsActive
+                  ? "bg-blue-500/15 text-blue-400 font-semibold border border-blue-500/30 shadow-sm"
+                  : "text-zinc-400 hover:text-blue-300 hover:bg-zinc-900"
+              }`}
+            >
+              <span>Markets Terminal</span>
             </Link>
             <a
               href="https://docs.base.org/specifications/b20/tokenized-stocks-on-base"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-zinc-200 transition inline-flex items-center gap-1"
+              className="px-3 py-1.5 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 rounded-lg transition inline-flex items-center gap-1"
             >
-              B20 Specs <ExternalLink className="w-3 h-3" />
+              <span>B20 Specs</span>
+              <ExternalLink className="w-3 h-3 text-zinc-500" />
             </a>
           </nav>
         </div>
