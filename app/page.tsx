@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { StockLogo } from "@/components/StockLogo";
 import { BaseLogo } from "@/components/BaseLogo";
+import { CoinbaseLogo, ChainlinkLogo, UniswapLogo } from "@/components/CryptoLogos";
 import { ToggleSwitch } from "@/components/ToggleSwitch";
 import { ProofStage } from "@/components/landing/ProofStage";
 import { BentoFeatures } from "@/components/landing/BentoFeatures";
@@ -145,23 +146,23 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Protocol Trust Stream with Real Lucide & Base Icons */}
-        <div className="max-w-4xl mx-auto pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-mono text-zinc-300 relative z-10">
-          <div className="flex items-center gap-2">
-            <BadgeCheck className="w-4 h-4 text-emerald-400" />
-            <span>Coinbase B20 Standard</span>
+        {/* Protocol Trust Stream with Real Crypto Logos */}
+        <div className="max-w-4xl mx-auto pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-zinc-300 relative z-10">
+          <div className="flex items-center gap-2.5">
+            <CoinbaseLogo className="w-4 h-4 rounded-full shadow-sm" />
+            <span className="font-medium tracking-tight text-zinc-200">Coinbase B20 Standard</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Radio className="w-4 h-4 text-sky-400" />
-            <span>Chainlink Equity Oracles</span>
+          <div className="flex items-center gap-2.5">
+            <ChainlinkLogo className="w-4 h-4" />
+            <span className="font-medium tracking-tight text-zinc-200">Chainlink Equity Oracles</span>
           </div>
-          <div className="flex items-center gap-2">
-            <ArrowLeftRight className="w-4 h-4 text-indigo-400" />
-            <span>Uniswap SwapRouter02</span>
+          <div className="flex items-center gap-2.5">
+            <UniswapLogo className="w-4 h-4 rounded-full shadow-sm" />
+            <span className="font-medium tracking-tight text-zinc-200">Uniswap SwapRouter02</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <BaseLogo className="w-4 h-4" fill="#0052FF" />
-            <span>Base ERC-8021 Suffix</span>
+            <span className="font-medium tracking-tight text-zinc-200">Base ERC-8021 Suffix</span>
           </div>
         </div>
       </section>
