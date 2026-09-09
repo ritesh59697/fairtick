@@ -66,88 +66,82 @@ export default function LandingPage() {
 
   return (
     <div className="space-y-16 md:space-y-24 py-6 md:py-10">
-      {/* 1. HERO SECTION (Bursar Dusk Gradient + Clarasight Hero Badge) */}
-      <section className="relative rounded-3xl bg-dusk-mesh hairline-frame p-8 md:p-14 overflow-hidden space-y-8">
-        {/* Subtle radial highlights */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+      {/* 1. HERO SECTION (Clarasight Luminous Ultramarine Lighting + Pure White Geometric Typography) */}
+      <section className="relative rounded-3xl bg-clarasight-hero hairline-frame p-8 sm:p-12 md:p-16 overflow-hidden space-y-8">
+        {/* Clarasight dot matrix watermark background */}
+        <div className="absolute inset-0 clarasight-dot-pattern pointer-events-none opacity-40" />
 
-        <div className="max-w-3xl space-y-6 relative z-10">
-          {/* Eyebrow with live pulse dot */}
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-750 text-xs font-mono font-medium text-zinc-300 shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-zinc-400">BASE MAINNET B20</span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-blue-400 font-semibold">CHAINLINK EQUITIES GUARDRAIL</span>
-          </div>
+        {/* Ambient illumination glow spots */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-blue-500/25 rounded-full blur-[100px] pointer-events-none" />
 
-          {/* Display Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.08]">
-            Don’t overpay for{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400">
-              onchain Apple.
-            </span>
-          </h1>
-
-          {/* Lede paragraph */}
-          <p className="text-sm md:text-base text-zinc-300 leading-relaxed max-w-2xl font-normal">
-            Coinbase B20 tokenized stocks trade 24/7 on Base, but equity exchanges sleep on nights and weekends.
-            FairTick automatically verifies Chainlink feed freshness, halts swaps when off-market DEX markups exceed{" "}
-            <strong className="text-white font-semibold">50 bps</strong>, computes stock split multipliers, and routes execution through Uniswap V3 with native Base ERC-8021 builder attribution.
-          </p>
-
-          {/* Action CTAs with Double-Label Slide Effect */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Link
-              href="#markets"
-              className="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-xl shadow-blue-600/25 transition btn-slide"
-            >
-              <div className="btn-inner">
-                <span>Launch Live Terminal</span>
-                <span>Trade B20 Equities</span>
-              </div>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
-
-            <Link
-              href="/markets"
-              className="px-6 py-3.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-semibold text-sm transition inline-flex items-center gap-2"
-            >
-              <Terminal className="w-4 h-4 text-blue-400" />
-              <span>Full Market Book</span>
-            </Link>
-
+        <div className="max-w-4xl mx-auto space-y-6 relative z-10 text-center">
+          {/* Centered Top Announcement Pill */}
+          <div className="flex justify-center">
             <a
               href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
               target="_blank"
               rel="noreferrer"
-              className="px-4 py-3.5 rounded-xl text-zinc-400 hover:text-zinc-200 text-xs font-mono font-medium transition inline-flex items-center gap-1.5"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/70 border border-blue-400/30 text-xs text-blue-200 hover:text-white hover:border-blue-400/50 transition backdrop-blur-md shadow-lg shadow-blue-950/50"
             >
-              <span>Verified Onchain Tx (Sepolia)</span>
-              <ExternalLink className="w-3.5 h-3.5" />
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+              <span>FairTick launches Base B20 Guardrails</span>
+              <span className="text-zinc-600">|</span>
+              <span className="text-blue-300 font-semibold inline-flex items-center gap-1">
+                Verified onchain <ChevronRight className="w-3 h-3" />
+              </span>
             </a>
+          </div>
+
+          {/* Clarasight Multi-line Headline: Crisp Pure White, Authoritative, Centered */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.12] text-center max-w-4xl mx-auto">
+            The execution guardrail
+            <br className="hidden sm:block" />
+            {" "}for onchain Apple and
+            <br className="hidden sm:block" />
+            {" "}tokenized US stocks
+          </h1>
+
+          {/* Centered Subheadline in Soft Periwinkle */}
+          <p className="text-sm sm:text-base md:text-lg text-slate-200/90 leading-relaxed text-center max-w-2xl mx-auto font-normal">
+            Purpose-built operating guardrails for Base B20 tokenized equities. Defending against weekend spread drift, uncalibrated stock splits, and predatory DEX markups.
+          </p>
+
+          {/* Centered Action Pill Buttons (Exact Clarasight CTA Architecture) */}
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
+            <Link
+              href="/markets"
+              className="clarasight-pill-btn px-8 py-3.5 bg-white hover:bg-slate-100 text-slate-950 font-bold text-sm shadow-xl shadow-blue-950/40 inline-flex items-center gap-2"
+            >
+              <span>Launch Terminal</span>
+              <ArrowRight className="w-4 h-4 text-slate-900" />
+            </Link>
+
+            <Link
+              href="#proof-stage"
+              className="clarasight-pill-btn px-8 py-3.5 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-sm backdrop-blur-md inline-flex items-center gap-1.5"
+            >
+              <span>See how it works</span>
+              <ChevronRight className="w-4 h-4 text-blue-200" />
+            </Link>
           </div>
         </div>
 
         {/* Protocol Trust Stream */}
-        <div className="pt-6 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono text-zinc-400 relative z-10">
+        <div className="pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-mono text-slate-300 relative z-10">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-blue-500" />
+            <div className="w-2 h-2 rounded-full bg-blue-400" />
             <span>Coinbase B20 Standard</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-purple-500" />
+            <div className="w-2 h-2 rounded-full bg-indigo-400" />
             <span>Chainlink Equity Feeds</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-500" />
+            <div className="w-2 h-2 rounded-full bg-emerald-400" />
             <span>SwapRouter02 Routing</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-sky-500" />
+            <div className="w-2 h-2 rounded-full bg-sky-400" />
             <span>Base ERC-8021 Suffix</span>
           </div>
         </div>

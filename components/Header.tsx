@@ -97,20 +97,20 @@ export function Header() {
           <nav className="hidden md:flex items-center gap-2 text-xs font-medium">
             <Link
               href="/"
-              className={`px-3 py-1.5 rounded-lg transition ${
+              className={`px-3.5 py-1.5 rounded-full transition ${
                 isOverviewActive
-                  ? "bg-zinc-850 text-zinc-100 font-semibold border border-zinc-750 shadow-sm"
-                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
+                  ? "bg-zinc-850 text-zinc-100 font-semibold border border-zinc-700 shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60"
               }`}
             >
               Overview
             </Link>
             <Link
               href="/markets"
-              className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full transition flex items-center gap-1.5 ${
                 isMarketsActive
-                  ? "bg-blue-500/15 text-blue-400 font-semibold border border-blue-500/30 shadow-sm"
-                  : "text-zinc-400 hover:text-blue-300 hover:bg-zinc-900"
+                  ? "bg-blue-500/20 text-blue-300 font-semibold border border-blue-400/40 shadow-sm"
+                  : "text-zinc-400 hover:text-blue-300 hover:bg-zinc-900/60"
               }`}
             >
               <span>Markets Terminal</span>
@@ -119,7 +119,7 @@ export function Header() {
               href="https://docs.base.org/specifications/b20/tokenized-stocks-on-base"
               target="_blank"
               rel="noreferrer"
-              className="px-3 py-1.5 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 rounded-lg transition inline-flex items-center gap-1"
+              className="px-3.5 py-1.5 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60 rounded-full transition inline-flex items-center gap-1"
             >
               <span>B20 Specs</span>
               <ExternalLink className="w-3 h-3 text-zinc-500" />
@@ -131,12 +131,12 @@ export function Header() {
           {isWrongNetwork ? (
             <button
               onClick={() => switchChain({ chainId: BASE_CHAIN_ID })}
-              className="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition"
+              className="px-3.5 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 rounded-full text-xs font-semibold transition cursor-pointer"
             >
               Switch to Base
             </button>
           ) : (
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-300">
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-zinc-900/90 border border-zinc-800 rounded-full text-xs text-zinc-300">
               <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
               <span>Base Mainnet</span>
             </div>
@@ -145,19 +145,19 @@ export function Header() {
           {isConnected ? (
             <div className="flex items-center gap-2">
               {isDemo ? (
-                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-xs text-emerald-300">
+                <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-xs text-emerald-300">
                   <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
                   <span className="font-semibold">Demo Mode</span>
                   <span className="font-mono text-[10px] text-emerald-200 hidden sm:inline">($500 USDC)</span>
                 </div>
               ) : (
-                <div className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-xs font-mono text-zinc-300">
+                <div className="px-3.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-full text-xs font-mono text-zinc-300">
                   {address?.slice(0, 6)}...{address?.slice(-4)}
                 </div>
               )}
               <button
                 onClick={() => disconnectAll()}
-                className="px-2.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs transition"
+                className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-full text-xs transition cursor-pointer"
               >
                 Disconnect
               </button>
@@ -165,7 +165,7 @@ export function Header() {
           ) : (
             <button
               onClick={openModal}
-              className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold transition shadow-md shadow-blue-600/20 flex items-center gap-1.5"
+              className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full text-xs font-semibold transition shadow-lg shadow-blue-600/30 flex items-center gap-1.5 cursor-pointer"
             >
               <Wallet className="w-3.5 h-3.5" />
               Connect Wallet
