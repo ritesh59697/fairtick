@@ -406,22 +406,22 @@ export default function LandingPage() {
           </section>
 
           {/* SECTION 3: INTERACTIVE EXECUTION SIMULATOR (Proof Stage) */}
-          <section id="proof-stage" className="scroll-mt-24">
+          <section id="proof-stage" className="scroll-mt-32">
             <ProofStage />
           </section>
 
           {/* SECTION 4: COMPARISON MATRIX (Blind DEX vs FairTick) */}
-          <section id="comparison" className="scroll-mt-24">
+          <section id="comparison" className="scroll-mt-32">
             <ComparisonMatrix />
           </section>
 
           {/* SECTION 5: CORE ARCHITECTURE (Bento Grid) */}
-          <section id="features" className="scroll-mt-24">
+          <section id="features" className="scroll-mt-32">
             <BentoFeatures />
           </section>
 
           {/* SECTION 6: TECHNICAL FAQ */}
-          <section id="faq" className="scroll-mt-24">
+          <section id="faq" className="scroll-mt-32">
             <TechnicalFAQ />
           </section>
 

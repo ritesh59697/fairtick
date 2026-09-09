@@ -2,161 +2,341 @@
 
 import React, { useState } from "react";
 import {
-  Check,
-  X,
-  ShieldAlert,
-  ShieldCheck,
-  Sparkles,
   Clock,
   Split,
   KeyRound,
   Route,
   Globe,
   CheckCircle2,
-  XCircle,
+  AlertTriangle,
+  Layers,
+  ArrowRight,
+  ShieldCheck,
+  ShieldAlert,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export function ComparisonMatrix() {
-  const [selectedView, setSelectedView] = useState<"both" | "fairtick" | "naive">("both");
+  const [activeTab, setActiveTab] = useState<"fairtick" | "blind" | "sidebyside">("fairtick");
 
-  const rows = [
+  const capabilities = [
     {
-      label: "After-Hours Spread Defense",
-      desc: "Protects buyers when traditional US stock exchanges are closed on nights & weekends",
+      id: "spread",
+      title: "After-Hours Spread Defense",
       icon: Clock,
-      naive: {
-        supported: false,
-        text: "Blind execution. Swaps fill at arbitrary +50 to +200 bps predatory DEX markups.",
+      category: "Pricing & Slippage",
+      blind: {
+        headline: "Uncalibrated Blind Swaps",
+        detail: "Executes at arbitrary AMM liquidity curve prices. When US equity markets close on nights and weekends, thin liquidity pools regularly drift +50 to +200 bps above real equity value, causing immediate capital gouging.",
+        status: "Exposed to +200 bps drift",
+        severity: "danger",
       },
       fairtick: {
-        supported: true,
-        text: "Automated 50 bps safety lockout against official Chainlink equity benchmark.",
+        headline: "Chainlink Oracle Safety Gate",
+        detail: "Continuously checks official Chainlink equity total-return feeds on Base. If pool price deviates by more than +50 bps from the official closing print, execution automatically locks with clear warning telemetry.",
+        status: "Hard 50 bps Circuit Breaker",
+        severity: "success",
       },
     },
     {
-      label: "Stock Split & Multiplier Awareness",
-      desc: "Handles corporate stock splits without balance miscalculation",
+      id: "split",
+      title: "Corporate Stock Split Multiplier",
       icon: Split,
-      naive: {
-        supported: false,
-        text: "Assumes 1 Token = 1 Share forever. Misquotes equity exposure post-split.",
+      category: "Asset Calibration",
+      blind: {
+        headline: "1:1 Balance Assumption",
+        detail: "Naive DEX interfaces assume 1 token = 1 share perpetually. When a company executes a 4:1 stock split, standard routers quote without scaling, causing severe unit miscalculations.",
+        status: "Unsynchronized Share Value",
+        severity: "danger",
       },
       fairtick: {
-        supported: true,
-        text: "Reads tokenToSharesMultiplier() onchain to quote exact scaled equity shares.",
+        headline: "Onchain tokenToSharesMultiplier()",
+        detail: "Directly reads the Coinbase B20 token contract multiplier on Base to compute exact effective equity share quantities, ensuring true economic parity post-split.",
+        status: "Continuous Multiplier Sync",
+        severity: "success",
       },
     },
     {
-      label: "Wallet Approval Safety",
-      desc: "Minimizes smart contract balance exposure in Web3 wallets",
+      id: "approval",
+      title: "Smart Contract Allowance Scope",
       icon: KeyRound,
-      naive: {
-        supported: false,
-        text: "Requests maxUint256 (infinite dollar approval), exposing your wallet funds.",
+      category: "Wallet Security",
+      blind: {
+        headline: "Infinite Dollar Approval (maxUint256)",
+        detail: "Most DEX aggregators prompt users to approve infinite funds (2^256 - 1) for convenience. This leaves your entire wallet's USDC balance exposed to potential future smart contract exploits.",
+        status: "Infinite Account Exposure",
+        severity: "danger",
       },
       fairtick: {
-        supported: true,
-        text: "Strict exact-amount approvals only (e.g. exactly 5.00 USDC).",
+        headline: "Exact Single-Transaction Approvals",
+        detail: "FairTick never requests infinite approvals. Every permit or ERC-20 approval is strictly scoped to the exact trade amount (e.g. exactly 5.000000 USDC), leaving zero residual allowance.",
+        status: "Zero Residual Allowance",
+        severity: "success",
       },
     },
     {
-      label: "Onchain Execution Standard",
-      desc: "Target router and attribution format",
+      id: "routing",
+      title: "Attribution & Execution Router",
       icon: Route,
-      naive: {
-        supported: false,
-        text: "Non-standard routers with added protocol cuts and opaque slippage.",
+      category: "Protocol Integrity",
+      blind: {
+        headline: "Opaque Routing & Extra Cuts",
+        detail: "Aggregators frequently route through proprietary middleman contracts that take opaque fees, insert intermediary hops, and introduce sandwich attack vectors.",
+        status: "Intermediary Fee Layers",
+        severity: "danger",
       },
       fairtick: {
-        supported: true,
-        text: "Direct Uniswap V3 SwapRouter02 with standard Base ERC-8021 attribution.",
+        headline: "Uniswap V3 + Base ERC-8021 Suffix",
+        detail: "Direct atomic execution via official Uniswap V3 SwapRouter02 on Base with zero protocol hop fees. Appends standard ERC-8021 builder attribution directly to calldata.",
+        status: "Direct Atomic SwapRouter02",
+        severity: "success",
       },
     },
     {
-      label: "Regulatory Non-US Geofencing",
-      desc: "Mandatory compliance for Coinbase B20 tokenized security tokens",
+      id: "geofence",
+      title: "Regulatory Compliance & Jurisdiction",
       icon: Globe,
-      naive: {
-        supported: false,
-        text: "Zero jurisdiction awareness. Leaves US users exposed to illicit transaction attempts.",
+      category: "Compliance",
+      blind: {
+        headline: "Zero Compliance Verification",
+        detail: "Leaves users in restricted jurisdictions (US and OFAC sanctioned regions) vulnerable to interacting with tokenized security products in violation of terms.",
+        status: "Unverified Jurisdiction",
+        severity: "danger",
       },
       fairtick: {
-        supported: true,
-        text: "Automated fail-closed geo-fencing (blocks US IPs and OFAC sanctioned regions).",
+        headline: "Fail-Closed Automated Geofencing",
+        detail: "Edge-computed IP verification blocks US and sanctioned IP requests before trade tickets can generate, preserving regulatory safety for Coinbase B20 assets.",
+        status: "Enforced Fail-Closed Edge Check",
+        severity: "success",
       },
     },
   ];
 
   return (
-    <section className="space-y-6">
-      <div className="text-center max-w-2xl mx-auto space-y-2">
-        <Badge variant="outline" className="gap-1.5 px-3.5 py-1 text-xs font-mono font-medium backdrop-blur-md shadow-sm">
-          <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
-          <span>The FairTick Standard</span>
-        </Badge>
-        <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow-md">
-          Why Blind DEX Swaps Cost You Money
-        </h2>
-        <p className="text-xs md:text-sm text-zinc-400 leading-relaxed font-normal">
-          See how FairTick transforms onchain equity trading from high-risk speculation into institutional-grade execution.
+    <section className="space-y-8">
+      {/* Header */}
+      <div className="text-center max-w-2xl mx-auto space-y-3">
+        <p className="text-xs font-mono tracking-widest text-zinc-400 uppercase">
+          03 / EXECUTION INTEGRITY
         </p>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+          How FairTick Protects Your Capital
+        </h2>
+        <p className="text-sm text-zinc-400 leading-relaxed font-normal">
+          Toggle between standard blind DEX execution and FairTick’s active guardrail architecture.
+        </p>
+
+        {/* Interactive Segmented Switcher (Arrakis Pill Style) */}
+        <div className="inline-flex items-center p-1 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md mt-2">
+          <button
+            onClick={() => setActiveTab("fairtick")}
+            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+              activeTab === "fairtick"
+                ? "bg-white text-zinc-950 font-bold shadow-md shadow-black/30"
+                : "text-zinc-400 hover:text-white"
+            }`}
+          >
+            FairTick Guarded
+          </button>
+          <button
+            onClick={() => setActiveTab("blind")}
+            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+              activeTab === "blind"
+                ? "bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold shadow-md shadow-black/30"
+                : "text-zinc-400 hover:text-white"
+            }`}
+          >
+            Standard Blind Swap
+          </button>
+          <button
+            onClick={() => setActiveTab("sidebyside")}
+            className={`hidden sm:inline-block px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+              activeTab === "sidebyside"
+                ? "bg-white/[0.12] text-white font-bold border border-white/20 shadow-md shadow-black/30"
+                : "text-zinc-400 hover:text-white"
+            }`}
+          >
+            Side-by-Side
+          </button>
+        </div>
       </div>
 
-      <div className="rounded-2xl hairline-card hairline-frame overflow-hidden">
-        {/* Desktop Table Header */}
-        <div className="hidden md:grid md:grid-cols-12 border-b border-white/10 bg-zinc-950/80 text-xs font-semibold">
-          <div className="md:col-span-5 p-4 text-zinc-400">Execution Capability</div>
-          <div className="md:col-span-3 p-4 text-rose-400/90 flex items-center gap-1.5 border-l border-white/10">
-            <XCircle className="w-3.5 h-3.5" />
-            <span>Blind Naive DEX Swap</span>
-          </div>
-          <div className="md:col-span-4 p-4 text-emerald-400 flex items-center gap-1.5 border-l border-white/10 bg-white/[0.03]">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>FairTick Protected Execution</span>
-          </div>
-        </div>
-
-        <div className="divide-y divide-white/5">
-          {rows.map((row, i) => {
-            const RowIcon = row.icon;
-            return (
-              <div
-                key={i}
-                className="grid grid-cols-1 md:grid-cols-12 p-4 md:p-5 gap-4 items-center hover:bg-white/[0.02] transition"
-              >
-                <div className="md:col-span-5 space-y-1.5">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center shrink-0">
-                      <RowIcon className="w-3.5 h-3.5 text-zinc-300" />
-                    </div>
-                    <span className="text-sm font-bold text-zinc-100">{row.label}</span>
-                  </div>
-                  <div className="text-xs text-zinc-400 leading-relaxed pl-9.5">{row.desc}</div>
-                </div>
-
-                {/* Naive column */}
-                <div className="md:col-span-3 p-3.5 rounded-xl bg-rose-950/15 border border-rose-900/30 text-xs space-y-1 md:border-l md:border-white/10">
-                  <div className="flex items-center gap-1.5 text-rose-400 font-bold text-[11px] uppercase tracking-wider">
-                    <XCircle className="w-3.5 h-3.5 shrink-0" />
-                    <span>Unprotected</span>
-                  </div>
-                  <p className="text-zinc-400 text-[11px] leading-relaxed pt-0.5">{row.naive.text}</p>
-                </div>
-
-                {/* FairTick column */}
-                <div className="md:col-span-4 p-3.5 rounded-xl bg-white/[0.05] border border-white/15 text-xs space-y-1 md:border-l md:border-white/10">
-                  <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-[11px] uppercase tracking-wider">
-                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                    <span>FairTick Enforced</span>
-                  </div>
-                  <p className="text-zinc-200 text-[11px] leading-relaxed pt-0.5">{row.fairtick.text}</p>
-                </div>
+      {/* VIEW 1: FAIRTICK GUARDED PIPELINE */}
+      {activeTab === "fairtick" && (
+        <div className="rounded-2xl border border-white/[0.08] bg-zinc-950/60 backdrop-blur-xl p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.06] pb-6">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">
+                  Active Guardrail Pipeline
+                </span>
               </div>
-            );
-          })}
+              <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                Institutional Trade Protection on Base
+              </h3>
+            </div>
+            <div className="text-xs text-zinc-400 font-mono bg-white/[0.03] px-3 py-1.5 rounded-xl border border-white/[0.06] self-start sm:self-auto">
+              Slippage Bound: <span className="text-emerald-400 font-bold">50 bps Max</span>
+            </div>
+          </div>
+
+          <div className="divide-y divide-white/[0.06]">
+            {capabilities.map((c) => {
+              const Icon = c.icon;
+              return (
+                <div key={c.id} className="py-5 first:pt-0 last:pb-0 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                  <div className="md:col-span-4 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-950/40 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold text-white">{c.title}</h4>
+                      <p className="text-[11px] font-mono text-zinc-400">{c.category}</p>
+                    </div>
+                  </div>
+                  <div className="md:col-span-8 space-y-1 pl-11 md:pl-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                        {c.fairtick.headline}
+                      </span>
+                      <span className="text-[10px] font-mono text-zinc-400 border border-white/10 px-2 py-0.5 rounded-md bg-white/[0.02]">
+                        {c.fairtick.status}
+                      </span>
+                    </div>
+                    <p className="text-xs text-zinc-300 leading-relaxed pt-1">
+                      {c.fairtick.detail}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-between text-xs text-zinc-400">
+            <span className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span>Result: Guaranteed execution parity with traditional US equity brokers.</span>
+            </span>
+            <span className="text-[11px] font-mono text-zinc-400">0% Protocol Hop Fees</span>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* VIEW 2: STANDARD BLIND DEX SWAP */}
+      {activeTab === "blind" && (
+        <div className="rounded-2xl border border-rose-500/20 bg-rose-950/[0.08] backdrop-blur-xl p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-rose-500/10 pb-6">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-rose-400" />
+                <span className="text-xs font-mono uppercase tracking-wider text-rose-400 font-semibold">
+                  Unguarded AMM Execution
+                </span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                Vulnerabilities of Naive DEX Trading
+              </h3>
+            </div>
+            <div className="text-xs text-rose-300/80 font-mono bg-rose-950/30 px-3 py-1.5 rounded-xl border border-rose-500/20 self-start sm:self-auto">
+              Exposure: <span className="text-rose-400 font-bold">Uncapped Drift</span>
+            </div>
+          </div>
+
+          <div className="divide-y divide-rose-500/10">
+            {capabilities.map((c) => {
+              const Icon = c.icon;
+              return (
+                <div key={c.id} className="py-5 first:pt-0 last:pb-0 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                  <div className="md:col-span-4 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-rose-950/40 border border-rose-500/30 flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4 text-rose-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold text-white">{c.title}</h4>
+                      <p className="text-[11px] font-mono text-zinc-400">{c.category}</p>
+                    </div>
+                  </div>
+                  <div className="md:col-span-8 space-y-1 pl-11 md:pl-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-semibold text-rose-400 flex items-center gap-1.5">
+                        <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                        {c.blind.headline}
+                      </span>
+                      <span className="text-[10px] font-mono text-rose-300/70 border border-rose-500/20 px-2 py-0.5 rounded-md bg-rose-950/20">
+                        {c.blind.status}
+                      </span>
+                    </div>
+                    <p className="text-xs text-zinc-400 leading-relaxed pt-1">
+                      {c.blind.detail}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="p-4 rounded-xl bg-rose-950/20 border border-rose-500/20 flex items-center justify-between text-xs text-zinc-400">
+            <span className="flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 text-rose-400" />
+              <span>Result: Traders bear full risk of off-hours liquidity gouging and balance drain.</span>
+            </span>
+            <span className="text-[11px] font-mono text-rose-400/80">High Slippage Risk</span>
+          </div>
+        </div>
+      )}
+
+      {/* VIEW 3: SIDE-BY-SIDE CLEAN DUAL COLUMNS */}
+      {activeTab === "sidebyside" && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Blind Swap Card */}
+          <div className="rounded-2xl border border-white/[0.08] bg-zinc-950/40 p-6 space-y-6">
+            <div className="flex items-center justify-between border-b border-white/[0.06] pb-4">
+              <div className="flex items-center gap-2 text-rose-400 text-xs font-semibold uppercase tracking-wider">
+                <AlertTriangle className="w-4 h-4" />
+                <span>Blind DEX Swap</span>
+              </div>
+              <span className="text-[11px] font-mono text-zinc-400">Uncalibrated AMM</span>
+            </div>
+
+            <div className="space-y-4">
+              {capabilities.map((c) => (
+                <div key={c.id} className="space-y-1 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-200 font-medium">{c.title}</span>
+                    <span className="text-[10px] font-mono text-rose-400/80">{c.blind.status}</span>
+                  </div>
+                  <p className="text-[11px] text-zinc-400 leading-relaxed">{c.blind.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* FairTick Guarded Card */}
+          <div className="rounded-2xl border border-white/20 bg-zinc-950/80 p-6 space-y-6 shadow-xl shadow-black/40 relative">
+            <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+              <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>FairTick Guarded Execution</span>
+              </div>
+              <span className="text-[11px] font-mono text-emerald-400">Chainlink Enforced</span>
+            </div>
+
+            <div className="space-y-4">
+              {capabilities.map((c) => (
+                <div key={c.id} className="space-y-1 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-white font-medium">{c.title}</span>
+                    <span className="text-[10px] font-mono text-emerald-400">{c.fairtick.status}</span>
+                  </div>
+                  <p className="text-[11px] text-zinc-300 leading-relaxed">{c.fairtick.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
