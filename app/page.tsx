@@ -92,53 +92,54 @@ export default function LandingPage() {
       {/* 2. FULL-WIDTH HERO SECTION (Sharp, Crystal-Clear Cosmic Video Background - No Blur) */}
       <section className="w-full py-20 sm:py-28 md:py-36 px-4 sm:px-6 relative z-10 overflow-hidden text-center">
         <div className="max-w-4xl mx-auto space-y-6 relative z-10">
-          {/* Centered Top Announcement Pill */}
+          {/* Centered Top Announcement Pill - Arrakis Style */}
           <div className="flex justify-center">
             <a
               href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
               target="_blank"
               rel="noreferrer"
-              className="inline-block group"
+              className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 transition-all backdrop-blur-md shadow-lg shadow-black/20 group"
             >
-              <Badge
-                variant="outline"
-                className="px-3.5 py-1.5 text-xs text-zinc-300 group-hover:text-white group-hover:border-white/30 transition backdrop-blur-md shadow-lg shadow-black/20 gap-2 font-mono"
-              >
-                <BaseLogo className="w-3.5 h-3.5" fill="#0052FF" />
-                <span>Base B20 Execution Standard</span>
-                <span className="text-white/20">|</span>
-                <span className="text-white font-medium inline-flex items-center gap-1">
-                  Verified Onchain <ChevronRight className="w-3 h-3 text-zinc-400 group-hover:translate-x-0.5 transition-transform" />
-                </span>
-              </Badge>
+              <span className="px-2 py-0.5 text-[11px] font-semibold tracking-wide bg-[#0052FF] text-white rounded-full flex items-center gap-1.5 shadow-sm">
+                <BaseLogo className="w-2.5 h-2.5" fill="#ffffff" />
+                Base B20
+              </span>
+              <span className="text-xs text-zinc-300 font-medium">Verified Onchain Execution Standard</span>
+              <ChevronRight className="w-3.5 h-3.5 text-zinc-400 group-hover:translate-x-0.5 group-hover:text-white transition-all" />
             </a>
           </div>
 
-          {/* Crisp, Bold Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] max-w-4xl mx-auto drop-shadow-md">
-            The execution guardrail
-            <br className="hidden sm:block" />
-            {" "}for onchain tokenized stocks
-          </h1>
+          {/* Editorial Headline with Arrakis-Grade Typography Pairing */}
+          <div className="space-y-3">
+            <p className="text-xs sm:text-sm font-medium tracking-widest text-zinc-400 uppercase">
+              Autonomous Execution Protection
+            </p>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white tracking-tight leading-[1.08] max-w-4xl mx-auto drop-shadow-md">
+              The execution guardrail <br />
+              <span className="font-editorial italic font-normal text-zinc-200">
+                for onchain tokenized stocks
+              </span>
+            </h1>
+          </div>
 
           {/* Centered Subheadline */}
-          <p className="text-sm sm:text-base md:text-lg text-zinc-300/95 leading-relaxed max-w-2xl mx-auto font-normal drop-shadow-sm">
-            Purpose-built execution protection for Coinbase B20 equities on Base. Automated defense against off-hours spread drift, uncalibrated stock splits, and predatory DEX markups.
+          <p className="text-sm sm:text-base md:text-lg text-zinc-300/90 leading-relaxed max-w-2xl mx-auto font-normal drop-shadow-sm">
+            Purpose-built execution protection for Coinbase B20 equities on Base. Automated defense against off-hours spread drift, uncalibrated corporate splits, and predatory DEX markups.
           </p>
 
-          {/* Action Buttons: High-Contrast Big-Company Aesthetics */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+          {/* Action Buttons: Arrakis-Grade High-Contrast Aesthetic */}
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Link
               href="/markets"
-              className="px-8 py-3.5 rounded-full bg-white hover:bg-zinc-200 text-slate-950 font-bold text-sm shadow-xl shadow-black/40 inline-flex items-center gap-2 transition transform active:scale-95"
+              className="px-8 py-3.5 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-sm shadow-xl shadow-black/40 inline-flex items-center gap-2 transition transform active:scale-95"
             >
               <span>Launch Terminal</span>
-              <ArrowRight className="w-4 h-4 text-slate-900" />
+              <ArrowRight className="w-4 h-4 text-zinc-950" />
             </Link>
 
             <Link
               href="#guardrails"
-              className="px-8 py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.15] border border-white/15 text-white font-semibold text-sm backdrop-blur-md inline-flex items-center gap-2 shadow-lg shadow-black/20 transition transform active:scale-95"
+              className="px-8 py-3.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 text-white font-medium text-sm backdrop-blur-md inline-flex items-center gap-2 shadow-lg shadow-black/20 transition transform active:scale-95"
             >
               <Compass className="w-4 h-4 text-zinc-300" />
               <span>Explore Guardrails</span>
@@ -146,31 +147,36 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Protocol Trust Stream with Real Crypto Logos */}
-        <div className="max-w-4xl mx-auto pt-8 mt-12 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-zinc-300 relative z-10">
-          <div className="flex items-center gap-2.5">
-            <CoinbaseLogo className="w-4 h-4 rounded-full shadow-sm" />
-            <span className="font-medium tracking-tight text-zinc-200">Coinbase B20 Standard</span>
+        {/* Protocol Trust Stream with Arrakis-Style Monochrome Opacity */}
+        <div className="max-w-4xl mx-auto pt-10 mt-14 border-t border-white/[0.08] relative z-10">
+          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-14 text-xs text-zinc-400">
+            <div className="flex items-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity">
+              <CoinbaseLogo className="w-4 h-4 rounded-full" />
+              <span className="font-medium tracking-tight text-zinc-300">Coinbase B20 Standard</span>
+            </div>
+            <div className="flex items-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity">
+              <ChainlinkLogo className="w-4 h-4" />
+              <span className="font-medium tracking-tight text-zinc-300">Chainlink Equity Oracles</span>
+            </div>
+            <div className="flex items-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity">
+              <UniswapLogo className="w-4 h-4 rounded-full" />
+              <span className="font-medium tracking-tight text-zinc-300">Uniswap SwapRouter02</span>
+            </div>
+            <div className="flex items-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity">
+              <BaseLogo className="w-4 h-4" fill="#0052FF" />
+              <span className="font-medium tracking-tight text-zinc-300">Base ERC-8021 Suffix</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2.5">
-            <ChainlinkLogo className="w-4 h-4" />
-            <span className="font-medium tracking-tight text-zinc-200">Chainlink Equity Oracles</span>
-          </div>
-          <div className="flex items-center gap-2.5">
-            <UniswapLogo className="w-4 h-4 rounded-full shadow-sm" />
-            <span className="font-medium tracking-tight text-zinc-200">Uniswap SwapRouter02</span>
-          </div>
-          <div className="flex items-center gap-2.5">
-            <BaseLogo className="w-4 h-4" fill="#0052FF" />
-            <span className="font-medium tracking-tight text-zinc-200">Base ERC-8021 Suffix</span>
-          </div>
+          <p className="text-[11px] font-mono tracking-widest text-zinc-400/80 uppercase text-center mt-5">
+            Verified Institutional Infrastructure on Base
+          </p>
         </div>
       </section>
 
       {/* 3. FROSTED BLUR WRAPPER FOR ALL SUBSEQUENT SECTIONS */}
       {/* Softly blurs the background video for clean contrast and zero visual noise */}
       <div className="relative z-10 w-full backdrop-blur-2xl bg-[#060a14]/85 border-t border-white/10">
-        <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-16 md:py-24 space-y-24 md:space-y-32">
+        <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-20 md:py-28 space-y-28 md:space-y-36">
 
           {/* SECTION 1: LIVE B20 MARKETS TICKER (Core Product Showcase) */}
           <section id="markets" className="space-y-6 scroll-mt-24">

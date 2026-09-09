@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  style: ["italic", "normal"],
+  variable: "--font-newsreader",
+});
 
 export const metadata: Metadata = {
   title: "FairTick — Protected Trade Ticket for Coinbase Tokenized Stocks on Base",
@@ -25,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} min-h-screen text-zinc-100 flex flex-col antialiased relative`}>
+      <body className={`${inter.className} ${newsreader.variable} min-h-screen text-zinc-100 flex flex-col antialiased relative`}>
         <Providers>
           <Header />
           <main className="flex-1 w-full">

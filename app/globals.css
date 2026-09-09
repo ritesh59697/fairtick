@@ -286,3 +286,7 @@ body {
   transform: translateY(-100%);
 }
 
+.font-editorial {
+  font-family: var(--font-newsreader), Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
