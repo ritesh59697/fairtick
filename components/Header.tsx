@@ -1,6 +1,6 @@
 "use client";
 
-import { useChainId, useSwitchChain } from "wagmi";
+import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { BASE_CHAIN_ID } from "@/lib/tokens";
 import { useGeoCheck } from "@/lib/geo";
 import { ShieldAlert, ShieldCheck, ExternalLink, Globe, AlertTriangle, Wallet, Sparkles } from "lucide-react";
@@ -10,7 +10,9 @@ import { useAppWallet } from "@/lib/wallet-context";
 
 export function Header() {
   const { address, isConnected, isDemo, openModal, disconnectAll } = useAppWallet();
-  const chainId = useChainId();
+  const defaultChainId = useChainId();
+  const { chainId: walletChainId } = useAccount();
+  const chainId = walletChainId ?? defaultChainId;
   const { switchChain } = useSwitchChain();
   const { isBlocked, country, simulatedUs, toggleSimulateUs } = useGeoCheck();
 

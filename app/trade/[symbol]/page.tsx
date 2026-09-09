@@ -8,6 +8,7 @@ import {
   useWriteContract,
   useSendTransaction,
   useWaitForTransactionReceipt,
+  useAccount,
   useChainId,
   useSwitchChain,
 } from "wagmi";
@@ -111,7 +112,9 @@ export default function TradeTicketPage({
   });
 
   // Contract write & transaction actions
-  const chainId = useChainId();
+  const defaultChainId = useChainId();
+  const { chainId: walletChainId } = useAccount();
+  const chainId = walletChainId ?? defaultChainId;
   const { switchChainAsync } = useSwitchChain();
   const { writeContractAsync } = useWriteContract();
   const { sendTransactionAsync } = useSendTransaction();
