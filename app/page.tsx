@@ -90,8 +90,8 @@ export default function LandingPage() {
       </div>
 
       {/* 2. FULL-WIDTH HERO SECTION (Sharp, Crystal-Clear Cosmic Video Background - No Blur) */}
-      <section className="w-full py-20 sm:py-28 md:py-36 px-4 sm:px-6 relative z-10 overflow-hidden text-center">
-        <div className="max-w-4xl mx-auto space-y-6 relative z-10">
+      <section className="w-full pt-8 sm:pt-12 md:pt-14 pb-14 sm:pb-18 md:pb-20 px-4 sm:px-6 relative z-10 overflow-hidden text-center">
+        <div className="max-w-4xl mx-auto space-y-5 sm:space-y-6 relative z-10">
           {/* Centered Top Announcement Pill - Arrakis Style */}
           <div className="flex justify-center">
             <a
@@ -148,7 +148,7 @@ export default function LandingPage() {
         </div>
 
         {/* Protocol Trust Stream with Arrakis-Style Monochrome Opacity */}
-        <div className="max-w-4xl mx-auto pt-10 mt-14 border-t border-white/[0.08] relative z-10">
+        <div className="max-w-4xl mx-auto pt-8 mt-10 sm:mt-12 border-t border-white/[0.08] relative z-10">
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-14 text-xs text-zinc-400">
             <div className="flex items-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity">
               <CoinbaseLogo className="w-4 h-4 rounded-full" />
