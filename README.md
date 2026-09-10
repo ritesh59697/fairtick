@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![FairTick Banner](https://fairtick.vercel.app/og-image.png)
+![FairTick Banner](./public/og-image.png)
 
 ### *“Don't overpay for onchain Apple.”*
 

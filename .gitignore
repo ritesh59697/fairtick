@@ -46,8 +46,14 @@ next-env.d.ts
 
 # local ide / agent rules
 CLAUDE.md
+AGENTS.md
 .agents/
+
+# local tooling / demo scripts
+scripts/
+scratch/
 
 # demo media
 public/vid/fairtick*.mp4
+
 
