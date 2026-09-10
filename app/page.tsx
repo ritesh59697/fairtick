@@ -85,53 +85,55 @@ export default function LandingPage() {
         >
           <source src="/vid/edge-of-the-universe.1920x1080.mp4" type="video/mp4" />
         </video>
-        {/* Subtle dark scrim to ensure text & card contrast while keeping the universe video vivid */}
-        <div className="absolute inset-0 bg-slate-950/60" />
+        {/* Dark scrim with subtle bottom fade to ensure perfect contrast on mobile and desktop */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/65 to-[#060a14]" />
       </div>
 
-      {/* 2. FULL-WIDTH HERO SECTION (Sharp, Crystal-Clear Cosmic Video Background - No Blur) */}
-      <section className="w-full pt-8 sm:pt-12 md:pt-14 pb-14 sm:pb-18 md:pb-20 px-4 sm:px-6 relative z-10 overflow-hidden text-center">
-        <div className="max-w-4xl mx-auto space-y-5 sm:space-y-6 relative z-10">
-          {/* Centered Top Announcement Pill - Arrakis Style */}
+      {/* 2. FULL-WIDTH HERO SECTION (Mobile Optimized, Crisp Contrast) */}
+      <section className="w-full pt-6 sm:pt-12 md:pt-16 pb-10 sm:pb-16 md:pb-20 px-4 sm:px-6 relative z-10 overflow-hidden text-center">
+        <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6 relative z-10">
+          {/* Centered Top Announcement Pill - Base Mainnet Verified */}
           <div className="flex justify-center">
             <a
-              href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
+              href="https://basescan.org/tx/0x9bfb2aa9ca0dfbdff5775b52c4de0e294686faa07c6c135db94963170e8ca252"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 transition-all backdrop-blur-md shadow-lg shadow-black/20 group"
+              className="inline-flex items-center gap-2 sm:gap-2.5 px-3 py-1 rounded-full border border-white/10 bg-black/40 hover:bg-black/60 hover:border-white/20 transition-all backdrop-blur-md shadow-lg shadow-black/30 group max-w-full"
             >
-              <span className="px-2 py-0.5 text-[11px] font-semibold tracking-wide bg-[#0052FF] text-white rounded-full flex items-center gap-1.5 shadow-sm">
+              <span className="px-2 py-0.5 text-[10px] sm:text-[11px] font-semibold tracking-wide bg-[#0052FF] text-white rounded-full flex items-center gap-1.5 shadow-sm shrink-0">
                 <BaseLogo className="w-2.5 h-2.5" fill="#ffffff" />
                 Base B20
               </span>
-              <span className="text-xs text-zinc-300 font-medium">Verified Onchain Execution Standard</span>
-              <ChevronRight className="w-3.5 h-3.5 text-zinc-400 group-hover:translate-x-0.5 group-hover:text-white transition-all" />
+              <span className="text-[11px] sm:text-xs text-zinc-300 font-medium truncate">
+                Verified Onchain Execution Standard
+              </span>
+              <ChevronRight className="w-3.5 h-3.5 text-zinc-400 group-hover:translate-x-0.5 group-hover:text-white transition-all shrink-0" />
             </a>
           </div>
 
-          {/* Editorial Headline with Arrakis-Grade Typography Pairing */}
-          <div className="space-y-3">
-            <p className="text-xs sm:text-sm font-medium tracking-widest text-zinc-400 uppercase">
+          {/* Editorial Headline with Adaptive Mobile Scale */}
+          <div className="space-y-2 sm:space-y-3">
+            <p className="text-[11px] sm:text-xs md:text-sm font-semibold tracking-widest text-zinc-400 uppercase">
               Autonomous Execution Protection
             </p>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white tracking-tight leading-[1.08] max-w-4xl mx-auto drop-shadow-md">
-              The execution guardrail <br />
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.12] sm:leading-[1.08] max-w-4xl mx-auto drop-shadow-md">
+              The execution guardrail <br className="hidden sm:inline" />
               <span className="font-editorial italic font-normal text-zinc-200">
                 for onchain tokenized stocks
               </span>
             </h1>
           </div>
 
-          {/* Centered Subheadline */}
-          <p className="text-sm sm:text-base md:text-lg text-zinc-300/90 leading-relaxed max-w-2xl mx-auto font-normal drop-shadow-sm">
+          {/* Centered Subheadline with Mobile Padding */}
+          <p className="text-xs sm:text-base md:text-lg text-zinc-300/90 leading-relaxed max-w-2xl mx-auto font-normal drop-shadow-sm px-1 sm:px-0">
             Purpose-built execution protection for Coinbase B20 equities on Base. Automated defense against off-hours spread drift, uncalibrated corporate splits, and predatory DEX markups.
           </p>
 
-          {/* Action Buttons: Arrakis-Grade High-Contrast Aesthetic */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+          {/* Action Buttons: Responsive for Thumb Interaction */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-1 sm:pt-2 w-full max-w-xs sm:max-w-none mx-auto">
             <Link
               href="/markets"
-              className="px-8 py-3.5 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-sm shadow-xl shadow-black/40 inline-flex items-center gap-2 transition transform active:scale-95"
+              className="w-full sm:w-auto px-7 py-3 sm:px-8 sm:py-3.5 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-sm shadow-xl shadow-black/40 inline-flex items-center justify-center gap-2 transition transform active:scale-95"
             >
               <span>Launch Terminal</span>
               <ArrowRight className="w-4 h-4 text-zinc-950" />
@@ -139,7 +141,7 @@ export default function LandingPage() {
 
             <Link
               href="#guardrails"
-              className="px-8 py-3.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 text-white font-medium text-sm backdrop-blur-md inline-flex items-center gap-2 shadow-lg shadow-black/20 transition transform active:scale-95"
+              className="w-full sm:w-auto px-7 py-3 sm:px-8 sm:py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/15 text-white font-medium text-sm backdrop-blur-md inline-flex items-center justify-center gap-2 shadow-lg shadow-black/20 transition transform active:scale-95"
             >
               <Compass className="w-4 h-4 text-zinc-300" />
               <span>Explore Guardrails</span>
@@ -147,29 +149,29 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Protocol Trust Stream with Arrakis-Style Monochrome Opacity */}
-        <div className="max-w-4xl mx-auto pt-8 mt-10 sm:mt-12 border-t border-white/[0.08] relative z-10">
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-14 text-xs text-zinc-400">
-            <div className="flex items-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity">
-              <CoinbaseLogo className="w-4 h-4 rounded-full" />
-              <span className="font-medium tracking-tight text-zinc-300">Coinbase B20 Standard</span>
-            </div>
-            <div className="flex items-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity">
-              <ChainlinkLogo className="w-4 h-4" />
-              <span className="font-medium tracking-tight text-zinc-300">Chainlink Equity Oracles</span>
-            </div>
-            <div className="flex items-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity">
-              <UniswapLogo className="w-4 h-4 rounded-full" />
-              <span className="font-medium tracking-tight text-zinc-300">Uniswap SwapRouter02</span>
-            </div>
-            <div className="flex items-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity">
-              <BaseLogo className="w-4 h-4" fill="#0052FF" />
-              <span className="font-medium tracking-tight text-zinc-300">Base ERC-8021 Suffix</span>
-            </div>
-          </div>
-          <p className="text-[11px] font-mono tracking-widest text-zinc-400/80 uppercase text-center mt-5">
+        {/* Protocol Trust Stream: Frosted Card Shielding from Bright Earth Video */}
+        <div className="max-w-3xl mx-auto mt-8 sm:mt-12 p-3.5 sm:p-5 rounded-2xl bg-[#060a14]/80 border border-white/[0.12] backdrop-blur-xl shadow-2xl relative z-10">
+          <p className="text-[10px] sm:text-[11px] font-mono tracking-widest text-zinc-400 uppercase text-center mb-3">
             Verified Institutional Infrastructure on Base
           </p>
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2.5 sm:gap-8 text-xs text-zinc-300">
+            <div className="flex items-center justify-center gap-2 p-2 sm:p-0 rounded-lg bg-white/[0.03] sm:bg-transparent">
+              <CoinbaseLogo className="w-4 h-4 rounded-full shrink-0" />
+              <span className="font-medium tracking-tight text-zinc-200 text-xs sm:text-xs">Coinbase B20</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 p-2 sm:p-0 rounded-lg bg-white/[0.03] sm:bg-transparent">
+              <ChainlinkLogo className="w-4 h-4 shrink-0" />
+              <span className="font-medium tracking-tight text-zinc-200 text-xs sm:text-xs">Chainlink Oracles</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 p-2 sm:p-0 rounded-lg bg-white/[0.03] sm:bg-transparent">
+              <UniswapLogo className="w-4 h-4 rounded-full shrink-0" />
+              <span className="font-medium tracking-tight text-zinc-200 text-xs sm:text-xs">Uniswap V3</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 p-2 sm:p-0 rounded-lg bg-white/[0.03] sm:bg-transparent">
+              <BaseLogo className="w-4 h-4 shrink-0" fill="#0052FF" />
+              <span className="font-medium tracking-tight text-zinc-200 text-xs sm:text-xs">Base ERC-8021</span>
+            </div>
+          </div>
         </div>
       </section>
 

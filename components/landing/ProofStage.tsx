@@ -148,7 +148,7 @@ export function ProofStage() {
 
             {activeStep === 3 && (
               <a
-                href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
+                href="https://basescan.org/tx/0x9bfb2aa9ca0dfbdff5775b52c4de0e294686faa07c6c135db94963170e8ca252"
                 target="_blank"
                 rel="noreferrer"
                 className="px-4 py-2 bg-white/[0.08] hover:bg-white/[0.15] border border-white/20 text-white text-xs font-semibold rounded-xl transition inline-flex items-center gap-1.5"

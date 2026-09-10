@@ -119,7 +119,7 @@ export function Footer() {
             <ul className="space-y-2.5 text-xs">
               <li>
                 <a
-                  href="https://sepolia.basescan.org/tx/0x7e63edbdc4720fe77431e20ee83267c0d64fb03007530138d00c06d0b2101ab8"
+                  href="https://basescan.org/tx/0x9bfb2aa9ca0dfbdff5775b52c4de0e294686faa07c6c135db94963170e8ca252"
                   target="_blank"
                   rel="noreferrer"
                   className="text-zinc-300 hover:text-white transition inline-flex items-center gap-2"
@@ -186,10 +186,17 @@ export function Footer() {
           <div>
             © {new Date().getFullYear()} FairTick Protocol. Built for Base.
           </div>
-          <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-400">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2.5 text-[11px] font-mono text-zinc-400">
             <span>Schema: ERC-8021</span>
             <span className="text-white/20">•</span>
-            <span>Attribution: fairtick_b20</span>
+            <a
+              href="https://basescan.org/tx/0x9bfb2aa9ca0dfbdff5775b52c4de0e294686faa07c6c135db94963170e8ca252"
+              target="_blank"
+              rel="noreferrer"
+              className="text-zinc-300 hover:text-blue-400 transition underline underline-offset-2"
+            >
+              Builder Code: bc_jmw5p5jt
+            </a>
           </div>
         </div>
       </div>
