@@ -1,0 +1,127 @@
+1
+00:00:00,800 --> 00:00:04,000
+Welcome to FairTick —
+
+2
+00:00:04,000 --> 00:00:07,800
+the autonomous execution guardrail for onchain tokenized stocks on Base.
+
+3
+00:00:07,800 --> 00:00:11,800
+As Coinbase brings institutional equities onchain via the B20 standard,
+
+4
+00:00:11,800 --> 00:00:15,800
+traders face real vulnerabilities: off-hours spread drift,
+
+5
+00:00:15,800 --> 00:00:20,500
+uncalibrated corporate stock splits, and predatory DEX markups.
+
+6
+00:00:21,000 --> 00:00:25,500
+Standard DEX swaps execute blindly against AMM liquidity pools.
+
+7
+00:00:25,500 --> 00:00:30,000
+FairTick introduces institutional-grade execution protection.
+
+8
+00:00:30,000 --> 00:00:34,200
+We implement a hard 50-basis-point circuit breaker against official Chainlink equity prints,
+
+9
+00:00:34,200 --> 00:00:38,200
+continuous corporate stock split multiplier scaling,
+
+10
+00:00:38,200 --> 00:00:42,000
+and strictly zero residual allowance approvals.
+
+11
+00:00:42,500 --> 00:00:46,800
+Connecting seamlessly through RainbowKit with Rabby Wallet on Base Mainnet.
+
+12
+00:00:46,800 --> 00:00:50,800
+Notice FairTick's fail-closed edge compliance,
+
+13
+00:00:50,800 --> 00:00:55,500
+automatically verifying jurisdictional safety before generating any trade tickets.
+
+14
+00:00:56,000 --> 00:01:00,500
+In the Markets Terminal, every B20 equity is benchmarked in real time.
+
+15
+00:01:00,500 --> 00:01:05,000
+We open the protected trade ticket for NVDAc.
+
+16
+00:01:05,000 --> 00:01:10,800
+FairTick immediately evaluates the Chainlink total-return feed at $223.56,
+
+17
+00:01:10,800 --> 00:01:16,500
+comparing it to the Uniswap V3 pool price to ensure the trade executes at fair value.
+
+18
+00:01:17,000 --> 00:01:21,800
+Because US equity markets are closed, FairTick flags the held price feed
+
+19
+00:01:21,800 --> 00:01:26,800
+and requires explicit acknowledgement of after-hours spread risk.
+
+20
+00:01:26,800 --> 00:01:31,800
+Entering 0.04 USDC, the router dynamically calculates the multiplier-scaled shares,
+
+21
+00:01:31,800 --> 00:01:37,500
+appending the Base ERC-8021 builder attribution code directly to the calldata.
+
+22
+00:01:38,000 --> 00:01:42,800
+With a single click in Rabby, the transaction routes atomically
+
+23
+00:01:42,800 --> 00:01:47,500
+through Uniswap V3 SwapRouter02 on Base Mainnet.
+
+24
+00:01:47,500 --> 00:01:52,500
+The trade is confirmed in sub-seconds. Our execution receipt confirms the exact shares received
+
+25
+00:01:52,500 --> 00:01:57,500
+at a 26-basis-point discount, complete with onchain builder attribution.
+
+26
+00:01:58,000 --> 00:02:02,800
+Clicking through to Basescan, we see the live onchain receipt on Base Mainnet.
+
+27
+00:02:02,800 --> 00:02:07,800
+Block 51108207 confirmed by the sequencer,
+
+28
+00:02:07,800 --> 00:02:12,500
+verifying the direct swap of 0.04 USDC into NVDAc
+
+29
+00:02:12,500 --> 00:02:17,000
+with zero hidden fees and no intermediary contract risk.
+
+30
+00:02:17,500 --> 00:02:22,500
+Back on the FairTick terminal, users enjoy the full suite of Coinbase B20 tokenized stocks
+
+31
+00:02:22,500 --> 00:02:27,500
+with real-time Chainlink oracle health and institutional guardrails.
+
+32
+00:02:27,500 --> 00:02:33,000
+FairTick — fair price discovery and oracle-protected execution on Base.

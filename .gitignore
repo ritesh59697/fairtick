@@ -48,3 +48,6 @@ next-env.d.ts
 CLAUDE.md
 .agents/
 
+# demo media
+public/vid/fairtick*.mp4
+
