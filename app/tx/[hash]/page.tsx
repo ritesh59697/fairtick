@@ -132,6 +132,9 @@ Tx: https://basescan.org/tx/${hash}`;
           <div className="pt-2 border-t border-zinc-850 flex items-center justify-between">
             <span className="text-zinc-400">Basescan Explorer:</span>
             <div className="flex items-center gap-2">
+              <span className="text-[10px] px-2 py-0.5 rounded bg-blue-500/15 text-blue-400 border border-blue-500/30 font-medium">
+                Base Mainnet
+              </span>
               <a
                 href={`https://basescan.org/tx/${hash}`}
                 target="_blank"
@@ -140,15 +143,6 @@ Tx: https://basescan.org/tx/${hash}`;
               >
                 {hash.slice(0, 10)}...{hash.slice(-8)}
                 <ExternalLink className="w-3 h-3" />
-              </a>
-              <span className="text-zinc-600">|</span>
-              <a
-                href={`https://sepolia.basescan.org/tx/${hash}`}
-                target="_blank"
-                rel="noreferrer"
-                className="text-zinc-500 hover:text-zinc-300 text-[10px] underline"
-              >
-                (Sepolia)
               </a>
             </div>
           </div>
