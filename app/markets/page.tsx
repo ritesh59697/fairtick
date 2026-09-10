@@ -10,7 +10,7 @@ import {
   AlertOctagon,
   RefreshCw,
   Sliders,
-  Terminal,
+  ArrowLeft,
   ArrowUpRight,
   CheckCircle2,
   PauseCircle,
@@ -66,10 +66,14 @@ export default function MarketListPage() {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/10">
         <div className="space-y-2 max-w-2xl">
           <div className="flex items-center gap-2.5">
-            <Badge variant="outline" className="gap-1.5 px-3 py-1 font-mono text-xs">
-              <Terminal className="w-3.5 h-3.5 text-zinc-400" />
-              <span>Markets Terminal</span>
-            </Badge>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full btn-back-home text-xs font-medium transition cursor-pointer"
+              title="Return to FairTick Homepage"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to Homepage</span>
+            </Link>
             <Badge variant="secondary" className="font-mono text-xs font-normal">
               {displayedMarkets.length} assets {showAll ? "(All)" : "(Priority)"}
             </Badge>

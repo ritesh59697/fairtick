@@ -74,8 +74,8 @@ export default function LandingPage() {
 
   return (
     <div className="relative w-full">
-      {/* 1. BACKGROUND VIDEO THEME: Edge of the Universe (Fixed behind entire page) */}
-      <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+      {/* 1. BACKGROUND THEME: Video for Dark Mode, Crisp Paper/Grid for Light Mode */}
+      <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden cosmic-video-bg">
         <video
           autoPlay
           loop
@@ -87,6 +87,13 @@ export default function LandingPage() {
         </video>
         {/* Dark scrim with subtle bottom fade to ensure perfect contrast on mobile and desktop */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/65 to-[#060a14]" />
+      </div>
+
+      {/* Light Mode Clean Geometric Paper & Mesh Background */}
+      <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden light-mode-bg hidden">
+        <div className="absolute inset-0 bg-[#f8fafc]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:28px_28px] opacity-50" />
+        <div className="absolute top-0 inset-x-0 h-[480px] bg-gradient-to-b from-slate-200/40 via-blue-50/30 to-transparent" />
       </div>
 
       {/* 2. FULL-WIDTH HERO SECTION (Mobile Optimized, Crisp Contrast) */}
@@ -150,7 +157,7 @@ export default function LandingPage() {
         </div>
 
         {/* Protocol Trust Stream: Frosted Card Shielding from Bright Earth Video */}
-        <div className="max-w-3xl mx-auto mt-8 sm:mt-12 p-3.5 sm:p-5 rounded-2xl bg-[#060a14]/80 border border-white/[0.12] backdrop-blur-xl shadow-2xl relative z-10">
+        <div className="max-w-3xl mx-auto mt-8 sm:mt-12 p-3.5 sm:p-5 rounded-2xl bg-[#060a14]/80 border border-white/[0.12] backdrop-blur-xl shadow-2xl relative z-10 hero-trust-card">
           <p className="text-[10px] sm:text-[11px] font-mono tracking-widest text-zinc-400 uppercase text-center mb-3">
             Verified Institutional Infrastructure on Base
           </p>
@@ -177,7 +184,7 @@ export default function LandingPage() {
 
       {/* 3. FROSTED BLUR WRAPPER FOR ALL SUBSEQUENT SECTIONS */}
       {/* Softly blurs the background video for clean contrast and zero visual noise */}
-      <div className="relative z-10 w-full backdrop-blur-2xl bg-[#060a14]/85 border-t border-white/10">
+      <div className="relative z-10 w-full backdrop-blur-2xl bg-[#060a14]/85 border-t border-white/10 frosted-section-wrapper transition-colors">
         <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-20 md:py-28 space-y-28 md:space-y-36">
 
           {/* SECTION 1: LIVE B20 MARKETS TICKER (Core Product Showcase) */}
@@ -365,7 +372,7 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Pillar 1 */}
               <div className="rounded-2xl hairline-card hairline-frame p-6 space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-emerald-400">
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-blue-400">
                   <Scale className="w-5 h-5" />
                 </div>
                 <div className="text-xs font-mono text-zinc-400">01 / CALIBRATION</div>

@@ -1,5 +1,46 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark, .dark *));
+
+.btn-back-home,
+html.dark .btn-back-home {
+  background-color: rgba(24, 24, 27, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #e4e4e7 !important;
+}
+
+.btn-back-home:hover,
+html.dark .btn-back-home:hover {
+  background-color: rgba(39, 39, 42, 0.95) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.btn-back-home svg,
+.btn-back-home span,
+html.dark .btn-back-home svg,
+html.dark .btn-back-home span {
+  color: inherit !important;
+}
+
+html.light .btn-back-home {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #1e293b !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .btn-back-home:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+
+html.light .btn-back-home svg,
+html.light .btn-back-home span {
+  color: inherit !important;
+}
+
 :root {
   --background: #09090b;
   --foreground: #f4f4f5;
@@ -185,6 +226,96 @@ body {
   transform: translateX(19px);
 }
 
+/* From Uiverse.io by Galahhad */ 
+/* switch settings 👇 */
+
+.ui-switch {
+  /* switch */
+  --switch-bg: rgb(135, 150, 165);
+  --switch-width: 48px;
+  --switch-height: 20px;
+  /* circle */
+  --circle-diameter: 32px;
+  --circle-bg: rgb(0, 56, 146);
+  --circle-inset: calc((var(--circle-diameter) - var(--switch-height)) / 2);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ui-switch input {
+  display: none;
+}
+
+.slider {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  background: var(--switch-bg);
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+}
+
+.slider .circle {
+  top: calc(var(--circle-inset) * -1);
+  left: 0;
+  width: var(--circle-diameter);
+  height: var(--circle-diameter);
+  position: absolute;
+  background: var(--circle-bg);
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHdpZHRoPSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxwYXRoIGZpbGw9IiNmZmYiCiAgICAgICAgZD0iTTkuMzA1IDEuNjY3VjMuNzVoMS4zODlWMS42NjdoLTEuMzl6bS00LjcwNyAxLjk1bC0uOTgyLjk4Mkw1LjA5IDYuMDcybC45ODItLjk4Mi0xLjQ3My0xLjQ3M3ptMTAuODAyIDBMMTMuOTI3IDUuMDlsLjk4Mi45ODIgMS40NzMtMS40NzMtLjk4Mi0uOTgyek0xMCA1LjEzOWE0Ljg3MiA0Ljg3MiAwIDAwLTQuODYyIDQuODZBNC44NzIgNC44NzIgMCAwMDEwIDE0Ljg2MiA0Ljg3MiA0Ljg3MiAwIDAwMTQuODYgMTAgNC44NzIgNC44NzIgMCAwMDEwIDUuMTM5em0wIDEuMzg5QTMuNDYyIDMuNDYyIDAgMDExMy40NzEgMTBhMy40NjIgMy40NjIgMCAwMS0zLjQ3MyAzLjQ3MkEzLjQ2MiAzLjQ2MiAwIDAxNi41MjcgMTAgMy40NjIgMy40NjIgMCAwMTEwIDYuNTI4ek0xLjY2NSA5LjMwNXYxLjM5aDIuMDgzdi0xLjM5SDEuNjY2em0xNC41ODMgMHYxLjM5aDIuMDg0di0xLjM5aC0yLjA4NHpNNS4wOSAxMy45MjhMMy42MTYgMTUuNGwuOTgyLjk4MiAxLjQ3My0xLjQ3My0uOTgyLS45ODJ6bTkuODIgMGwtLjk4Mi45ODIgMS40NzMtMS40NzMuOTgyLS45ODItMS40NzMtMS40NzN6TTkuMzA1IDE2LjI1djIuMDgzaDEuMzg5VjE2LjI1aC0xLjM5eiIgLz4KPC9zdmc+");
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  -o-transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+}
+
+.slider .circle::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: inherit;
+  -webkit-transition: all 500ms;
+  -o-transition: all 500ms;
+  transition: all 500ms;
+  opacity: 0;
+}
+
+/* actions */
+
+.ui-switch input:checked+.slider .circle {
+  left: calc(100% - var(--circle-diameter));
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHdpZHRoPSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxwYXRoIGZpbGw9IiNmZmYiCiAgICAgICAgZD0iTTQuMiAyLjVsLS43IDEuOC0xLjguNyAxLjguNy43IDEuOC42LTEuOEw2LjcgNWwtMS45LS43LS42LTEuOHptMTUgOC4zYTYuNyA2LjcgMCAxMS02LjYtNi42IDUuOCA1LjggMCAwMDYuNiA2LjZ6IiAvPgo8L3N2Zz4=");
+}
+
+.ui-switch input:active+.slider .circle::before {
+  -webkit-transition: 0s;
+  -o-transition: 0s;
+  transition: 0s;
+  opacity: 1;
+  width: 0;
+  height: 0;
+}
+
 /* Night sky (Yaten) Theme
  * ICE HANADA #B9C8F2
  * GLAZED AZURE #6E7FBF
@@ -289,4 +420,249 @@ body {
 .font-editorial {
   font-family: var(--font-newsreader), Georgia, Cambria, "Times New Roman", Times, serif;
 }
+
+/* ==========================================================================
+   LIGHT MODE DESIGN SYSTEM (Anti-Slop, Swiss / Editorial / Linear Aesthetics)
+   ========================================================================== */
+
+html.light {
+  color-scheme: light;
+}
+
+html.light,
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* 1. Background Switching */
+html.light .cosmic-video-bg {
+  display: none !important;
+}
+
+html.light .light-mode-bg {
+  display: block !important;
+}
+
+/* 2. Surfaces, Cards & Frames */
+html.light .hairline-frame {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 1px 3px 0 rgba(15, 23, 42, 0.03) !important;
+}
+
+html.light .hairline-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04) !important;
+  backdrop-filter: none !important;
+}
+
+html.light .hairline-card:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.08) !important;
+}
+
+html.light .hero-trust-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 1px 3px 0 rgba(15, 23, 42, 0.04) !important;
+  backdrop-filter: none !important;
+}
+
+html.light .frosted-section-wrapper {
+  background: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
+  backdrop-filter: none !important;
+}
+
+/* 3. Navigation & Header / Footer */
+html.light header {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03) !important;
+}
+
+html.light footer {
+  background: #ffffff !important;
+  border-top: 1px solid #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+/* 4. Typography & High-Contrast Ink */
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light .text-white,
+html.light .text-zinc-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-zinc-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-zinc-300 {
+  color: #334155 !important;
+}
+
+html.light .text-zinc-400 {
+  color: #64748b !important;
+}
+
+html.light .text-zinc-500 {
+  color: #64748b !important;
+}
+
+html.light p {
+  color: #334155;
+}
+
+/* Enhanced Light Mode Semantic Colors for Crisp Contrast */
+html.light .text-rose-400 {
+  color: #be123c !important;
+}
+
+html.light .text-rose-300,
+html.light .text-rose-300\/70,
+html.light .text-rose-300\/80 {
+  color: #9f1239 !important;
+}
+
+html.light .text-amber-400,
+html.light .text-amber-300,
+html.light .text-amber-200 {
+  color: #b45309 !important;
+}
+
+html.light .text-emerald-400,
+html.light .text-emerald-300 {
+  color: #047857 !important;
+}
+
+html.light .text-blue-400 {
+  color: #0052ff !important;
+}
+
+/* 5. Generic Container Backgrounds */
+html.light .bg-\[\#030610\],
+html.light .bg-\[\#060a14\],
+html.light .bg-\[\#050814\],
+html.light .bg-slate-950,
+html.light .bg-slate-950\/40,
+html.light .bg-slate-950\/60,
+html.light .bg-slate-950\/80 {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-zinc-950,
+html.light .bg-zinc-950\/60,
+html.light .bg-zinc-950\/70,
+html.light .bg-zinc-950\/80 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05) !important;
+}
+
+html.light .bg-zinc-900,
+html.light .bg-zinc-900\/40,
+html.light .bg-zinc-900\/60,
+html.light .bg-zinc-900\/80,
+html.light .bg-zinc-850,
+html.light .bg-zinc-800,
+html.light .bg-zinc-800\/80 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light .bg-rose-950,
+html.light .bg-rose-950\/20,
+html.light .bg-rose-950\/30,
+html.light .bg-rose-950\/40,
+html.light .bg-rose-950\/60,
+html.light .bg-rose-950\/\[0\.08\] {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+  color: #9f1239 !important;
+}
+
+html.light .bg-amber-950,
+html.light .bg-amber-950\/40,
+html.light .bg-amber-950\/50,
+html.light .bg-amber-950\/60 {
+  background-color: #fef3c7 !important;
+  border-color: #fde68a !important;
+  color: #92400e !important;
+}
+
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/\[0\.06\],
+html.light .bg-white\/\[0\.08\] {
+  background-color: #f8fafc !important;
+}
+
+/* 6. Border Tone Adjustments */
+html.light .border-white\/5,
+html.light .border-white\/8,
+html.light .border-white\/10,
+html.light .border-white\/12,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-white\/25,
+html.light .border-white\/\[0\.06\],
+html.light .border-white\/\[0\.08\],
+html.light .border-zinc-900,
+html.light .border-zinc-850,
+html.light .border-zinc-800,
+html.light .border-zinc-750,
+html.light .border-zinc-700,
+html.light .divide-white\/\[0\.06\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+
+/* 7. Action Button Inversions (High-end Editorial Buttons) */
+html.light a[href="/markets"].bg-white {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.25) !important;
+}
+
+html.light a[href="/markets"].bg-white span,
+html.light a[href="/markets"].bg-white svg {
+  color: #ffffff !important;
+}
+
+html.light a[href="#guardrails"] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light a[href="#guardrails"] span,
+html.light a[href="#guardrails"] svg {
+  color: #0f172a !important;
+}
+
+/* 8. Inputs and Forms */
+html.light input {
+  color: #0f172a !important;
+}
+
+html.light input::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* 9. Terminal / Simulator Mockup in Light Mode */
+html.light .font-mono.bg-\[\#050814\] {
+  background-color: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) inset !important;
+}
+
+
 

@@ -23,6 +23,7 @@ import { usePathname } from "next/navigation";
 import { BUILDER_CODE_ENV } from "@/lib/attribution";
 import { useAppWallet } from "@/lib/wallet-context";
 import { BaseLogo } from "@/components/BaseLogo";
+import { useTheme } from "@/lib/theme-context";
 import { Badge } from "@/components/ui/badge";
 import { FairTickLogo } from "@/components/FairTickLogo";
 
@@ -39,12 +40,13 @@ export function Header() {
   const { isBlocked, country, simulatedUs, toggleSimulateUs } = useGeoCheck();
 
 
-  const isWrongNetwork = !isDemo && isConnected && chainId !== BASE_CHAIN_ID;
+  const { isWrongNetwork } = { isWrongNetwork: !isDemo && isConnected && chainId !== BASE_CHAIN_ID };
+  const { theme, toggleTheme } = useTheme();
   const isOverviewActive = pathname === "/";
   const isMarketsActive = pathname.startsWith("/markets");
 
   return (
-    <header className="border-b border-white/10 bg-slate-950/40 backdrop-blur-md sticky top-0 z-50">
+    <header className="border-b border-white/10 dark:border-white/10 border-slate-200/80 bg-slate-950/40 dark:bg-slate-950/40 bg-white/80 backdrop-blur-md sticky top-0 z-50 transition-colors">
       {/* Only show warning banner if user is actually blocked */}
       {isBlocked && (
         <div className="bg-red-500/15 border-b border-red-500/30 px-4 py-2 text-xs text-red-200 flex items-center justify-between">
@@ -56,60 +58,74 @@ export function Header() {
           </div>
           <button
             onClick={toggleSimulateUs}
-            className="text-[11px] underline text-red-300 hover:text-red-100 ml-4 shrink-0 cursor-pointer"
+            className="text-[11px] underline hover:text-white"
           >
-            {simulatedUs ? "Reset Geo" : "Simulate Non-US"}
+            {simulatedUs ? "Reset Simulation" : "Simulate Non-US IP"}
           </button>
         </div>
       )}
 
-
-      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <FairTickLogo size={32} variant="badge" />
-            <span className="font-bold text-zinc-100 text-lg tracking-tight group-hover:text-white transition">
-              FairTick
-            </span>
+          <Link href="/" className="flex items-center gap-2.5 font-bold tracking-tight text-white dark:text-white text-slate-900">
+            <FairTickLogo size={24} variant="badge" />
+            <span className="text-sm font-semibold tracking-tight">FairTick</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1.5 text-xs font-medium">
+          {/* Navigation links */}
+          <nav className="hidden md:flex items-center gap-1 text-xs">
             <Link
               href="/"
               className={`px-3.5 py-1.5 rounded-full transition inline-flex items-center gap-1.5 ${
                 isOverviewActive
-                  ? "bg-white/10 text-white font-semibold border border-white/15 shadow-sm"
-                  : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05]"
+                  ? "bg-white/10 dark:bg-white/10 bg-slate-900/10 text-white dark:text-white text-slate-900 font-semibold border border-white/15 dark:border-white/15 border-slate-900/10 shadow-sm"
+                  : "text-zinc-400 dark:text-zinc-400 text-slate-600 hover:text-zinc-200 dark:hover:text-zinc-200 hover:text-slate-900 hover:bg-white/[0.05]"
               }`}
             >
-              <LayoutDashboard className="w-3.5 h-3.5 text-zinc-400" />
+              <LayoutDashboard className="w-3.5 h-3.5" />
               <span>Overview</span>
             </Link>
             <Link
               href="/markets"
               className={`px-3.5 py-1.5 rounded-full transition inline-flex items-center gap-1.5 ${
                 isMarketsActive
-                  ? "bg-white/10 text-white font-semibold border border-white/15 shadow-sm"
-                  : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05]"
+                  ? "bg-white/10 dark:bg-white/10 bg-slate-900/10 text-white dark:text-white text-slate-900 font-semibold border border-white/15 dark:border-white/15 border-slate-900/10 shadow-sm"
+                  : "text-zinc-400 dark:text-zinc-400 text-slate-600 hover:text-zinc-200 dark:hover:text-zinc-200 hover:text-slate-900 hover:bg-white/[0.05]"
               }`}
             >
-              <LineChart className="w-3.5 h-3.5 text-zinc-400" />
+              <LineChart className="w-3.5 h-3.5" />
               <span>Markets Terminal</span>
             </Link>
             <a
               href="https://docs.base.org/specifications/b20/tokenized-stocks-on-base"
               target="_blank"
               rel="noreferrer"
-              className="px-3.5 py-1.5 text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05] rounded-full transition inline-flex items-center gap-1.5"
+              className="px-3.5 py-1.5 text-zinc-400 dark:text-zinc-400 text-slate-600 hover:text-zinc-200 dark:hover:text-zinc-200 hover:text-slate-900 hover:bg-white/[0.05] rounded-full transition inline-flex items-center gap-1.5"
             >
-              <FileText className="w-3.5 h-3.5 text-zinc-400" />
+              <FileText className="w-3.5 h-3.5" />
               <span>B20 Specs</span>
               <ExternalLink className="w-3 h-3 text-zinc-500" />
             </a>
           </nav>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Theme Toggle Switch (Uiverse.io by Galahhad) */}
+          <label
+            className="ui-switch my-auto shrink-0"
+            title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            aria-label="Toggle Theme"
+          >
+            <input
+              type="checkbox"
+              checked={theme === "dark"}
+              onChange={toggleTheme}
+            />
+            <div className="slider">
+              <div className="circle"></div>
+            </div>
+          </label>
+
           {isWrongNetwork ? (
             <button
               onClick={() => (openChainModal ? openChainModal() : switchChain({ chainId: BASE_CHAIN_ID }))}
@@ -120,7 +136,7 @@ export function Header() {
           ) : (
             <button
               onClick={() => openChainModal?.()}
-              className="hidden sm:inline-flex items-center gap-1.5 py-1 px-3 rounded-full border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800/80 text-xs text-zinc-300 font-normal transition cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1.5 py-1 px-3 rounded-full border border-white/10 dark:border-zinc-800 border-slate-200 bg-zinc-900/60 dark:bg-zinc-900/60 bg-slate-100 text-xs text-zinc-300 dark:text-zinc-300 text-slate-700 font-normal transition cursor-pointer"
               title="Chain selector"
             >
               <BaseLogo className="w-3 h-3" fill="#0052FF" />
