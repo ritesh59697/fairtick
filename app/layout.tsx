@@ -33,6 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <meta name="base:app_id" content="6a999ca7dd129945bdac11ff" />
+      </head>
       <body className={`${inter.className} ${newsreader.variable} min-h-screen text-zinc-100 flex flex-col antialiased relative`}>
         <Providers>
           <Header />
