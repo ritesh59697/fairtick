@@ -95,7 +95,7 @@ export function ProofStage() {
                   variant={isActive ? "default" : "secondary"}
                   className="text-[10px] font-mono font-bold px-1.5 py-0.5 gap-1.5"
                 >
-                  <Icon className="w-3 h-3 text-zinc-300" />
+                  <Icon className={`w-3 h-3 ${isActive ? "text-zinc-950" : "text-zinc-400"}`} />
                   <span>Step {s.num}</span>
                 </Badge>
                 {isActive && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />}
