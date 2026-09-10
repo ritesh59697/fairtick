@@ -63,25 +63,6 @@ export function Header() {
         </div>
       )}
 
-      {/* Builder Code Banner if missing */}
-      {!BUILDER_CODE_ENV && (
-        <div className="bg-amber-500/10 border-b border-amber-500/20 px-4 py-1 text-[11px] text-amber-300 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span>
-              Builder Code attribution inactive. Set <code>NEXT_PUBLIC_BUILDER_CODE</code> in your env.
-            </span>
-          </div>
-          <a
-            href="https://base.dev"
-            target="_blank"
-            rel="noreferrer"
-            className="underline inline-flex items-center gap-1 text-[11px] text-amber-200 hover:text-amber-100"
-          >
-            Get Code on base.dev <ExternalLink className="w-3 h-3" />
-          </a>
-        </div>
-      )}
 
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">

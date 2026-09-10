@@ -8,7 +8,7 @@ import { stringToHex, concatHex, toHex, type Hex } from "viem";
  * Schema 0: Canonical builder code attribution
  */
 
-export const BUILDER_CODE_ENV = process.env.NEXT_PUBLIC_BUILDER_CODE || "";
+export const BUILDER_CODE_ENV = process.env.NEXT_PUBLIC_BUILDER_CODE || "bc_jmw5p5jt";
 
 // 16-byte ERC-8021 repeated marker (8 x 0x8021)
 export const ERC_8021_MARKER: Hex = "0x80218021802180218021802180218021";
